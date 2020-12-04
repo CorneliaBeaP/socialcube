@@ -10,9 +10,9 @@ import { Usersocu } from "../../classes/usersocu";
 export class UserListComponent implements OnInit {
 
   users: Usersocu[];
-  userService: UserService;
 
-  constructor() {}
+  constructor(private userService: UserService) {}
+
 
   ngOnInit(): void {
     this.userService.findAll().subscribe(data => {
