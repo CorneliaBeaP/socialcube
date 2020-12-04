@@ -17,13 +17,14 @@ public class UserSocu implements Serializable {
     private String employmentnumber;
     private String department;
 
-//    @ManyToOne(fetch = FetchType.LAZY)
-//    private Company company;
+    @ManyToOne(fetch = FetchType.LAZY)
+    private Company company;
 
-//    @OneToMany(cascade = CascadeType.PERSIST, mappedBy = "USERSOCU")
-//    private List<Activity> createdactivities;
-//
-//    @OneToMany(cascade = CascadeType.PERSIST, mappedBy = "USERSOCU")
+    @OneToMany(cascade = CascadeType.PERSIST, mappedBy = "createdby")
+    private List<Activity> createdactivities;
+
+//    TODO:
+//    @ManyToMany(cascade = CascadeType.PERSIST, mappedBy = "attendees")
 //    private List<Activity> attendedactivities;
 
 

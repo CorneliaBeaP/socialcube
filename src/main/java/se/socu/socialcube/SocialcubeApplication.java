@@ -24,7 +24,7 @@ public class SocialcubeApplication {
 //        userRepository.save(new UserSocu("Anna"));
 //        userRepository.save(new UserSocu("Andrea"));
 
-            companyRepository.save(new Company(929292929292L, "TestCompany"));
+//            companyRepository.save(new Company(929292929292L, "TestCompany"));
 
         userRepository.findAll().forEach(System.out::println);
         });

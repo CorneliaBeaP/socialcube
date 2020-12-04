@@ -3,11 +3,9 @@ package se.socu.socialcube.Entities;
 import lombok.Getter;
 import lombok.Setter;
 
-import javax.persistence.CascadeType;
-import javax.persistence.Entity;
-import javax.persistence.Id;
-import javax.persistence.OneToMany;
+import javax.persistence.*;
 import java.io.Serializable;
+import java.util.ArrayList;
 import java.util.List;
 
 @Getter
@@ -19,8 +17,8 @@ public class Company implements Serializable {
     private long organizationnumber;
     private String name;
 
-//    @OneToMany(cascade = CascadeType.PERSIST, mappedBy = "COMPANY")
-//    private List<UserSocu> employees;
+    @OneToMany(cascade = CascadeType.PERSIST, mappedBy = "company")
+    private List<UserSocu> employees = new ArrayList<>();
 
     public Company() {
     }

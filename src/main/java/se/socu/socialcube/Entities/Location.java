@@ -12,8 +12,8 @@ public class Location implements Serializable {
     private String name;
     private String address;
 
-//    @OneToMany(cascade = CascadeType.PERSIST, mappedBy = "LOCATION")
-//    private List<Activity> activities;
+    @OneToMany(cascade = CascadeType.PERSIST, mappedBy = "location")
+    private List<Activity> activities;
 
     public Location() {
     }
