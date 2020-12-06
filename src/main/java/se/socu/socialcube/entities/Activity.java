@@ -1,4 +1,4 @@
-package se.socu.socialcube.Entities;
+package se.socu.socialcube.entities;
 
 import javax.persistence.*;
 import java.io.Serializable;

@@ -1,4 +1,4 @@
-package se.socu.socialcube.Entities;
+package se.socu.socialcube.entities;
 
 import lombok.Getter;
 import lombok.Setter;

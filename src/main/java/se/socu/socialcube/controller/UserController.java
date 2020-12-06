@@ -1,8 +1,8 @@
-package se.socu.socialcube.Controllers;
+package se.socu.socialcube.controller;
 
 import org.springframework.web.bind.annotation.*;
-import se.socu.socialcube.Entities.UserSocu;
-import se.socu.socialcube.Repository.UserRepository;
+import se.socu.socialcube.entities.UserSocu;
+import se.socu.socialcube.repository.UserRepository;
 
 import java.util.List;
 
