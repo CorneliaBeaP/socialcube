@@ -27,12 +27,10 @@ public class Activity implements Serializable {
     @ManyToOne(fetch = FetchType.LAZY)
     private Location location;
 
-    // TODO:
-
-//    @JoinTable(name = "USERSOCU", joinColumns = @JoinColumn(name = "activity_id"),
-//            inverseJoinColumns = @JoinColumn(name = "usersocu_id"))
-//    @ManyToMany(cascade = CascadeType.PERSIST)
-//    private List<UserSocu> attendees;
+    @JoinTable(name = "ATTENDEDACTIVITIES", joinColumns = @JoinColumn(name = "activity_id"),
+            inverseJoinColumns = @JoinColumn(name = "usersocu_id"))
+    @ManyToMany(cascade = CascadeType.PERSIST)
+    private List<UserSocu> attendees;
 
     public Activity() {
     }

@@ -24,8 +24,8 @@ public class UserSocu implements Serializable {
     private List<Activity> createdactivities;
 
 //    TODO:
-//    @ManyToMany(cascade = CascadeType.PERSIST, mappedBy = "attendees")
-//    private List<Activity> attendedactivities;
+    @ManyToMany(cascade = CascadeType.PERSIST, mappedBy = "attendees")
+    private List<Activity> attendedactivities;
 
 
     public UserSocu() {
