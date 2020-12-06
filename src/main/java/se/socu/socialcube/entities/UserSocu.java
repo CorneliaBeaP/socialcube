@@ -1,16 +1,21 @@
 package se.socu.socialcube.entities;
 
+import lombok.Getter;
+import lombok.Setter;
+
 import javax.persistence.*;
 import java.io.Serializable;
 import java.util.List;
 
+@Getter
+@Setter
 @Entity(name = "USERSOCU")
 public class UserSocu implements Serializable {
 
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @GeneratedValue(strategy = GenerationType.AUTO)
     private long id;
-    private int usertype;
+    private Usertype usertype;
     private String name;
     private String email;
     private String password;
@@ -30,4 +35,17 @@ public class UserSocu implements Serializable {
 
     public UserSocu() {
     }
+
+    public UserSocu(Usertype usertype, String name, String email, String password, String employmentnumber, String department, Company company) {
+        this.usertype = usertype;
+        this.name = name;
+        this.email = email;
+        this.password = password;
+        this.employmentnumber = employmentnumber;
+        this.department = department;
+        this.company = company;
+    }
+
+
+
 }

@@ -25,4 +25,9 @@ public class UserController {
     void addUser(@RequestBody UserSocu userSocu){
         userRepository.save(userSocu);
     }
+
+    @GetMapping("/user/{id}")
+    public UserSocu getUser(@PathVariable long id){
+        return userRepository.findById(id);
+    }
 }
