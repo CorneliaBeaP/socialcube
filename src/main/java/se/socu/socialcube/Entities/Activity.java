@@ -1,14 +1,8 @@
 package se.socu.socialcube.Entities;
 
-import javassist.LoaderClassPath;
-
 import javax.persistence.*;
 import java.io.Serializable;
-import java.sql.Time;
 import java.sql.Timestamp;
-import java.time.LocalDate;
-import java.time.LocalDateTime;
-import java.util.Date;
 import java.util.List;
 
 @Entity(name = "ACTIVITY")
