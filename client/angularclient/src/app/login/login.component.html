@@ -1,8 +1,8 @@
-<div class="loginblock">
+<div class="loginblock centerofpage" *ngIf="loginpage">
   <div class="socialcubelogin socialcube m-5">
     Socialcube
   </div>
-  <div class="logingroup">
+  <div class="logingroup ">
     <div>
       <input type="text" class="p-1 m-3 loginitem" id="emailinput" placeholder="Mailadress">
     </div>
@@ -12,7 +12,17 @@
     <button class="btn btn-light m-2">Logga in</button>
   </div>
   <div class="">
-    <button class="btn btn-link noAccount"> Jag har inget konto!</button>
+    <button class="btn btn-link noAccount" (click)="showLoginPage(false)" type="button"> Jag har inget konto!</button>
   </div>
 </div>
+
+<ng-template [ngIf]="!loginpage">
+  <div class="centerofpage">
+    <div class="text-center">
+      <h3 class="m-5">Vad kul att du vill skapa ett konto hos oss!</h3>
+
+      Just nu är vi i pilot och därför behöver du kontakta oss för att skapa ett konto för ditt företag, detta gör du genom att maila oss på <b>kontakt@socialcube</b></div>
+    <button type="button" class="btn btn-light mt-5" (click)="showLoginPage(true)">Tillbaka</button>
+  </div>
+</ng-template>
 
