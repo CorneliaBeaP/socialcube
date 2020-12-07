@@ -1,0 +1,35 @@
+.socialcubelogin {
+  font-size: 55px;
+}
+
+.loginblock {
+  height: 600px;
+  width: 450px;
+  text-align: center;
+  border-width: 2px;
+  border-color: #bdbdbd;
+  border-style: solid;
+  position: fixed;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  border-radius: 15px;
+
+}
+
+.logingroup {
+  margin-top: 170px;
+}
+
+.loginitem {
+  height: 45px;
+  width: 360px;
+  border-width: 1px;
+  border-radius: 15px;
+  text-align: center;
+}
+
+.noAccount {
+  color: #bdbdbd;
+}
+
