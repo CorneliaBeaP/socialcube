@@ -1,8 +1,8 @@
-.card{
+.card {
   border-bottom-right-radius: 0px;
 }
 
-.choicebutton{
+.choicebutton {
   width: 50px;
   border-width: 1px;
   border-color: #d1d1d1;
@@ -10,6 +10,10 @@
   border-style: solid;
   border-top-width: 0px;
   outline: none;
+}
+
+.choicebutton:hover {
+  background-color: #f7f7f7;
 }
 
 .accept {

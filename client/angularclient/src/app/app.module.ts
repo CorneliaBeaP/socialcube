@@ -13,6 +13,8 @@ import { MainComponent } from './main/main.component';
 import { CreateActivityComponent } from './main/create-activity/create-activity.component';
 import {FormsModule} from "@angular/forms";
 import { ActivityCardsComponent } from './main/activity-cards/activity-cards.component';
+import { CalendarComponent } from './main/calendar/calendar.component';
+import { UpcomingActivitiesComponent } from './main/upcoming-activities/upcoming-activities.component';
 
 @NgModule({
   declarations: [
@@ -22,7 +24,9 @@ import { ActivityCardsComponent } from './main/activity-cards/activity-cards.com
     LoginComponent,
     MainComponent,
     CreateActivityComponent,
-    ActivityCardsComponent
+    ActivityCardsComponent,
+    CalendarComponent,
+    UpcomingActivitiesComponent
   ],
   imports: [
     BrowserModule,
