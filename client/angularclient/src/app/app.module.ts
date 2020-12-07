@@ -6,16 +6,20 @@ import { AppComponent } from './app.component';
 import { UserListComponent } from './userlist/user-list/user-list.component';
 import { UserService } from "./services/user.service";
 import {HttpClientModule} from "@angular/common/http";
+import { HeaderComponent } from './navigation/header/header.component';
+import { NoopAnimationsModule } from '@angular/platform-browser/animations';
 
 @NgModule({
   declarations: [
     AppComponent,
-    UserListComponent
+    UserListComponent,
+    HeaderComponent
   ],
   imports: [
     BrowserModule,
     HttpClientModule,
-    AppRoutingModule
+    AppRoutingModule,
+    NoopAnimationsModule
   ],
   providers: [UserService],
   bootstrap: [AppComponent]
