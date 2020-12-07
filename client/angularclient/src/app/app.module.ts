@@ -15,6 +15,8 @@ import {FormsModule} from "@angular/forms";
 import { ActivityCardsComponent } from './main/activity-cards/activity-cards.component';
 import { CalendarComponent } from './main/calendar/calendar.component';
 import { UpcomingActivitiesComponent } from './main/upcoming-activities/upcoming-activities.component';
+import { ProfileComponent } from './profile/profile.component';
+import { AdministrationComponent } from './administration/administration.component';
 
 @NgModule({
   declarations: [
@@ -26,7 +28,9 @@ import { UpcomingActivitiesComponent } from './main/upcoming-activities/upcoming
     CreateActivityComponent,
     ActivityCardsComponent,
     CalendarComponent,
-    UpcomingActivitiesComponent
+    UpcomingActivitiesComponent,
+    ProfileComponent,
+    AdministrationComponent
   ],
   imports: [
     BrowserModule,
