@@ -8,12 +8,14 @@ import { UserService } from "./services/user.service";
 import {HttpClientModule} from "@angular/common/http";
 import { HeaderComponent } from './navigation/header/header.component';
 import { NoopAnimationsModule } from '@angular/platform-browser/animations';
+import { LoginComponent } from './login/login.component';
 
 @NgModule({
   declarations: [
     AppComponent,
     UserListComponent,
-    HeaderComponent
+    HeaderComponent,
+    LoginComponent
   ],
   imports: [
     BrowserModule,
