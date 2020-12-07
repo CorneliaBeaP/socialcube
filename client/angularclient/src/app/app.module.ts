@@ -10,6 +10,8 @@ import { HeaderComponent } from './navigation/header/header.component';
 import { NoopAnimationsModule } from '@angular/platform-browser/animations';
 import { LoginComponent } from './login/login.component';
 import { MainComponent } from './main/main.component';
+import { CreateActivityComponent } from './main/create-activity/create-activity.component';
+import {FormsModule} from "@angular/forms";
 
 @NgModule({
   declarations: [
@@ -17,13 +19,15 @@ import { MainComponent } from './main/main.component';
     UserListComponent,
     HeaderComponent,
     LoginComponent,
-    MainComponent
+    MainComponent,
+    CreateActivityComponent
   ],
   imports: [
     BrowserModule,
     HttpClientModule,
     AppRoutingModule,
-    NoopAnimationsModule
+    NoopAnimationsModule,
+    FormsModule
   ],
   providers: [UserService],
   bootstrap: [AppComponent]
