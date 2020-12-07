@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import {Component, OnInit} from '@angular/core';
 
 @Component({
   selector: 'app-create-activity',
@@ -7,9 +7,12 @@ import { Component, OnInit } from '@angular/core';
 })
 export class CreateActivityComponent implements OnInit {
 
-  constructor() { }
+  showPlanActivity = false;
+  showCurrentActivities = false;
+
+  constructor() {
+  }
 
   ngOnInit(): void {
   }
-
 }
