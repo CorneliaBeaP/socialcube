@@ -29,3 +29,6 @@
   color: #bdbdbd;
 }
 
+button {
+  outline: none;
+}

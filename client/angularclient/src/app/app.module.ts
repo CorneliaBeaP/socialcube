@@ -12,6 +12,7 @@ import { LoginComponent } from './login/login.component';
 import { MainComponent } from './main/main.component';
 import { CreateActivityComponent } from './main/create-activity/create-activity.component';
 import {FormsModule} from "@angular/forms";
+import { ActivityCardsComponent } from './main/activity-cards/activity-cards.component';
 
 @NgModule({
   declarations: [
@@ -20,7 +21,8 @@ import {FormsModule} from "@angular/forms";
     HeaderComponent,
     LoginComponent,
     MainComponent,
-    CreateActivityComponent
+    CreateActivityComponent,
+    ActivityCardsComponent
   ],
   imports: [
     BrowserModule,
