@@ -23,7 +23,7 @@ public class SocialcubeApplication {
     @Bean
     public CommandLineRunner setUp(UserRepository userRepository, CompanyRepository companyRepository, LocationRepository locationRepository, ActivityRepository activityRepository) {
         return (args -> {
-
+            System.out.println("Applikationen startar");
 ////            Skapa testföretag
 //            Company company = new Company(929292929292L, "TestCompany");
 //            companyRepository.save(company);

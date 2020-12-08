@@ -1,6 +1,8 @@
 package se.socu.socialcube.service;
 
+import org.slf4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.boot.logging.LoggerGroup;
 import org.springframework.stereotype.Service;
 import se.socu.socialcube.DTO.UserDTO;
 import se.socu.socialcube.entities.UserSocu;
@@ -41,9 +43,17 @@ public class UserService {
 
     public boolean checkIfLoginCredentialsAreCorrect(String username, String password) {
         boolean isAuthenticated = false;
-        if(userRepository.findByEmail(username).getPassword() == password){
-            isAuthenticated = true;
-        }
+//
+//        if(!(username ==null)){
+//            UserSocu userSocu= userRepository.findByEmail(username;
+//            System.out.println(u);
+////            if(userRepository.findByEmail(username).getPassword().equals(password)){
+////                isAuthenticated = true;
+////            }
+//        }
+        System.out.println(username);
+        System.out.println(password);
+        System.out.println(isAuthenticated);
         return isAuthenticated;
     }
 }

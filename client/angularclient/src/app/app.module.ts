@@ -17,6 +17,7 @@ import { CalendarComponent } from './main/calendar/calendar.component';
 import { UpcomingActivitiesComponent } from './main/upcoming-activities/upcoming-activities.component';
 import { ProfileComponent } from './profile/profile.component';
 import { AdministrationComponent } from './administration/administration.component';
+import { LoginService } from "./services/login.service";
 
 @NgModule({
   declarations: [
@@ -39,7 +40,7 @@ import { AdministrationComponent } from './administration/administration.compone
     NoopAnimationsModule,
     FormsModule
   ],
-  providers: [UserService],
+  providers: [UserService, LoginService],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

@@ -37,6 +37,7 @@ public class UserController {
 
     @PostMapping("/login")
     public boolean authenticationApproved(@RequestBody String[] usercredentials) {
+        System.out.println("authenticationApproved()");
         return userService.checkIfLoginCredentialsAreCorrect(usercredentials[0], usercredentials[1]);
     }
 }
