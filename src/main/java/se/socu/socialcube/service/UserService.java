@@ -43,14 +43,13 @@ public class UserService {
 
     public boolean checkIfLoginCredentialsAreCorrect(String username, String password) {
         boolean isAuthenticated = false;
-//
-//        if(!(username ==null)){
-//            UserSocu userSocu= userRepository.findByEmail(username;
-//            System.out.println(u);
-////            if(userRepository.findByEmail(username).getPassword().equals(password)){
-////                isAuthenticated = true;
-////            }
-//        }
+
+        if (!(username == null)) {
+            UserSocu userSocu = userRepository.findByEmail(username);
+            if (!(userSocu == null) && userSocu.getPassword().equals(password)) {
+                isAuthenticated = true;
+            }
+        }
         System.out.println(username);
         System.out.println(password);
         System.out.println(isAuthenticated);
