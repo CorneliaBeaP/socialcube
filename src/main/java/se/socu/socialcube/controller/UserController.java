@@ -1,8 +1,10 @@
 package se.socu.socialcube.controller;
 
 import org.springframework.web.bind.annotation.*;
+import se.socu.socialcube.DTO.UserDTO;
 import se.socu.socialcube.entities.UserSocu;
 import se.socu.socialcube.repository.UserRepository;
+import se.socu.socialcube.service.UserService;
 
 import java.util.List;
 
@@ -10,15 +12,17 @@ import java.util.List;
 @CrossOrigin(origins = "http://localhost:4200")
 public class UserController {
 
-    public UserController(UserRepository userRepository) {
+    public UserController(UserRepository userRepository, UserService userService) {
         this.userRepository = userRepository;
+        this.userService = userService;
     }
 
     private final UserRepository userRepository;
+    private final UserService userService;
 
     @GetMapping("/users")
-    public List<UserSocu> getUsers() {
-        return (List<UserSocu>) userRepository.findAll();
+    public List<UserDTO> getUsers() {
+        return userService.getAllUserDTOs();
     }
 
     @PostMapping("/users")
