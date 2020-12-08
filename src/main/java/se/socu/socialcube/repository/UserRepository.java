@@ -7,6 +7,6 @@ import se.socu.socialcube.entities.UserSocu;
 
 @Repository
 public interface UserRepository extends CrudRepository<UserSocu, Long> {
-     UserSocu findById(long id);
-     UserSocu findByEmail(String email);
+     <Optional>UserSocu findById(long id);
+     <Optional>UserSocu findByEmail(String email);
 }

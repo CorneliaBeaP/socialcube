@@ -18,6 +18,7 @@ export class LoginService {
   authenticate(username: string, password: string): Observable<Object> {
     this.usercredentials = [username, password]
     console.log(this.usercredentials);
+    console.log(this.http.post(this.loginUrl, this.usercredentials));
     return this.http.post(this.loginUrl, this.usercredentials);
   }
 }

@@ -1,15 +1,21 @@
 package se.socu.socialcube.controller;
 
+import org.springframework.http.HttpHeaders;
+import org.springframework.http.MediaType;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import se.socu.socialcube.DTO.UserDTO;
 import se.socu.socialcube.entities.UserSocu;
 import se.socu.socialcube.repository.UserRepository;
 import se.socu.socialcube.service.UserService;
 
+import java.awt.*;
+import java.net.URI;
 import java.util.List;
 
+@CrossOrigin(origins = "*", maxAge = 3600)
 @RestController
-@CrossOrigin(origins = "http://localhost:4200")
+@RequestMapping("/")
 public class UserController {
 
     public UserController(UserRepository userRepository, UserService userService) {
@@ -35,9 +41,18 @@ public class UserController {
         return userRepository.findById(id);
     }
 
-    @PostMapping("/login")
-    public boolean authenticationApproved(@RequestBody String[] usercredentials) {
+    @RequestMapping(value = "/login", method = RequestMethod.GET, produces = MediaType.TEXT_PLAIN_VALUE)
+    @ResponseBody
+    public ResponseEntity<Boolean> checkAuthenticationStatus(@RequestBody String[] usercredentials) {
+        HttpHeaders httpHeaders = new HttpHeaders();
+        httpHeaders.set("Access-Control-Allow-Origin", "*");
+        System.out.println(ResponseEntity.ok().header("Access-Control-Allow-Origin", "*").body(false));
         System.out.println("authenticationApproved()");
-        return userService.checkIfLoginCredentialsAreCorrect(usercredentials[0], usercredentials[1]);
+        return ResponseEntity.ok().headers(httpHeaders).body(userService.checkIfLoginCredentialsAreCorrect(usercredentials[0], usercredentials[1]));
     }
+
+//    @GetMapping("/login")
+//    public boolean getAuthenticationStatus(){
+//
+//    }
 }
