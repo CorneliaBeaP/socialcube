@@ -8,6 +8,7 @@ import {Component, OnInit} from '@angular/core';
 export class LoginComponent implements OnInit {
   loginpage = true;
 
+  //TODO: varför går det inte att lägga in en formbuilder i contructorn, då försvinner sidan
   constructor() {
   }
 
@@ -18,4 +19,8 @@ export class LoginComponent implements OnInit {
     this.loginpage = login;
   }
 
+  loginUser(event){
+    event.preventDefault();
+    console.log(event);
+  }
 }
