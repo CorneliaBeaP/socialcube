@@ -33,9 +33,17 @@ public class UserService {
 
         for (UserSocu user : allUsers
         ) {
-           UserDTO userDTO = convertToUserDTOfromUserSocu(user);
-           allUsersDTO.add(userDTO);
+            UserDTO userDTO = convertToUserDTOfromUserSocu(user);
+            allUsersDTO.add(userDTO);
         }
         return allUsersDTO;
+    }
+
+    public boolean checkIfLoginCredentialsAreCorrect(String username, String password) {
+        boolean isAuthenticated = false;
+        if(userRepository.findByEmail(username).getPassword() == password){
+            isAuthenticated = true;
+        }
+        return isAuthenticated;
     }
 }

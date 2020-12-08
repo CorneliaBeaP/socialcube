@@ -26,12 +26,17 @@ public class UserController {
     }
 
     @PostMapping("/users")
-    void addUser(@RequestBody UserSocu userSocu){
+    void addUser(@RequestBody UserSocu userSocu) {
         userRepository.save(userSocu);
     }
 
     @GetMapping("/user/{id}")
-    public UserSocu getUser(@PathVariable long id){
+    public UserSocu getUser(@PathVariable long id) {
         return userRepository.findById(id);
+    }
+
+    @PostMapping("/login")
+    public boolean authenticationApproved(@RequestBody String[] usercredentials) {
+        return userService.checkIfLoginCredentialsAreCorrect(usercredentials[0], usercredentials[1]);
     }
 }
