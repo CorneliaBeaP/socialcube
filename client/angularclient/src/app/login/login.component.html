@@ -3,7 +3,7 @@
     Socialcube
   </div>
   <div class="logingroup ">
-    <form (ngSubmit)="loginUser($event)" [formGroup]="loginForm" novalidate>
+    <form (ngSubmit)="onSubmit()" [formGroup]="loginForm" novalidate>
       <input formControlName="username" autocomplete="off" type="email" class="p-1 m-3 loginitem" id="emailinput" placeholder="Mailadress"
              required name="username">
       <input formControlName="password" autocomplete="off" type="password" class="p-1 m-3 loginitem" id="passwordinput" placeholder="Lösenord"

@@ -3,8 +3,8 @@ import {LoginService} from "../services/login.service";
 import {ActivatedRoute, Router} from "@angular/router";
 import {FormBuilder, FormControl, FormGroup, Validators} from "@angular/forms";
 import {Observable, of, Subscription} from "rxjs";
-import {log} from "util";
 import {valueReferenceToExpression} from "@angular/compiler-cli/src/ngtsc/annotations/src/util";
+import {first} from "rxjs/operators";
 
 @Component({
   selector: 'app-login',
@@ -17,11 +17,14 @@ export class LoginComponent implements OnInit, OnDestroy {
   password: string;
   isAuthenticated = false;
   loginForm: FormGroup;
-  subscription: Subscription;
+  returnUrl: string;
+  submitted = false;
 
 
-  constructor(private loginService: LoginService, private route: ActivatedRoute, private router: Router, private formBuilder: FormBuilder) {
-    this.createForm();
+  constructor(private loginService: LoginService,
+              private route: ActivatedRoute,
+              private router: Router,
+              private formBuilder: FormBuilder) {
   }
 
   createForm() {
@@ -29,15 +32,41 @@ export class LoginComponent implements OnInit, OnDestroy {
       username: ['', Validators.required],
       password: ['', Validators.required]
     });
+
+    this.returnUrl = this.route.snapshot.queryParams['returnUrl'] || '/login';
   }
 
   ngOnInit(): void {
-
+    this.createForm();
   }
 
   showLoginPage(login: boolean): void {
     this.loginpage = login;
   }
+
+  onSubmit() {
+    this.submitted = true;
+
+    if (this.loginForm.invalid) {
+      return;
+    }
+
+    this.loginService.authenticate(this.loginForm.get('username').value, this.loginForm.get('password').value)
+      .pipe(first())
+      .subscribe(data => {
+          if (!(data.email == null)) {
+            this.router.navigate(['/home']);
+          } else {
+            this.router.navigate([this.returnUrl]);
+          }
+        },
+        error => {
+          //TODO: fixa alertservice av nåt slag
+        });
+
+
+  }
+
 
   loginUser(event) {
     let current: string = '';
@@ -48,10 +77,10 @@ export class LoginComponent implements OnInit, OnDestroy {
         current = (sessionStorage.getItem('id'));
       }, 100);
       setTimeout(() => {
-        if (!(current==null)) {
+        if (!(current == null)) {
           console.log('approved!');
           this.goToMainPage();
-        }else{
+        } else {
           console.log('not approved');
         }
       }, 500);
@@ -70,7 +99,7 @@ export class LoginComponent implements OnInit, OnDestroy {
     this.router.navigate(['/home']);
   }
 
-  executeErrorMessage(){
+  executeErrorMessage() {
     //TODO: lägg in så att felmeddelande visas när man försöker logga in och skriver fel uppgifter
   }
 
