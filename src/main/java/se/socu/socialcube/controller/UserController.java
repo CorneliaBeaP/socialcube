@@ -50,8 +50,14 @@ public class UserController {
 //    }
 
     @PostMapping(path = "/login", produces = MediaType.APPLICATION_JSON_VALUE)
-    public UserDTO getAuthenticationStatus(@RequestBody String[] usercredentials){
-        System.out.println("usercredentials: " + usercredentials[0] + ", " + usercredentials[1] + " userDTO: " + userService.checkIfLoginCredentialsAreCorrectAndGetUser(usercredentials[0], usercredentials[1]));
-        return userService.checkIfLoginCredentialsAreCorrectAndGetUser(usercredentials[0], usercredentials[1]);
+    public UserDTO getAuthenticationStatus(@RequestBody String[] usercredentials) {
+//        System.out.println("usercredentials: " + usercredentials[0] + ", " + usercredentials[1] + " userDTO: " + userService.checkIfLoginCredentialsAreCorrectAndGetUser(usercredentials[0], usercredentials[1]));
+        UserDTO userDTO = userService.checkIfLoginCredentialsAreCorrectAndGetUser(usercredentials[0], usercredentials[1]);
+        System.out.println(userDTO.getEmail() + "email");
+        if (!(userDTO.getEmail() == null)) {
+            return userDTO;
+        } else {
+            return null;
+        }
     }
 }

@@ -5,6 +5,7 @@ import {FormBuilder, FormControl, FormGroup, Validators} from "@angular/forms";
 import {Observable, of, Subscription} from "rxjs";
 import {valueReferenceToExpression} from "@angular/compiler-cli/src/ngtsc/annotations/src/util";
 import {first} from "rxjs/operators";
+import {AuthGuard} from "../auth/auth.guard";
 
 @Component({
   selector: 'app-login',
@@ -33,7 +34,7 @@ export class LoginComponent implements OnInit, OnDestroy {
       password: ['', Validators.required]
     });
 
-    this.returnUrl = this.route.snapshot.queryParams['returnUrl'] || '/login';
+    this.returnUrl = this.route.snapshot.queryParams['returnUrl'] || '/home';
   }
 
   ngOnInit(): void {
@@ -54,11 +55,7 @@ export class LoginComponent implements OnInit, OnDestroy {
     this.loginService.authenticate(this.loginForm.get('username').value, this.loginForm.get('password').value)
       .pipe(first())
       .subscribe(data => {
-          if (!(data.email == null)) {
-            this.router.navigate(['/home']);
-          } else {
-            this.router.navigate([this.returnUrl]);
-          }
+          this.router.navigate([this.returnUrl]);
         },
         error => {
           //TODO: fixa alertservice av nåt slag

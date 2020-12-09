@@ -52,9 +52,6 @@ public class UserService {
                     userDTO = convertToUserDTOfromUserSocu(userSocu.get());
                 }
             }
-
-        }else{
-            userDTO = null;
         }
         return userDTO;
     }
