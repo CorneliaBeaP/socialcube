@@ -2,6 +2,7 @@ import {Injectable, Output} from '@angular/core';
 import {HttpClient, HttpHeaders} from "@angular/common/http";
 import {Usersocu} from "../classes/usersocu";
 import {BehaviorSubject, Observable, of, Subscription} from "rxjs";
+import {LoginComponent} from "../login/login.component";
 
 
 @Injectable({
@@ -13,6 +14,7 @@ export class LoginService {
   private usercredentials: string[];
   private accepted: boolean;
   private currentUserSubject: BehaviorSubject<Usersocu>
+  private currentUser: Usersocu;
 
   constructor(private http: HttpClient) {
     this.loginUrl = 'http://localhost:8080/login';
@@ -20,13 +22,16 @@ export class LoginService {
   }
 
   authenticate(username: string, password: string) {
-    this.accepted = false;
+    let accepted = false;
     this.usercredentials = [username, password];
-    this.http.post<boolean>(this.loginUrl, this.usercredentials).subscribe(data => {
-      let newdata: Usersocu = JSON.parse(JSON.stringify(data));
-      console.log(newdata.email);
-      console.log(newdata.companyorganizationnumber);
+    this.http.post<Usersocu>(this.loginUrl, this.usercredentials).subscribe(data => {
+      let loggedinuser: Usersocu = JSON.parse(JSON.stringify(data));
+      if (!((loggedinuser.email) == null)) {
+        sessionStorage.setItem('id', JSON.stringify(loggedinuser.id));
+        this.currentUser = new Usersocu();
+        this.currentUser.id = loggedinuser.id;
+        this.currentUser.email = loggedinuser.email;
+      }
     });
-    return this.http.post<String>(this.loginUrl, this.usercredentials);
   }
 }

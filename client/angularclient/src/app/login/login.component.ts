@@ -4,6 +4,7 @@ import {ActivatedRoute, Router} from "@angular/router";
 import {FormBuilder, FormControl, FormGroup, Validators} from "@angular/forms";
 import {Observable, of, Subscription} from "rxjs";
 import {log} from "util";
+import {valueReferenceToExpression} from "@angular/compiler-cli/src/ngtsc/annotations/src/util";
 
 @Component({
   selector: 'app-login',
@@ -18,13 +19,14 @@ export class LoginComponent implements OnInit, OnDestroy {
   loginForm: FormGroup;
   subscription: Subscription;
 
+
   constructor(private loginService: LoginService, private route: ActivatedRoute, private router: Router, private formBuilder: FormBuilder) {
     this.createForm();
   }
 
   createForm() {
     this.loginForm = this.formBuilder.group({
-      username: ['', Validators.required ],
+      username: ['', Validators.required],
       password: ['', Validators.required]
     });
   }
@@ -37,21 +39,42 @@ export class LoginComponent implements OnInit, OnDestroy {
     this.loginpage = login;
   }
 
-    loginUser(event) {
+  loginUser(event) {
+    let current: string = '';
+    Promise.resolve().then(value => {
+      this.loginService.authenticate(this.loginForm.get('username').value, this.loginForm.get('password').value);
+      setTimeout(() => {
+        console.log(sessionStorage.getItem('id'));
+        current = (sessionStorage.getItem('id'));
+      }, 100);
+      setTimeout(() => {
+        if (!(current==null)) {
+          console.log('approved!');
+          this.goToMainPage();
+        }else{
+          console.log('not approved');
+        }
+      }, 500);
+    });
+    //TODO: sätt catch här
 
-    let accepted: boolean;
 
-      console.log(this.loginService.authenticate(this.loginForm.get('username').value, this.loginForm.get('password').value));
+    // this.loginService.authenticate(this.loginForm.get('username').value, this.loginForm.get('password').value);
     // if (this.isAuthenticated) {
     //   this.goToMainPage();
     // }
+
   }
 
   goToMainPage() {
     this.router.navigate(['/home']);
   }
 
+  executeErrorMessage(){
+    //TODO: lägg in så att felmeddelande visas när man försöker logga in och skriver fel uppgifter
+  }
+
   ngOnDestroy(): void {
-    this.subscription.unsubscribe();
+    // this.subscription.unsubscribe();
   }
 }
