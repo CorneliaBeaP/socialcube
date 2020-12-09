@@ -5,7 +5,7 @@
   <div class="logingroup ">
     <form (ngSubmit)="loginUser($event)">
       <input autocomplete="off" type="email" class="p-1 m-3 loginitem" id="emailinput" placeholder="Mailadress"
-             required="required" [(ngModel)]="username" name="username">
+             required [(ngModel)]="username" name="username">
       <input autocomplete="off" type="password" class="p-1 m-3 loginitem" id="passwordinput" placeholder="Lösenord"
              required="required" [(ngModel)]="password" name="password">
       <button class="btn btn-light m-2" type="submit">Logga in</button>

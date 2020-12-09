@@ -9,13 +9,11 @@ import se.socu.socialcube.entities.UserSocu;
 import se.socu.socialcube.repository.UserRepository;
 import se.socu.socialcube.service.UserService;
 
-import java.awt.*;
-import java.net.URI;
 import java.util.List;
 
-@CrossOrigin(origins = "*", maxAge = 3600)
+@CrossOrigin(origins = "*", allowedHeaders = "*")
 @RestController
-@RequestMapping("/")
+//@RequestMapping("/")
 public class UserController {
 
     public UserController(UserRepository userRepository, UserService userService) {
@@ -26,7 +24,7 @@ public class UserController {
     private final UserRepository userRepository;
     private final UserService userService;
 
-    @GetMapping("/users")
+    @RequestMapping(value = "/users", method = RequestMethod.GET)
     public List<UserDTO> getUsers() {
         return userService.getAllUserDTOs();
     }
@@ -41,18 +39,18 @@ public class UserController {
         return userRepository.findById(id);
     }
 
-    @RequestMapping(value = "/login", method = RequestMethod.GET, produces = MediaType.TEXT_PLAIN_VALUE)
-    @ResponseBody
-    public ResponseEntity<Boolean> checkAuthenticationStatus(@RequestBody String[] usercredentials) {
-        HttpHeaders httpHeaders = new HttpHeaders();
-        httpHeaders.set("Access-Control-Allow-Origin", "*");
-        System.out.println(ResponseEntity.ok().header("Access-Control-Allow-Origin", "*").body(false));
-        System.out.println("authenticationApproved()");
-        return ResponseEntity.ok().headers(httpHeaders).body(userService.checkIfLoginCredentialsAreCorrect(usercredentials[0], usercredentials[1]));
-    }
-
-//    @GetMapping("/login")
-//    public boolean getAuthenticationStatus(){
-//
+//    @RequestMapping(value = "/login", method = RequestMethod.POST, produces = MediaType.TEXT_PLAIN_VALUE)
+//    @ResponseBody
+//    public ResponseEntity<Boolean> checkAuthenticationStatus(@RequestParam String[] usercredentials) {
+//        HttpHeaders httpHeaders = new HttpHeaders();
+//        httpHeaders.set("Access-Control-Allow-Origin", "*");
+//        System.out.println(ResponseEntity.ok().header("Access-Control-Allow-Origin", "*").body(false));
+//        System.out.println("authenticationApproved()");
+//        return ResponseEntity.ok().headers(httpHeaders).body(userService.checkIfLoginCredentialsAreCorrect(usercredentials[0], usercredentials[1]));
 //    }
+
+    @PostMapping("/login")
+    public boolean getAuthenticationStatus(@RequestBody String[] usercredentials){
+    return userService.checkIfLoginCredentialsAreCorrect(usercredentials[0], usercredentials[1]);
+    }
 }

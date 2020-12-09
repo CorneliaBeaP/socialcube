@@ -11,6 +11,7 @@ export class LoginComponent implements OnInit {
   loginpage = true;
   username: string;
   password: string;
+  isAuthenticated = false;
 
   //TODO: varför går det inte att lägga in en formbuilder i contructorn, då försvinner sidan
   constructor(private loginService: LoginService, private route: ActivatedRoute, private router: Router) {
@@ -24,10 +25,13 @@ export class LoginComponent implements OnInit {
   }
 
   loginUser(event) {
-    this.loginService.authenticate(this.username, this.password).subscribe(result => this.goToMainPage())
-    console.log(this.username);
-    console.log(this.password);
-    console.log(this.loginService.authenticate(this.username, this.password));
+    this.loginService.authenticate(this.username, this.password).subscribe(boolean => this.isAuthenticated = boolean);
+    console.log(this.isAuthenticated);
+    if(this.isAuthenticated){
+      this.goToMainPage();
+    }
+    this.username = "";
+    this.password = "";
   }
 
   goToMainPage() {
