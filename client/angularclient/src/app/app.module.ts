@@ -11,7 +11,7 @@ import { NoopAnimationsModule } from '@angular/platform-browser/animations';
 import { LoginComponent } from './login/login.component';
 import { MainComponent } from './main/main.component';
 import { CreateActivityComponent } from './main/create-activity/create-activity.component';
-import {FormsModule} from "@angular/forms";
+import {FormsModule, ReactiveFormsModule} from "@angular/forms";
 import { ActivityCardsComponent } from './main/activity-cards/activity-cards.component';
 import { CalendarComponent } from './main/calendar/calendar.component';
 import { UpcomingActivitiesComponent } from './main/upcoming-activities/upcoming-activities.component';
@@ -38,7 +38,8 @@ import { LoginService } from "./services/login.service";
     HttpClientModule,
     AppRoutingModule,
     NoopAnimationsModule,
-    FormsModule
+    FormsModule,
+    ReactiveFormsModule
   ],
   providers: [UserService, LoginService],
   bootstrap: [AppComponent]
