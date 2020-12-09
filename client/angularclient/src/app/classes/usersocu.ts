@@ -6,4 +6,5 @@ export class Usersocu {
   password: string;
   employmentnumber: string;
   department: string;
+  companyorganizationnumber: number;
 }

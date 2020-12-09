@@ -1,7 +1,7 @@
-import {Injectable} from '@angular/core';
+import {Injectable, Output} from '@angular/core';
 import {HttpClient, HttpHeaders} from "@angular/common/http";
 import {Usersocu} from "../classes/usersocu";
-import {Observable, of, Subscription} from "rxjs";
+import {BehaviorSubject, Observable, of, Subscription} from "rxjs";
 
 
 @Injectable({
@@ -9,18 +9,24 @@ import {Observable, of, Subscription} from "rxjs";
 })
 export class LoginService {
 
-  loginUrl: string
+  loginUrl: string;
   private usercredentials: string[];
-  accepted = false;
+  private accepted: boolean;
+  private currentUserSubject: BehaviorSubject<Usersocu>
 
   constructor(private http: HttpClient) {
     this.loginUrl = 'http://localhost:8080/login';
+
   }
 
-  //TODO: fortsätt här, varför får jag fortfarande CORS-felmeddelande?
-  authenticate(username: string, password: string): Observable<boolean> {
-    this.usercredentials = [username, password]
-    // return of(this.http.post<boolean>(this.loginUrl, this.usercredentials).subscribe(boolean => this.accepted = boolean));
-    return this.http.post<boolean>(this.loginUrl, this.usercredentials);
+  authenticate(username: string, password: string) {
+    this.accepted = false;
+    this.usercredentials = [username, password];
+    this.http.post<boolean>(this.loginUrl, this.usercredentials).subscribe(data => {
+      let newdata: Usersocu = JSON.parse(JSON.stringify(data));
+      console.log(newdata.email);
+      console.log(newdata.companyorganizationnumber);
+    });
+    return this.http.post<String>(this.loginUrl, this.usercredentials);
   }
 }

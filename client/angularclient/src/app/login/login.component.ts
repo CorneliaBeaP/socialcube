@@ -1,22 +1,23 @@
-import {Component, OnInit} from '@angular/core';
+import {Component, OnDestroy, OnInit} from '@angular/core';
 import {LoginService} from "../services/login.service";
 import {ActivatedRoute, Router} from "@angular/router";
 import {FormBuilder, FormControl, FormGroup, Validators} from "@angular/forms";
-import {error} from "@angular/compiler/src/util";
+import {Observable, of, Subscription} from "rxjs";
+import {log} from "util";
 
 @Component({
   selector: 'app-login',
   templateUrl: './login.component.html',
   styleUrls: ['./login.component.css']
 })
-export class LoginComponent implements OnInit {
+export class LoginComponent implements OnInit, OnDestroy {
   loginpage = true;
   username: string;
   password: string;
   isAuthenticated = false;
   loginForm: FormGroup;
+  subscription: Subscription;
 
-  //TODO: varför går det inte att lägga in en formbuilder i contructorn, då försvinner sidan
   constructor(private loginService: LoginService, private route: ActivatedRoute, private router: Router, private formBuilder: FormBuilder) {
     this.createForm();
   }
@@ -36,20 +37,21 @@ export class LoginComponent implements OnInit {
     this.loginpage = login;
   }
 
-  loginUser(event) {
-    this.username = this.loginForm.get('username').value;
-    this.password = this.loginForm.get('password').value;
-    this.loginService.authenticate(this.username, this.password).subscribe(boolean => this.isAuthenticated = boolean);
-    console.log(this.isAuthenticated);
-    if (this.isAuthenticated) {
-      this.goToMainPage();
-    } else {
+    loginUser(event) {
 
-    }
-    this.loginForm.reset();
+    let accepted: boolean;
+
+      console.log(this.loginService.authenticate(this.loginForm.get('username').value, this.loginForm.get('password').value));
+    // if (this.isAuthenticated) {
+    //   this.goToMainPage();
+    // }
   }
 
   goToMainPage() {
     this.router.navigate(['/home']);
+  }
+
+  ngOnDestroy(): void {
+    this.subscription.unsubscribe();
   }
 }

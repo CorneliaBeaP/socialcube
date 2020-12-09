@@ -4,16 +4,16 @@
   </div>
   <div class="logingroup ">
     <form (ngSubmit)="loginUser($event)" [formGroup]="loginForm" novalidate>
-      <input formControlName="username" autocomplete="off" type="email" class="p-1 m-3 loginitem form-control" id="emailinput" placeholder="Mailadress"
+      <input formControlName="username" autocomplete="off" type="email" class="p-1 m-3 loginitem" id="emailinput" placeholder="Mailadress"
              required name="username">
       <input formControlName="password" autocomplete="off" type="password" class="p-1 m-3 loginitem" id="passwordinput" placeholder="Lösenord"
              required name="password">
       <button class="btn btn-light m-2" type="submit">Logga in</button>
     </form>
   </div>
-  <div [hidden]="!isAuthenticated">
-    Fel
-  </div>
+<!--  <div [hidden]="!isAuthenticated">-->
+<!--    Fel-->
+<!--  </div>-->
   <button class="btn btn-link noAccount" (click)="showLoginPage(false)" type="button"> Jag har inget konto!</button>
 </div>
 

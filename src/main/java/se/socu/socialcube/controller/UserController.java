@@ -1,14 +1,14 @@
 package se.socu.socialcube.controller;
 
-import org.springframework.http.HttpHeaders;
+import org.apache.catalina.User;
 import org.springframework.http.MediaType;
-import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import se.socu.socialcube.DTO.UserDTO;
 import se.socu.socialcube.entities.UserSocu;
 import se.socu.socialcube.repository.UserRepository;
 import se.socu.socialcube.service.UserService;
 
+import java.awt.*;
 import java.util.List;
 
 @CrossOrigin(origins = "*", allowedHeaders = "*")
@@ -34,10 +34,10 @@ public class UserController {
         userRepository.save(userSocu);
     }
 
-    @GetMapping("/user/{id}")
-    public UserSocu getUser(@PathVariable long id) {
-        return userRepository.findById(id);
-    }
+//    @GetMapping("/user/{id}")
+//    public UserDTO getUser(@PathVariable long id) {
+//        return userRepository.findById(id);
+//    }
 
 //    @RequestMapping(value = "/login", method = RequestMethod.POST, produces = MediaType.TEXT_PLAIN_VALUE)
 //    @ResponseBody
@@ -49,8 +49,9 @@ public class UserController {
 //        return ResponseEntity.ok().headers(httpHeaders).body(userService.checkIfLoginCredentialsAreCorrect(usercredentials[0], usercredentials[1]));
 //    }
 
-    @PostMapping("/login")
-    public boolean getAuthenticationStatus(@RequestBody String[] usercredentials){
-    return userService.checkIfLoginCredentialsAreCorrect(usercredentials[0], usercredentials[1]);
+    @PostMapping(path = "/login", produces = MediaType.APPLICATION_JSON_VALUE)
+    public UserDTO getAuthenticationStatus(@RequestBody String[] usercredentials){
+        System.out.println("usercredentials: " + usercredentials[0] + ", " + usercredentials[1] + " userDTO: " + userService.checkIfLoginCredentialsAreCorrectAndGetUser(usercredentials[0], usercredentials[1]));
+        return userService.checkIfLoginCredentialsAreCorrectAndGetUser(usercredentials[0], usercredentials[1]);
     }
 }

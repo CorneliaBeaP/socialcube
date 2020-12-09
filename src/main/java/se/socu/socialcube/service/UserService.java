@@ -1,5 +1,6 @@
 package se.socu.socialcube.service;
 
+import org.apache.catalina.User;
 import org.slf4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.logging.LoggerGroup;
@@ -10,6 +11,7 @@ import se.socu.socialcube.repository.UserRepository;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Optional;
 
 @Service
 public class UserService {
@@ -26,6 +28,7 @@ public class UserService {
         userDTO.setUsertype(userSocu.getUsertype());
         userDTO.setDepartment(userSocu.getDepartment());
         userDTO.setEmploymentnumber(userSocu.getEmploymentnumber());
+        userDTO.setCompanyorganizationnumber(userSocu.getCompany().getOrganizationnumber());
         return userDTO;
     }
 
@@ -41,18 +44,19 @@ public class UserService {
         return allUsersDTO;
     }
 
-    public boolean checkIfLoginCredentialsAreCorrect(String username, String password) {
-        boolean isAuthenticated = false;
-
+    public UserDTO checkIfLoginCredentialsAreCorrectAndGetUser(String username, String password) {
+        UserDTO userDTO = new UserDTO();
         if (!(username == null)) {
-            UserSocu userSocu = userRepository.findByEmail(username);
-            if (!(userSocu == null) && userSocu.getPassword().equals(password)) {
-                isAuthenticated = true;
+            Optional<UserSocu> userSocu = userRepository.findByEmail(username);
+            if(userSocu.isPresent()){
+                if (!(userSocu.get().getEmail().length()<1) && userSocu.get().getPassword().equals(password)) {
+                    userDTO = convertToUserDTOfromUserSocu(userSocu.get());
+                }
             }
+
+        }else{
+            userDTO = null;
         }
-        System.out.println(username);
-        System.out.println(password);
-        System.out.println(isAuthenticated);
-        return isAuthenticated;
+        return userDTO;
     }
 }

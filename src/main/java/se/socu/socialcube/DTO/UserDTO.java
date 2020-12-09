@@ -14,4 +14,5 @@ public class UserDTO {
     private String password;
     private String employmentnumber;
     private String department;
+    private long companyorganizationnumber;
 }
