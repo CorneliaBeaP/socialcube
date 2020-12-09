@@ -11,7 +11,6 @@ public class UserDTO {
     private Usertype usertype;
     private String name;
     private String email;
-    private String password;
     private String employmentnumber;
     private String department;
     private long companyorganizationnumber;

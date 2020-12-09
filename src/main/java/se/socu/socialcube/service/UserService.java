@@ -24,7 +24,6 @@ public class UserService {
         userDTO.setId(userSocu.getId());
         userDTO.setName(userSocu.getName());
         userDTO.setEmail(userSocu.getEmail());
-        userDTO.setPassword(userSocu.getPassword());
         userDTO.setUsertype(userSocu.getUsertype());
         userDTO.setDepartment(userSocu.getDepartment());
         userDTO.setEmploymentnumber(userSocu.getEmploymentnumber());

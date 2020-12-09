@@ -3,7 +3,6 @@ export class Usersocu {
   usertype: number;
   name: string;
   email: string;
-  password: string;
   employmentnumber: string;
   department: string;
   companyorganizationnumber: number;
