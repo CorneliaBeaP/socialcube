@@ -1,4 +1,5 @@
 import {Usersocu} from "./usersocu";
+import {Location} from "./location";
 
 export class Activity {
   id: number;

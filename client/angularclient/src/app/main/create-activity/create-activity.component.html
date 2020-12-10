@@ -1,20 +1,37 @@
 <div class="container">
   <h4 class="mt-5" (click)="showPlanActivity = !showPlanActivity">Planera aktivitet <i *ngIf="!showPlanActivity" class="fas fa-angle-right"></i><i *ngIf="showPlanActivity" class="fas fa-angle-down"></i></h4>
   <div *ngIf="showPlanActivity">
-    <div class="form-group ml-3 mt-2">
-      <label for="activitytype" class="mt-4 ml-1">Typ</label>
-      <input type="text" class="form-control m-1" id="activitytype" required>
-      <label for="activitydate" class="mt-4 ml-1">Datum för aktivitet</label>
-      <input type="text" class="form-control m-1" id="activitydate" required>
-      <label for="rsvpdate" class="mt-4 ml-1">Datum OSA senast</label>
-      <input type="text" class="form-control m-1" id="rsvpdate">
-      <label class="mt-4 ml-1">Plats</label>
-      <input type="text" class="form-control m-1" id="locationname" placeholder="Namn">
-      <input type="text" class="form-control m-1" id="locationaddress" placeholder="Adress">
-      <label for="description" class="mt-4 ml-1">Beskrivning</label>
-      <textarea class="form-control m-1" id="description" rows="3"></textarea>
-      <button class="btn btn-light mt-4">Skapa aktivitet</button>
-    </div>
+    <form (ngSubmit)="onSubmit()" [formGroup]="form">
+      <div class="form-group ml-3 mt-2">
+        <label for="activitytype" class="mt-4 ml-1">Typ</label>
+        <input formControlName="activitytype" type="text" class="form-control m-1" id="activitytype" required>
+        <label class="mt-4 ml-1">Datum för aktivitet</label>
+        <mat-form-field  appearance="outline">
+          <mat-label>Välj ett datum</mat-label>
+          <input formControlName="activitydate" matInput [matDatepicker]="activitydate">
+          <mat-datepicker-toggle matSuffix [for]="activitydate"></mat-datepicker-toggle>
+          <mat-datepicker #activitydate></mat-datepicker>
+        </mat-form-field>
+
+        <div class="md-form md-outline">
+          <input formControlName="activitytime" type="time" id="default-picker" class="form-control" placeholder="Select time">
+        </div>
+
+        <label class="mt-4 ml-1">Datum O.S.A senast</label>
+        <mat-form-field  appearance="outline">
+          <mat-label>Välj ett datum</mat-label>
+          <input formControlName="rsvpdate" matInput [matDatepicker]="rsvpdate">
+          <mat-datepicker-toggle matSuffix [for]="rsvpdate"></mat-datepicker-toggle>
+          <mat-datepicker #rsvpdate></mat-datepicker>
+        </mat-form-field>
+        <label class="mt-4 ml-1">Plats</label>
+        <input formControlName="locationname" type="text" class="form-control m-1" id="locationname" placeholder="Namn">
+        <input formControlName="locationaddress" type="text" class="form-control m-1" id="locationaddress" placeholder="Adress">
+        <label for="description" class="mt-4 ml-1">Beskrivning</label>
+        <textarea formControlName="descriptionsocu" class="form-control m-1" id="description" rows="3"></textarea>
+        <button class="btn btn-light mt-4">Skapa aktivitet</button>
+      </div>
+    </form>
   </div>
 
   <h4 class="mt-5" (click)="showCurrentActivities = !showCurrentActivities">Se nuvarande aktiviteter <i *ngIf="!showCurrentActivities" class="fas fa-angle-right"></i><i *ngIf="showCurrentActivities" class="fas fa-angle-down"></i></h4>

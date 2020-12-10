@@ -18,6 +18,10 @@ import { UpcomingActivitiesComponent } from './main/upcoming-activities/upcoming
 import { ProfileComponent } from './profile/profile.component';
 import { AdministrationComponent } from './administration/administration.component';
 import { LoginService } from "./services/login.service";
+import {MatFormFieldModule} from "@angular/material/form-field";
+import {MatDatepickerModule} from "@angular/material/datepicker";
+import {MatNativeDateModule} from "@angular/material/core";
+import {MatInputModule} from "@angular/material/input";
 
 @NgModule({
   declarations: [
@@ -39,7 +43,11 @@ import { LoginService } from "./services/login.service";
     AppRoutingModule,
     NoopAnimationsModule,
     FormsModule,
-    ReactiveFormsModule
+    ReactiveFormsModule,
+    MatFormFieldModule,
+    MatDatepickerModule,
+    MatNativeDateModule,
+    MatInputModule
   ],
   providers: [UserService, LoginService],
   bootstrap: [AppComponent]

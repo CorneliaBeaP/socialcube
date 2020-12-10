@@ -16,10 +16,10 @@ export class LoginComponent implements OnInit, OnDestroy {
   loginpage = true;
   username: string;
   password: string;
-  isAuthenticated = false;
   loginForm: FormGroup;
   returnUrl: string;
   submitted = false;
+  subscription;
 
 
   constructor(private loginService: LoginService,
@@ -31,7 +31,7 @@ export class LoginComponent implements OnInit, OnDestroy {
   createForm() {
     this.loginForm = this.formBuilder.group({
       username: ['', Validators.required],
-      password: ['', Validators.required]
+      password: ['', Validators.required],
     });
 
     this.returnUrl = this.route.snapshot.queryParams['returnUrl'] || '/home';
@@ -52,7 +52,7 @@ export class LoginComponent implements OnInit, OnDestroy {
       return;
     }
 
-    this.loginService.authenticate(this.loginForm.get('username').value, this.loginForm.get('password').value)
+   this.subscription = this.loginService.authenticate(this.loginForm.get('username').value, this.loginForm.get('password').value)
       .pipe(first())
       .subscribe(data => {
           this.router.navigate([this.returnUrl]);
@@ -65,42 +65,36 @@ export class LoginComponent implements OnInit, OnDestroy {
   }
 
 
-  loginUser(event) {
-    let current: string = '';
-    Promise.resolve().then(value => {
-      this.loginService.authenticate(this.loginForm.get('username').value, this.loginForm.get('password').value);
-      setTimeout(() => {
-        console.log(sessionStorage.getItem('id'));
-        current = (sessionStorage.getItem('id'));
-      }, 100);
-      setTimeout(() => {
-        if (!(current == null)) {
-          console.log('approved!');
-          this.goToMainPage();
-        } else {
-          console.log('not approved');
-        }
-      }, 500);
-    });
-    //TODO: sätt catch här
+  // loginUser(event) {
+  //   let current: string = '';
+  //   Promise.resolve().then(value => {
+  //     this.loginService.authenticate(this.loginForm.get('username').value, this.loginForm.get('password').value);
+  //     setTimeout(() => {
+  //       console.log(sessionStorage.getItem('id'));
+  //       current = (sessionStorage.getItem('id'));
+  //     }, 100);
+  //     setTimeout(() => {
+  //       if (!(current == null)) {
+  //         console.log('approved!');
+  //         this.goToMainPage();
+  //       } else {
+  //         console.log('not approved');
+  //       }
+  //     }, 500);
+  //   });
 
 
     // this.loginService.authenticate(this.loginForm.get('username').value, this.loginForm.get('password').value);
     // if (this.isAuthenticated) {
     //   this.goToMainPage();
     // }
-
-  }
-
-  goToMainPage() {
-    this.router.navigate(['/home']);
-  }
+  // }
 
   executeErrorMessage() {
     //TODO: lägg in så att felmeddelande visas när man försöker logga in och skriver fel uppgifter
   }
 
   ngOnDestroy(): void {
-    // this.subscription.unsubscribe();
+    this.subscription.unsubscribe();
   }
 }
