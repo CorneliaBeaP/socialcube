@@ -81,6 +81,6 @@ export class CreateActivityComponent implements OnInit {
     activity.descriptionsocu = this.form.get('descriptionsocu').value;
     activity.location = location;
 
-    
+
   }
 }
