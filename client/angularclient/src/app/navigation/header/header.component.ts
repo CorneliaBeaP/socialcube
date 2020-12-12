@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import {Component, OnInit} from '@angular/core';
 import {LoginService} from "../../services/login.service";
 
 @Component({
@@ -7,13 +7,23 @@ import {LoginService} from "../../services/login.service";
   styleUrls: ['./header.component.css']
 })
 export class HeaderComponent implements OnInit {
+  isAdmin = false;
 
-  constructor(private loginService: LoginService) { }
+  constructor(private loginService: LoginService) {
+    this.getAdmin();
+  }
 
   ngOnInit(): void {
   }
 
-  logout(){
+  logout() {
     this.loginService.logout();
+  }
+
+  getAdmin() {
+    let user = this.loginService.getUserValue();
+    if (user.usertype.toString() == 'ADMIN') {
+      this.isAdmin = true;
+    }
   }
 }

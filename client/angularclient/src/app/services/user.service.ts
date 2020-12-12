@@ -25,8 +25,8 @@ export class UserService {
   public findAll(): Observable<Usersocu[]> {
     return this.http.get<Usersocu[]>(this.usersUrl);
   }
-
-  public save(user: Usersocu) {
-    return this.http.post<Usersocu>(this.usersUrl, user);
-  }
+  //
+  // public save(user: Usersocu) {
+  //   return this.http.post<Usersocu>(this.usersUrl, user);
+  // }
 }
