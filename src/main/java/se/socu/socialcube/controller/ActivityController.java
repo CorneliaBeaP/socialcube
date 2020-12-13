@@ -1,16 +1,45 @@
 package se.socu.socialcube.controller;
 
-import org.springframework.web.bind.annotation.CrossOrigin;
-import org.springframework.web.bind.annotation.RestController;
-import se.socu.socialcube.repository.ActivityRepository;
+import org.springframework.http.HttpHeaders;
+import org.springframework.http.MediaType;
+import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.*;
+import se.socu.socialcube.DTO.ActivityDTO;
+import se.socu.socialcube.service.ActivityService;
 
+import java.util.ArrayList;
+
+@CrossOrigin(origins = "*", allowedHeaders = "*")
 @RestController
-@CrossOrigin(origins = "http://localhost:4200")
 public class ActivityController {
 
-    private final ActivityRepository activityRepository;
 
-    public ActivityController(ActivityRepository activityRepository) {
-        this.activityRepository = activityRepository;
+    public ActivityController(ActivityService activityService) {
+        this.activityService = activityService;
     }
+
+    private final ActivityService activityService;
+
+//    @PostMapping(path = "/activity")
+//    public void addActivity(@RequestBody String activity) {
+//        System.out.println("Sparar aktivitet:" + activity);
+////        activityService.saveActivityDTO(activityDTO);
+//    }
+
+    @PostMapping(path = "/home", produces = MediaType.APPLICATION_JSON_VALUE)
+    public String saveActivity(@RequestParam String usercredentials) {
+        System.out.println("Got it");
+        return usercredentials;
+    }
+
+    @GetMapping(path = "/home/{id}", produces = MediaType.APPLICATION_JSON_VALUE)
+    public ArrayList<ActivityDTO> getAllActivitiesForCompany(@PathVariable long id) {
+        System.out.println("Skickar aktiviteter...");
+        return activityService.findAllActivitiesByCompany_organizationnumber(id);
+    }
+
+    //    @GetMapping("/user/{id}")
+//    public UserDTO getUser(@PathVariable long id) {
+//        return userRepository.findById(id);
+//    }
 }

@@ -27,6 +27,9 @@ public class Activity implements Serializable {
     @ManyToOne(fetch = FetchType.LAZY)
     private Location location;
 
+    @ManyToOne(fetch = FetchType.LAZY)
+    private Company company;
+
     @JoinTable(name = "ATTENDEDACTIVITIES", joinColumns = @JoinColumn(name = "activity_id"),
             inverseJoinColumns = @JoinColumn(name = "usersocu_id"))
     @ManyToMany(cascade = CascadeType.PERSIST)

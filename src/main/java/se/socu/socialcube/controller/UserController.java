@@ -1,38 +1,27 @@
 package se.socu.socialcube.controller;
 
-import org.apache.catalina.User;
 import org.springframework.http.MediaType;
 import org.springframework.web.bind.annotation.*;
 import se.socu.socialcube.DTO.UserDTO;
-import se.socu.socialcube.entities.UserSocu;
-import se.socu.socialcube.repository.UserRepository;
 import se.socu.socialcube.service.UserService;
 
-import java.awt.*;
 import java.util.List;
 
 @CrossOrigin(origins = "*", allowedHeaders = "*")
 @RestController
-//@RequestMapping("/")
 public class UserController {
 
-    public UserController(UserRepository userRepository, UserService userService) {
-        this.userRepository = userRepository;
+    public UserController(UserService userService) {
         this.userService = userService;
     }
 
-    private final UserRepository userRepository;
     private final UserService userService;
 
-    @RequestMapping(value = "/users", method = RequestMethod.GET)
-    public List<UserDTO> getUsers() {
-        return userService.getAllUserDTOs();
-    }
+//    @RequestMapping(value = "/users", method = RequestMethod.GET)
+//    public List<UserDTO> getUsers() {
+//        return userService.getAllUserDTOs();
+//    }
 
-    @PostMapping("/users")
-    void addUser(@RequestBody UserSocu userSocu) {
-        userRepository.save(userSocu);
-    }
 
 //    @GetMapping("/user/{id}")
 //    public UserDTO getUser(@PathVariable long id) {
@@ -53,11 +42,17 @@ public class UserController {
     public UserDTO getAuthenticationStatus(@RequestBody String[] usercredentials) {
 //        System.out.println("usercredentials: " + usercredentials[0] + ", " + usercredentials[1] + " userDTO: " + userService.checkIfLoginCredentialsAreCorrectAndGetUser(usercredentials[0], usercredentials[1]));
         UserDTO userDTO = userService.checkIfLoginCredentialsAreCorrectAndGetUser(usercredentials[0], usercredentials[1]);
-        System.out.println(userDTO.getEmail() + "email");
+        System.out.println(userDTO.getEmail() + " email");
         if (!(userDTO.getEmail() == null)) {
             return userDTO;
         } else {
             return null;
         }
     }
+
+//    @PostMapping(path = "/home", produces = MediaType.APPLICATION_JSON_VALUE)
+//    public String saveActivity(@RequestBody String usercredentials) {
+//        System.out.println(usercredentials);
+//        return usercredentials;
+//    }
 }

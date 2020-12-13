@@ -6,6 +6,7 @@ import {Activity} from "../../classes/activity";
 import {Location} from "../../classes/location";
 import {Time} from "@angular/common";
 import {min} from "rxjs/operators";
+import {ActivityService} from "../../services/activity.service";
 
 
 @Component({
@@ -32,7 +33,8 @@ export class CreateActivityComponent implements OnInit {
 
   constructor(private route: ActivatedRoute,
               private router: Router,
-              private formBuilder: FormBuilder) {
+              private formBuilder: FormBuilder,
+              private activityService: ActivityService) {
   }
 
   ngOnInit(): void {
@@ -53,16 +55,9 @@ export class CreateActivityComponent implements OnInit {
   }
 
   onSubmit() {
-    // if (this.form.invalid) {
-    //   return;
-    // }
-    // this.activitytype = this.form.get('activitytype').value;
-    // this.activitydate = this.form.get('activitydate').value;
-    // this.rsvpdate = this.form.get('rsvpdate').value;
-    // this.descriptionsocu = this.form.get('description').value;
-    // this.locationname = this.form.get('locationname').value;
-    // this.locationaddress = this.form.get('locationaddress').value;
-
+    if (this.form.invalid) {
+      return;
+    }
 
     let location = new Location();
     location.name = this.form.get('locationname').value;
@@ -72,8 +67,8 @@ export class CreateActivityComponent implements OnInit {
     let time = this.form.get('activitytime').value;
     let hours = time.toString().substring(0, 2);
     let minutes = time.toString().substring(3, 5);
-    let concatDate = new Date(date.getFullYear(), date.getMonth(), date.getDay(), hours, minutes);
-
+    let concatDate = new Date(date.getFullYear(), date.getMonth(), date.getDate(), hours, minutes);
+new Date()
     let activity= new Activity();
     activity.activitytype = this.form.get('activitytype').value;
     activity.activitydate = concatDate;
@@ -81,6 +76,10 @@ export class CreateActivityComponent implements OnInit {
     activity.descriptionsocu = this.form.get('descriptionsocu').value;
     activity.location = location;
 
+    this.createActivity(activity);
+  }
 
+  createActivity(activity: Activity){
+    this.activityService.save(activity);
   }
 }

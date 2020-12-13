@@ -10,4 +10,5 @@ export class Activity {
   createdby: Usersocu;
   location: Location;
   attendees: Usersocu[];
+  companyorganizationnumber: number;
 }

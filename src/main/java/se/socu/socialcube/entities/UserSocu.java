@@ -28,7 +28,6 @@ public class UserSocu implements Serializable {
     @OneToMany(cascade = CascadeType.PERSIST, mappedBy = "createdby")
     private List<Activity> createdactivities;
 
-//    TODO:
     @ManyToMany(cascade = CascadeType.PERSIST, mappedBy = "attendees")
     private List<Activity> attendedactivities;
 
