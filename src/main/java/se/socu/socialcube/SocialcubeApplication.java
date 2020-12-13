@@ -58,6 +58,40 @@ public class SocialcubeApplication {
 //
 //            activityRepository.save(activity1);
 //            activityRepository.save(activity2);
+
+//            skapar testföretag 2
+//            Company company = new Company(10101010101L, "TestCompany 2");
+//            companyRepository.save(company);
+//
+////            skapa testanvändare och testadmins
+//            UserSocu userSocu1 = new UserSocu(Usertype.USER, "Maria Rodriguez", "maria@company2.com", "111", "6845", "Produktion", company);
+//            UserSocu userSocu2 = new UserSocu(Usertype.ADMIN, "Angelina Sjöström", "angelina@company2.com", "123", "1354", "IT-avdelningen", company);
+//            UserSocu userSocu3 = new UserSocu(Usertype.USER, "Erik Enqvist", "erik@company2.com", "1234", "1568", "Linux-gruppen", company);
+//            UserSocu userSocu4 = new UserSocu(Usertype.USER, "Leif Hansson", "leif@company2.com", "11111", "7895", "Lager", company);
+//            UserSocu userSocu5 = new UserSocu(Usertype.USER, "Cecilia Mattson", "cecilia@company2.com", "losen23", "1645", "IT-avdelningen", company);
+//            userRepository.save(userSocu1);
+//            userRepository.save(userSocu2);
+//            userRepository.save(userSocu3);
+//            userRepository.save(userSocu4);
+//            userRepository.save(userSocu5);
+//
+////            skapa testlocations
+//            Location location = new Location("Java Bar", "Stockholmsgatan 3, 11539 Stockholm");
+//            Location location2 = new Location("Lunchrummet", "Regeringsgatan 21, 11153 Stockholm");
+//            locationRepository.save(location);
+//            locationRepository.save(location2);
+//
+////            skapa testactivities
+//            LocalDateTime activitydate1 = LocalDateTime.of(2020, 12, 19, 17, 0);
+//            LocalDateTime rsvp1 = LocalDateTime.of(2020, 12, 10, 17, 0);
+//            Activity activity1 = new Activity("AW", activitydate1, rsvp1, "AW bara för att det är trevligt!", userSocu1, location, company);
+//
+//            LocalDateTime activitydate2 = LocalDateTime.of(2021, 1, 8, 12, 0, 0);
+//            LocalDateTime rsvp2 = LocalDateTime.of(2021, 1, 8, 12, 0, 0);
+//            Activity activity2 = new Activity("Lunch", activitydate2, rsvp2, "Pizzalunch för de som är sugna!", userSocu2, location2, company);
+//
+//            activityRepository.save(activity1);
+//            activityRepository.save(activity2);
         });
     }
 

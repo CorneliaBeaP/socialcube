@@ -38,12 +38,13 @@ public class Activity implements Serializable {
     public Activity() {
     }
 
-    public Activity(String activitytype, LocalDateTime activitydate, LocalDateTime rsvpdate, String descriptionsocu, UserSocu createdby, Location location) {
+    public Activity(String activitytype, LocalDateTime activitydate, LocalDateTime rsvpdate, String descriptionsocu, UserSocu createdby, Location location, Company company) {
         this.activitytype = activitytype;
         this.activitydate = activitydate;
         this.rsvpdate = rsvpdate;
         this.descriptionsocu = descriptionsocu;
         this.createdby = createdby;
         this.location = location;
+        this.company = company;
     }
 }
