@@ -20,7 +20,19 @@ export class ActivityCardsComponent implements OnInit, OnDestroy {
   ngOnInit(): void {
     this.subscription = this.activityService.getActivities(this.loginService.getUserValue().companyorganizationnumber).subscribe(activityarray => {
       this.activities = activityarray;
+      this.sortByCreatedDate();
     });
+  }
+
+
+  public sortByCreatedDate(): void {
+
+    this.activities.sort(function (ac1, ac2) {
+      let ac1date = new Date(ac1.createddate).getTime();
+      let ac2date = new Date(ac2.createddate).getTime();
+      return ac1date > ac2date ? -1 : 1;
+    });
+
   }
 
   ngOnDestroy(): void {
