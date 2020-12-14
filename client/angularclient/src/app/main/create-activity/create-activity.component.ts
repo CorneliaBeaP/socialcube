@@ -103,5 +103,4 @@ export class CreateActivityComponent implements OnInit {
       console.log(next);
     });
   }
-
 }

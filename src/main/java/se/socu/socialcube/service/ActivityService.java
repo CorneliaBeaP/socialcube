@@ -60,10 +60,7 @@ public class ActivityService {
     }
 
     public void saveActivityDTO(ActivityDTO activityDTO) {
-        Activity activity = convertToActivityFromActivityDTO(activityDTO);
-        System.out.println(activity.toString());
-        System.out.println(activityDTO.toString());
-//        activityRepository.save(convertToActivityFromActivityDTO(activityDTO));
+        activityRepository.save(convertToActivityFromActivityDTO(activityDTO));
     }
 
     public ArrayList<ActivityDTO> findAllActivitiesByCompany_organizationnumber(long organizationnumber) {
