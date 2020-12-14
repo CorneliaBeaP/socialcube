@@ -1,6 +1,7 @@
 package se.socu.socialcube.service;
 
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 import se.socu.socialcube.DTO.ActivityDTO;
 import se.socu.socialcube.entities.Activity;
 import se.socu.socialcube.entities.Company;
@@ -10,9 +11,11 @@ import se.socu.socialcube.repository.CompanyRepository;
 import se.socu.socialcube.repository.UserRepository;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.Optional;
 
 @Service
+@Transactional
 public class ActivityService {
 
     private ActivityRepository activityRepository;
@@ -60,7 +63,12 @@ public class ActivityService {
     }
 
     public void saveActivityDTO(ActivityDTO activityDTO) {
-        activityRepository.save(convertToActivityFromActivityDTO(activityDTO));
+        try{
+            activityRepository.save(convertToActivityFromActivityDTO(activityDTO));
+        }catch (Exception e){
+            // TODO: bättre felhantering
+            System.out.println(Arrays.toString(e.getStackTrace()));
+        }
     }
 
     public ArrayList<ActivityDTO> findAllActivitiesByCompany_organizationnumber(long organizationnumber) {

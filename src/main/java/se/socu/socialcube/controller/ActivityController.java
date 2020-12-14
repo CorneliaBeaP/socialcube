@@ -13,7 +13,7 @@ import se.socu.socialcube.service.ActivityService;
 import java.util.ArrayList;
 import java.util.TimeZone;
 
-@CrossOrigin
+@CrossOrigin(origins = "http://localhost:4200", allowedHeaders = "*")
 @RestController
 public class ActivityController {
 

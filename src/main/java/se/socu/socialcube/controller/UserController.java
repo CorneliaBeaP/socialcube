@@ -1,27 +1,21 @@
 package se.socu.socialcube.controller;
 
-import org.springframework.http.HttpHeaders;
 import org.springframework.http.MediaType;
-import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.*;
-import se.socu.socialcube.DTO.ActivityDTO;
+import org.springframework.web.bind.annotation.CrossOrigin;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RestController;
 import se.socu.socialcube.DTO.UserDTO;
-import se.socu.socialcube.service.ActivityService;
 import se.socu.socialcube.service.UserService;
-
-import java.util.List;
-//TODO: varför fungerar login trots felaktiga uppgifter nedan?
-//@CrossOrigin(origins = "http://localhost/3000", allowedHeaders = "*")
+@CrossOrigin(origins = "http://localhost:4200", allowedHeaders = "*")
 @RestController
 public class UserController {
 
-    public UserController(UserService userService, ActivityService activityService) {
+    public UserController(UserService userService) {
         this.userService = userService;
-        this.activityService = activityService;
     }
 
     private final UserService userService;
-    private final ActivityService activityService;
 
 //    @RequestMapping(value = "/users", method = RequestMethod.GET)
 //    public List<UserDTO> getUsers() {
