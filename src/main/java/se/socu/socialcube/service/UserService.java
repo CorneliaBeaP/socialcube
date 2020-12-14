@@ -46,7 +46,7 @@ public class UserService {
     public UserDTO checkIfLoginCredentialsAreCorrectAndGetUser(String username, String password) {
         UserDTO userDTO = new UserDTO();
         if (!(username == null)) {
-            Optional<UserSocu> userSocu = userRepository.findByEmail(username);
+            Optional<UserSocu> userSocu = userRepository.findByEmail(username.toLowerCase());
             if(userSocu.isPresent()){
                 if (!(userSocu.get().getEmail().length()<1) && userSocu.get().getPassword().equals(password)) {
                     userDTO = convertToUserDTOfromUserSocu(userSocu.get());
