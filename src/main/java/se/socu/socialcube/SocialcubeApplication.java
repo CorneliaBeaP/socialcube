@@ -4,13 +4,20 @@ import org.springframework.boot.CommandLineRunner;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.context.annotation.Bean;
+import org.springframework.web.servlet.config.annotation.CorsRegistry;
+import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
+import org.springframework.web.servlet.config.annotation.WebMvcConfigurerAdapter;
 import se.socu.socialcube.entities.*;
 import se.socu.socialcube.repository.ActivityRepository;
 import se.socu.socialcube.repository.CompanyRepository;
 import se.socu.socialcube.repository.LocationRepository;
 import se.socu.socialcube.repository.UserRepository;
 
+import java.sql.Time;
 import java.time.LocalDateTime;
+import java.util.Calendar;
+import java.util.Date;
+import java.util.TimeZone;
 
 @SpringBootApplication
 public class SocialcubeApplication {
@@ -92,8 +99,24 @@ public class SocialcubeApplication {
 //
 //            activityRepository.save(activity1);
 //            activityRepository.save(activity2);
+
+            TimeZone timeZone = TimeZone.getDefault();
+            Date date = Calendar.getInstance().getTime();
+            System.out.println(timeZone.getDisplayName());
+            System.out.println(date);
+
         });
     }
+
+//    @Bean
+//    public WebMvcConfigurer corsConfigurer() {
+//        return new WebMvcConfigurer() {
+//            @Override
+//            public void addCorsMappings(CorsRegistry registry) {
+//                registry.addMapping("/**").allowedOrigins("*");
+//            }
+//        };
+//    }
 
 }
 

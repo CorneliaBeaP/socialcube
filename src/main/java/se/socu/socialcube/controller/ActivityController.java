@@ -4,12 +4,15 @@ import org.springframework.http.HttpHeaders;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.filter.CorsFilter;
 import se.socu.socialcube.DTO.ActivityDTO;
+import se.socu.socialcube.DTO.UserDTO;
 import se.socu.socialcube.service.ActivityService;
 
 import java.util.ArrayList;
+import java.util.TimeZone;
 
-@CrossOrigin(origins = "*", allowedHeaders = "*")
+@CrossOrigin
 @RestController
 public class ActivityController {
 
@@ -26,20 +29,47 @@ public class ActivityController {
 ////        activityService.saveActivityDTO(activityDTO);
 //    }
 
-    @PostMapping(path = "/home", produces = MediaType.APPLICATION_JSON_VALUE)
-    public String saveActivity(@RequestParam String usercredentials) {
-        System.out.println("Got it");
-        return usercredentials;
-    }
+//    @PostMapping(path = "/home/add", consumes = MediaType.APPLICATION_JSON_VALUE)
+//    public String saveActivity(@RequestBody ActivityDTO activityDTO) {
+//        System.out.println("Mottagit UserDTO");
+//        activityService.saveActivityDTO(activityDTO);
+//        return "Ok!";
+//    }
 
-    @GetMapping(path = "/home/{id}", produces = MediaType.APPLICATION_JSON_VALUE)
+    @GetMapping(path = "/api/home/{id}", produces = MediaType.APPLICATION_JSON_VALUE)
     public ArrayList<ActivityDTO> getAllActivitiesForCompany(@PathVariable long id) {
         System.out.println("Skickar aktiviteter...");
         return activityService.findAllActivitiesByCompany_organizationnumber(id);
     }
 
-    //    @GetMapping("/user/{id}")
-//    public UserDTO getUser(@PathVariable long id) {
-//        return userRepository.findById(id);
+//    @PostMapping(value = "/api/activity/add", produces = MediaType.TEXT_PLAIN_VALUE)
+//    public ResponseEntity<String> save(@RequestBody ActivityDTO activityDTO) {
+//        HttpHeaders httpHeaders = new HttpHeaders();
+//        httpHeaders.set("Access-Control-Allow-Origin", "*");
+//        System.out.println(ResponseEntity.ok().header("Access-Control-Allow-Origin", "*"));
+//        System.out.println("save ok");
+//        return ResponseEntity.ok().headers(httpHeaders).body("Ok!");
 //    }
+
+    @PostMapping(path = "/api/activity/add", produces = MediaType.APPLICATION_JSON_VALUE)
+    public ActivityDTO save(@RequestBody ActivityDTO activityDTO) {
+        System.out.println("Beskrivning: " + activityDTO.getDescriptionsocu());
+        System.out.println("Typ: " + activityDTO.getActivitytype());
+        System.out.println("Aktivitetsdatum: " + activityDTO.getActivitydate());
+        System.out.println("Aktivitetsdatum: " + activityDTO.getActivitydate().toLocalTime());
+        System.out.println("Organisationsnummer: " + activityDTO.getCompanyorganizationnumber());
+        System.out.println("LocationAddress: " + activityDTO.getLocationaddress());
+        System.out.println("LocationName: " + activityDTO.getLocationname());
+        System.out.println("Skapad av id: " + activityDTO.getCreatedbyid());
+        System.out.println("RSVP-date: " + activityDTO.getRsvpdate());
+        return new ActivityDTO();
+    }
+
+//    @PostMapping(path = "/api/activity/add", produces = MediaType.APPLICATION_JSON_VALUE)
+//    public ResponseEntity<ActivityDTO> receiveString(@RequestBody ActivityDTO stringy) {
+//        System.out.println(stringy.toString());
+//        ActivityDTO activityDTO = new ActivityDTO();
+//        return ResponseEntity.ok().body(activityDTO);
+//    }
+
 }

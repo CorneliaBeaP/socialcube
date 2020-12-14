@@ -1,7 +1,7 @@
 <div class="container">
   <h4 class="mt-5" (click)="showPlanActivity = !showPlanActivity">Planera aktivitet <i *ngIf="!showPlanActivity" class="fas fa-angle-right"></i><i *ngIf="showPlanActivity" class="fas fa-angle-down"></i></h4>
   <div *ngIf="showPlanActivity">
-    <form (ngSubmit)="onSubmit()" [formGroup]="form">
+    <form (ngSubmit)="sendActivity()" [formGroup]="form">
       <div class="form-group ml-3 mt-2">
         <label for="activitytype" class="mt-4 ml-1">Typ</label>
         <input formControlName="activitytype" type="text" class="form-control m-1" id="activitytype" required>
@@ -37,5 +37,6 @@
   <h4 class="mt-5" (click)="showCurrentActivities = !showCurrentActivities">Se nuvarande aktiviteter <i *ngIf="!showCurrentActivities" class="fas fa-angle-right"></i><i *ngIf="showCurrentActivities" class="fas fa-angle-down"></i></h4>
   <div *ngIf="showCurrentActivities">
     Här kommer aktiviteter visas
+    <button type="button" (click)="sendString()">Send String</button>
   </div>
 </div>

@@ -1,5 +1,6 @@
 import {Usersocu} from "./usersocu";
 import {Location} from "./location";
+import {Time} from "@angular/common";
 
 export class Activity {
   id: number;
@@ -7,9 +8,9 @@ export class Activity {
   activitydate: Date;
   rsvpdate: Date;
   descriptionsocu: string;
-  createdby: Usersocu;
-  locationname: String;
-  locationaddress: String;
+  createdbyid: number;
+  locationname: string;
+  locationaddress: string;
   attendees: Usersocu[];
   companyorganizationnumber: number;
 }

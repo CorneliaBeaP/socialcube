@@ -44,9 +44,9 @@ public class ActivityService {
         return activity;
     }
 
-//    public void saveActivityDTO(ActivityDTO activityDTO) {
-//        activityRepository.save(convertToActivityFromActivityDTO(activityDTO));
-//    }
+    public void saveActivityDTO(ActivityDTO activityDTO) {
+        activityRepository.save(convertToActivityFromActivityDTO(activityDTO));
+    }
 
     public ArrayList<ActivityDTO> findAllActivitiesByCompany_organizationnumber(long organizationnumber) {
         ArrayList<Activity> activities = activityRepository.findAllByCompany_organizationnumber(organizationnumber);

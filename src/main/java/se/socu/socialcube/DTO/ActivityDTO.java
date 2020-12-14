@@ -5,7 +5,10 @@ import lombok.Setter;
 import se.socu.socialcube.entities.Location;
 import se.socu.socialcube.entities.UserSocu;
 
+import java.sql.Time;
 import java.time.LocalDateTime;
+import java.time.LocalTime;
+import java.time.OffsetDateTime;
 
 @Getter
 @Setter

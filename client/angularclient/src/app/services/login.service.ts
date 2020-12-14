@@ -19,7 +19,7 @@ export class LoginService {
 
   constructor(private http: HttpClient,
               private router: Router) {
-    this.loginUrl = 'http://localhost:8080/login';
+    this.loginUrl = 'http://localhost:8080/api/login';
     this.userBehaviorSubject = new BehaviorSubject<Usersocu>(JSON.parse(sessionStorage.getItem('user')));
     this.user = this.userBehaviorSubject.asObservable();
   }
