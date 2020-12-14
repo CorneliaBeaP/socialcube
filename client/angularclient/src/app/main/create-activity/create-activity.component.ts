@@ -80,27 +80,26 @@ export class CreateActivityComponent implements OnInit {
   //   this.activityService.save(activity);
   // }
 
-  sendActivity(){
-    console.log('Skickar');
+  sendActivity() {
     let activity = new Activity();
-
     let date = new Date(this.form.get('activitydate').value);
     let time = this.form.get('activitytime').value;
     let hours = time.toString().substring(0, 2);
+    let hours2: number = parseInt(hours) + 1;
     let minutes = time.toString().substring(3, 5);
-    let concatDate = new Date(date.getFullYear(), date.getMonth(), date.getDate(), hours, minutes);
+    let concatDate = new Date(date.getFullYear(), date.getMonth(), date.getDate(), hours2, minutes);
 
     activity.descriptionsocu = this.form.get('descriptionsocu').value;
     activity.activitytype = this.form.get('activitytype').value;
     activity.locationname = this.form.get('locationname').value;
-    activity.locationaddress =this.form.get('locationaddress').value;
+    activity.locationaddress = this.form.get('locationaddress').value;
     activity.createdbyid = this.loginService.getUserValue().id;
     activity.companyorganizationnumber = this.loginService.getUserValue().companyorganizationnumber;
     activity.activitydate = concatDate;
     activity.rsvpdate = this.form.get('rsvpdate').value;
     console.log(activity);
 
-    this.activityService.sendActivity(activity).subscribe(next=>{
+    this.activityService.sendActivity(activity).subscribe(next => {
       console.log(next);
     });
   }

@@ -7,6 +7,7 @@ import org.springframework.web.bind.annotation.*;
 import org.springframework.web.filter.CorsFilter;
 import se.socu.socialcube.DTO.ActivityDTO;
 import se.socu.socialcube.DTO.UserDTO;
+import se.socu.socialcube.entities.Response;
 import se.socu.socialcube.service.ActivityService;
 
 import java.util.ArrayList;
@@ -52,17 +53,21 @@ public class ActivityController {
 //    }
 
     @PostMapping(path = "/api/activity/add", produces = MediaType.APPLICATION_JSON_VALUE)
-    public ActivityDTO save(@RequestBody ActivityDTO activityDTO) {
-        System.out.println("Beskrivning: " + activityDTO.getDescriptionsocu());
-        System.out.println("Typ: " + activityDTO.getActivitytype());
-        System.out.println("Aktivitetsdatum: " + activityDTO.getActivitydate());
-        System.out.println("Aktivitetsdatum: " + activityDTO.getActivitydate().toLocalTime());
-        System.out.println("Organisationsnummer: " + activityDTO.getCompanyorganizationnumber());
-        System.out.println("LocationAddress: " + activityDTO.getLocationaddress());
-        System.out.println("LocationName: " + activityDTO.getLocationname());
-        System.out.println("Skapad av id: " + activityDTO.getCreatedbyid());
-        System.out.println("RSVP-date: " + activityDTO.getRsvpdate());
-        return new ActivityDTO();
+    public Response save(@RequestBody ActivityDTO activityDTO) {
+//        System.out.println("Beskrivning: " + activityDTO.getDescriptionsocu());
+//        System.out.println("Typ: " + activityDTO.getActivitytype());
+//        System.out.println("Aktivitetsdatum: " + activityDTO.getActivitydate());
+//        System.out.println("Aktivitetsdatum: " + activityDTO.getActivitydate().toLocalTime());
+//        System.out.println("Organisationsnummer: " + activityDTO.getCompanyorganizationnumber());
+//        System.out.println("LocationAddress: " + activityDTO.getLocationaddress());
+//        System.out.println("LocationName: " + activityDTO.getLocationname());
+//        System.out.println("Skapad av id: " + activityDTO.getCreatedbyid());
+//        System.out.println("RSVP-date: " + activityDTO.getRsvpdate());
+        activityService.saveActivityDTO(activityDTO);
+        Response response = new Response();
+        response.setMessage("Aktivitet sparad");
+        response.setStatus("OK");
+        return response;
     }
 
 //    @PostMapping(path = "/api/activity/add", produces = MediaType.APPLICATION_JSON_VALUE)

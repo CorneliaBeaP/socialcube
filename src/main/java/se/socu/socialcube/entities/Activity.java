@@ -27,8 +27,11 @@ public class Activity implements Serializable {
     @ManyToOne(fetch = FetchType.LAZY)
     private UserSocu createdby;
 
-    @ManyToOne(fetch = FetchType.LAZY)
-    private Location location;
+//    @ManyToOne(fetch = FetchType.LAZY)
+//    private Location location;
+
+    private String locationname;
+    private String locationaddress;
 
     @ManyToOne(fetch = FetchType.LAZY)
     private Company company;
@@ -41,13 +44,18 @@ public class Activity implements Serializable {
     public Activity() {
     }
 
-    public Activity(String activitytype, LocalDateTime activitydate, LocalDateTime rsvpdate, String descriptionsocu, UserSocu createdby, Location location, Company company) {
-        this.activitytype = activitytype;
-        this.activitydate = activitydate;
-        this.rsvpdate = rsvpdate;
-        this.descriptionsocu = descriptionsocu;
-        this.createdby = createdby;
-        this.location = location;
-        this.company = company;
+    @Override
+    public String toString() {
+        return "Activity{" +
+                "id=" + id +
+                ", activitytype='" + activitytype + '\'' +
+                ", activitydate=" + activitydate +
+                ", rsvpdate=" + rsvpdate +
+                ", descriptionsocu='" + descriptionsocu + '\'' +
+                ", createdby=" + createdby +
+                ", locationname='" + locationname + '\'' +
+                ", locationaddress='" + locationaddress + '\'' +
+                ", company=" + company +
+                '}';
     }
 }

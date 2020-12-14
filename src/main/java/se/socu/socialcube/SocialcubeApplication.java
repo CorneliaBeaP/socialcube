@@ -4,17 +4,10 @@ import org.springframework.boot.CommandLineRunner;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.context.annotation.Bean;
-import org.springframework.web.servlet.config.annotation.CorsRegistry;
-import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
-import org.springframework.web.servlet.config.annotation.WebMvcConfigurerAdapter;
-import se.socu.socialcube.entities.*;
 import se.socu.socialcube.repository.ActivityRepository;
 import se.socu.socialcube.repository.CompanyRepository;
-import se.socu.socialcube.repository.LocationRepository;
 import se.socu.socialcube.repository.UserRepository;
 
-import java.sql.Time;
-import java.time.LocalDateTime;
 import java.util.Calendar;
 import java.util.Date;
 import java.util.TimeZone;
@@ -28,7 +21,7 @@ public class SocialcubeApplication {
 
 
     @Bean
-    public CommandLineRunner setUp(UserRepository userRepository, CompanyRepository companyRepository, LocationRepository locationRepository, ActivityRepository activityRepository) {
+    public CommandLineRunner setUp(UserRepository userRepository, CompanyRepository companyRepository, ActivityRepository activityRepository) {
         return (args -> {
             System.out.println("Applikationen startar");
             System.out.println("OK");

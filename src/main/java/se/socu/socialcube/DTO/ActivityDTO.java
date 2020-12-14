@@ -2,13 +2,8 @@ package se.socu.socialcube.DTO;
 
 import lombok.Getter;
 import lombok.Setter;
-import se.socu.socialcube.entities.Location;
-import se.socu.socialcube.entities.UserSocu;
 
-import java.sql.Time;
 import java.time.LocalDateTime;
-import java.time.LocalTime;
-import java.time.OffsetDateTime;
 
 @Getter
 @Setter
@@ -23,4 +18,20 @@ public class ActivityDTO {
     private String locationname;
     private String locationaddress;
     private long companyorganizationnumber;
+
+
+    @Override
+    public String toString() {
+        return "ActivityDTO{" +
+                "id=" + id +
+                ", activitytype='" + activitytype + '\'' +
+                ", activitydate=" + activitydate +
+                ", rsvpdate=" + rsvpdate +
+                ", descriptionsocu='" + descriptionsocu + '\'' +
+                ", createdbyid=" + createdbyid +
+                ", locationname='" + locationname + '\'' +
+                ", locationaddress='" + locationaddress + '\'' +
+                ", companyorganizationnumber=" + companyorganizationnumber +
+                '}';
+    }
 }

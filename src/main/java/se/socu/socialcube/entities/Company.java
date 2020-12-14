@@ -27,4 +27,12 @@ public class Company implements Serializable {
         this.organizationnumber = organizationnumber;
         this.name = name;
     }
+
+    @Override
+    public String toString() {
+        return "Company{" +
+                "organizationnumber=" + organizationnumber +
+                ", name='" + name + '\'' +
+                '}';
+    }
 }

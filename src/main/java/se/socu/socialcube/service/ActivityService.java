@@ -1,20 +1,29 @@
 package se.socu.socialcube.service;
 
-import antlr.collections.List;
-import antlr.collections.impl.LList;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import se.socu.socialcube.DTO.ActivityDTO;
 import se.socu.socialcube.entities.Activity;
+import se.socu.socialcube.entities.Company;
+import se.socu.socialcube.entities.UserSocu;
 import se.socu.socialcube.repository.ActivityRepository;
+import se.socu.socialcube.repository.CompanyRepository;
+import se.socu.socialcube.repository.UserRepository;
 
 import java.util.ArrayList;
+import java.util.Optional;
 
 @Service
 public class ActivityService {
 
-    @Autowired
     private ActivityRepository activityRepository;
+    private UserRepository userRepository;
+    private CompanyRepository companyRepository;
+
+    public ActivityService(ActivityRepository activityRepository, UserRepository userRepository, CompanyRepository companyRepository) {
+        this.activityRepository = activityRepository;
+        this.userRepository = userRepository;
+        this.companyRepository = companyRepository;
+    }
 
     private ActivityDTO convertToActivityDTOfromActivity(Activity activity) {
         ActivityDTO activityDTO = new ActivityDTO();
@@ -25,8 +34,8 @@ public class ActivityService {
         activityDTO.setDescriptionsocu(activity.getDescriptionsocu());
         activityDTO.setCompanyorganizationnumber(activity.getCompany().getOrganizationnumber());
         activityDTO.setCreatedbyid(activity.getCreatedby().getId());
-        activityDTO.setLocationname(activity.getLocation().getName());
-        activityDTO.setLocationaddress(activity.getLocation().getAddress());
+        activityDTO.setLocationname(activity.getLocationname());
+        activityDTO.setLocationaddress(activity.getLocationaddress());
         return activityDTO;
     }
 
@@ -37,22 +46,31 @@ public class ActivityService {
         activity.setActivitydate(activityDTO.getActivitydate());
         activity.setRsvpdate(activityDTO.getRsvpdate());
         activity.setDescriptionsocu(activityDTO.getDescriptionsocu());
-//      TODO: nedan behövs lösas med ny lösning
-
-//        activity.setLocation(activityDTO.getLocation());
-//        activity.setCreatedby(activityDTO.getCreatedby());
+        activity.setLocationname(activityDTO.getLocationname());
+        activity.setLocationaddress(activityDTO.getLocationaddress());
+        Optional<Company> company = companyRepository.findById(activityDTO.getCompanyorganizationnumber());
+        if(company.isPresent()){
+            activity.setCompany(company.get());
+        }
+        Optional<UserSocu> userSocu = userRepository.findById(activityDTO.getCreatedbyid());
+        if (userSocu.isPresent()) {
+            activity.setCreatedby(userSocu.get());
+        }
         return activity;
     }
 
     public void saveActivityDTO(ActivityDTO activityDTO) {
-        activityRepository.save(convertToActivityFromActivityDTO(activityDTO));
+        Activity activity = convertToActivityFromActivityDTO(activityDTO);
+        System.out.println(activity.toString());
+        System.out.println(activityDTO.toString());
+//        activityRepository.save(convertToActivityFromActivityDTO(activityDTO));
     }
 
     public ArrayList<ActivityDTO> findAllActivitiesByCompany_organizationnumber(long organizationnumber) {
         ArrayList<Activity> activities = activityRepository.findAllByCompany_organizationnumber(organizationnumber);
         ArrayList<ActivityDTO> activityDTOS = new ArrayList<>();
         for (Activity activity : activities
-                ) {
+        ) {
             ActivityDTO activityDTO = convertToActivityDTOfromActivity(activity);
             activityDTOS.add(activityDTO);
         }
