@@ -8,7 +8,8 @@ export class Activity {
   rsvpdate: Date;
   descriptionsocu: string;
   createdby: Usersocu;
-  location: Location;
+  locationname: String;
+  locationaddress: String;
   attendees: Usersocu[];
   companyorganizationnumber: number;
 }
