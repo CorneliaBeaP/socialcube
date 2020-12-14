@@ -7,10 +7,12 @@ export class Activity {
   activitytype: string;
   activitydate: Date;
   rsvpdate: Date;
+  createddate: Date;
   descriptionsocu: string;
   createdbyid: number;
   locationname: string;
   locationaddress: string;
   attendees: Usersocu[];
   companyorganizationnumber: number;
+
 }

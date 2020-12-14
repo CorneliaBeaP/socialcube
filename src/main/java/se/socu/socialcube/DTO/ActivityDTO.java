@@ -13,6 +13,7 @@ public class ActivityDTO {
     private String activitytype;
     private LocalDateTime activitydate;
     private LocalDateTime rsvpdate;
+    private LocalDateTime createddate;
     private String descriptionsocu;
     private long createdbyid;
     private String locationname;
@@ -27,6 +28,7 @@ public class ActivityDTO {
                 ", activitytype='" + activitytype + '\'' +
                 ", activitydate=" + activitydate +
                 ", rsvpdate=" + rsvpdate +
+                ", createdDate=" + createddate +
                 ", descriptionsocu='" + descriptionsocu + '\'' +
                 ", createdbyid=" + createdbyid +
                 ", locationname='" + locationname + '\'' +

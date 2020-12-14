@@ -22,6 +22,7 @@ public class Activity implements Serializable {
     private String activitytype;
     private LocalDateTime activitydate;
     private LocalDateTime rsvpdate;
+    private LocalDateTime createddate;
     private String descriptionsocu;
 
     @ManyToOne(fetch = FetchType.LAZY)

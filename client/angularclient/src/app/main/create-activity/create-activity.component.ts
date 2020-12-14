@@ -1,14 +1,9 @@
 import {Component, OnInit} from '@angular/core';
 import {FormBuilder, FormGroup, Validators} from "@angular/forms";
 import {ActivatedRoute, Router} from "@angular/router";
-import {Usersocu} from "../../classes/usersocu";
 import {Activity} from "../../classes/activity";
-import {Location} from "../../classes/location";
-import {Time} from "@angular/common";
-import {min} from "rxjs/operators";
 import {ActivityService} from "../../services/activity.service";
 import {LoginService} from "../../services/login.service";
-import {Timestamp} from "rxjs/internal-compatibility";
 
 
 @Component({
@@ -97,6 +92,9 @@ export class CreateActivityComponent implements OnInit {
     activity.companyorganizationnumber = this.loginService.getUserValue().companyorganizationnumber;
     activity.activitydate = concatDate;
     activity.rsvpdate = this.form.get('rsvpdate').value;
+    let today = new Date();
+    activity.createddate = new Date(today.getFullYear(), today.getMonth(), today.getDate(), today.getHours() + 1, today.getMinutes());
+    console.log(new Date());
     console.log(activity);
 
     this.activityService.sendActivity(activity).subscribe(next => {
