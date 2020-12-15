@@ -21,9 +21,10 @@ export class ActivityCardsComponent implements OnInit, OnDestroy {
     this.subscription = this.activityService.getActivities(this.loginService.getUserValue().companyorganizationnumber).subscribe(activityarray => {
       this.activities = activityarray;
       this.sortByCreatedDate();
+      this.activities = this.activities.reverse();
     });
-  }
 
+  }
 
   public sortByCreatedDate(): void {
 
