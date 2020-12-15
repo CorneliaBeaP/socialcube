@@ -22,6 +22,7 @@ import {MatFormFieldModule} from "@angular/material/form-field";
 import {MatDatepickerModule} from "@angular/material/datepicker";
 import {MatNativeDateModule} from "@angular/material/core";
 import {MatInputModule} from "@angular/material/input";
+import { ErrorpageComponent } from './error/errorpage/errorpage.component';
 
 @NgModule({
   declarations: [
@@ -35,7 +36,8 @@ import {MatInputModule} from "@angular/material/input";
     CalendarComponent,
     UpcomingActivitiesComponent,
     ProfileComponent,
-    AdministrationComponent
+    AdministrationComponent,
+    ErrorpageComponent
   ],
   imports: [
     BrowserModule,
