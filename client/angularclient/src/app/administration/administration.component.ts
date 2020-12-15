@@ -54,6 +54,7 @@ export class AdministrationComponent implements OnInit, OnDestroy {
     );
 
     this.addForm.reset();
+    window.location.reload();
   }
 
   ngOnDestroy(): void {
