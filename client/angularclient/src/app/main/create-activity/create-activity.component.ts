@@ -1,4 +1,4 @@
-import {Component, OnInit} from '@angular/core';
+import {Component, OnDestroy, OnInit} from '@angular/core';
 import {FormBuilder, FormGroup, Validators} from "@angular/forms";
 import {ActivatedRoute, Router} from "@angular/router";
 import {Activity} from "../../classes/activity";
@@ -6,6 +6,7 @@ import {ActivityService} from "../../services/activity.service";
 import {LoginService} from "../../services/login.service";
 import {DateAdapter, MAT_DATE_FORMATS} from "@angular/material/core";
 import {APP_DATE_FORMATS, AppDateAdapter} from "../../helpers/app-date-adapter";
+import {Subscription} from "rxjs";
 
 
 @Component({
@@ -17,12 +18,13 @@ import {APP_DATE_FORMATS, AppDateAdapter} from "../../helpers/app-date-adapter";
     {provide: MAT_DATE_FORMATS, useValue: APP_DATE_FORMATS}
   ]
 })
-export class CreateActivityComponent implements OnInit {
+export class CreateActivityComponent implements OnInit, OnDestroy {
 
   showPlanActivity = false;
   showCurrentActivities = false;
 
   form: FormGroup;
+  subscription: Subscription;
 
 
   // location: Location;
@@ -103,8 +105,12 @@ export class CreateActivityComponent implements OnInit {
     console.log(new Date());
     console.log(activity);
 
-    this.activityService.sendActivity(activity).subscribe(next => {
+   this.subscription = this.activityService.sendActivity(activity).subscribe(next => {
       console.log(next);
     });
+  }
+
+  ngOnDestroy(): void {
+    // this.subscription.unsubscribe();
   }
 }

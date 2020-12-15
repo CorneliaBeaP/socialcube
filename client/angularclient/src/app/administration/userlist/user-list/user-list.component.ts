@@ -30,10 +30,10 @@ export class UserListComponent implements OnInit, OnDestroy {
     console.log('Delete');
     this.deletesub = this.userService.deleteUser(id).subscribe();
     window.location.reload();
+    this.deletesub.unsubscribe();
   }
 
   ngOnDestroy(): void {
     this.subscription.unsubscribe();
-    this.deletesub.unsubscribe();
   }
 }
