@@ -1,12 +1,16 @@
 package se.socu.socialcube.controller;
 
+import org.springframework.data.annotation.CreatedBy;
+import org.springframework.http.HttpHeaders;
 import org.springframework.http.MediaType;
-import org.springframework.web.bind.annotation.CrossOrigin;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.*;
 import se.socu.socialcube.DTO.UserDTO;
+import se.socu.socialcube.entities.Response;
 import se.socu.socialcube.service.UserService;
+
+import java.util.List;
+
 @CrossOrigin(origins = "http://localhost:4200", allowedHeaders = "*")
 @RestController
 public class UserController {
@@ -17,10 +21,16 @@ public class UserController {
 
     private final UserService userService;
 
-//    @RequestMapping(value = "/users", method = RequestMethod.GET)
-//    public List<UserDTO> getUsers() {
-//        return userService.getAllUserDTOs();
-//    }
+    @RequestMapping(value = "/api/users", method = RequestMethod.GET)
+    public List<UserDTO> getUsers() {
+        return userService.getAllUserDTOs();
+    }
+
+    @GetMapping("/api/users/{id}")
+    public List<UserDTO> getUsersForCompany(@PathVariable Long id) {
+        System.out.println("Skickar användare...");
+        return userService.getAllUserDTOsForCompany(id);
+    }
 
 
 //    @GetMapping("/user/{id}")
@@ -50,9 +60,17 @@ public class UserController {
         }
     }
 
-//    @PostMapping(path = "/home", produces = MediaType.APPLICATION_JSON_VALUE)
-//    public String saveActivity(@RequestBody String usercredentials) {
-//        System.out.println(usercredentials);
-//        return usercredentials;
-//    }
+    //    @CrossOrigin(origins = "*")
+    @PostMapping(path = "/api/users/add", produces = MediaType.APPLICATION_JSON_VALUE, consumes = MediaType.TEXT_PLAIN_VALUE)
+    public ResponseEntity<Response> saveNewUser(@RequestBody String string) {
+        System.out.println("mottagit ny användare");
+        Response response = new Response();
+        HttpHeaders httpHeaders = new HttpHeaders();
+        httpHeaders.set("Access-Control-Allow-Origin", "*");
+        response.setStatus("OK");
+        response.setMessage("Ny användare mottagen");
+        return ResponseEntity.ok().headers(httpHeaders).body(response);
+    }
+
+
 }

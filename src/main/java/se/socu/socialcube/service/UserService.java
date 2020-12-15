@@ -55,4 +55,16 @@ public class UserService {
         }
         return userDTO;
     }
+
+    public List<UserDTO> getAllUserDTOsForCompany(Long id) {
+        List<UserSocu> allUsers = (List<UserSocu>) userRepository.findAllByCompany_organizationnumber(id);
+        List<UserDTO> allUsersDTO = new ArrayList<>();
+
+        for (UserSocu user : allUsers
+        ) {
+            UserDTO userDTO = convertToUserDTOfromUserSocu(user);
+            allUsersDTO.add(userDTO);
+        }
+        return allUsersDTO;
+    }
 }

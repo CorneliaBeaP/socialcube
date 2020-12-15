@@ -12,6 +12,8 @@ import { Injectable } from '@angular/core';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Usersocu } from '../classes/usersocu';
 import { Observable } from 'rxjs';
+import {map} from "rxjs/operators";
+import {Activity} from "../classes/activity";
 
 @Injectable()
 export class UserService {
@@ -22,11 +24,46 @@ export class UserService {
     this.usersUrl = 'http://localhost:8080/api/users';
   }
 
-  public findAll(): Observable<Usersocu[]> {
-    return this.http.get<Usersocu[]>(this.usersUrl);
+  public findAll(organizationnumber: number): Observable<Usersocu[]> {
+    return this.http.get<Usersocu[]>(this.usersUrl + '/' + organizationnumber);
   }
-  //
-  // public save(user: Usersocu) {
-  //   return this.http.post<Usersocu>(this.usersUrl, user);
-  // }
+
+  public sendUser2(string: string) {
+    const headerDict = {
+      'Content-Type': 'text/plain',
+      'Accept': 'application/json',
+      'Access-Control-Allow-Headers': 'Content-Type',
+    };
+
+    const requestOptions = {
+      headers: new HttpHeaders(headerDict),
+    };
+    // console.log(JSON.stringify(user));
+    return this.http.post('http://localhost:8080/api/users/add', string, requestOptions).pipe(map(data =>{
+      let data2 = JSON.stringify(data);
+      return JSON.parse(data2);
+    }));
+  }
+
+  public sendUser(string: string) {
+
+    const headerDict = {
+      'Content-Type': 'text/plain',
+      'Accept': 'application/json',
+      'Access-Control-Allow-Headers': '*',
+      'Access-Control-Allow-Methods': '*'
+    };
+    const requestOptions = {
+      headers: new HttpHeaders(headerDict),
+    };
+
+    console.log('SendUser()');
+    // let user2 = JSON.stringify(user);
+    return this.http.post<String>('http://localhost:8080/api/users/add', string, requestOptions).pipe(map(data => {
+      let data2 = JSON.stringify(data);
+      console.log(data2);
+      return JSON.parse(data2);
+    }));
+  }
+
 }

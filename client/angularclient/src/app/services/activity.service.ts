@@ -26,7 +26,7 @@ export class ActivityService {
 
   public sendActivity(activity: Activity) {
     return this.http.post('http://localhost:8080/api/activity/add', activity).pipe(map(data => {
-      let data2 = JSON.stringify(data)
+      let data2 = JSON.stringify(data);
       return JSON.parse(data2);
     }));
   }

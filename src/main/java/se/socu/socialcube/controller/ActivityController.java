@@ -63,6 +63,7 @@ public class ActivityController {
 //        System.out.println("LocationName: " + activityDTO.getLocationname());
 //        System.out.println("Skapad av id: " + activityDTO.getCreatedbyid());
 //        System.out.println("RSVP-date: " + activityDTO.getRsvpdate());
+        System.out.println("Lägger till aktivitet...");
         activityService.saveActivityDTO(activityDTO);
         Response response = new Response();
         response.setMessage("Aktivitet sparad");

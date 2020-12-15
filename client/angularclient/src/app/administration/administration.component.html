@@ -3,16 +3,20 @@
 <div class="container">
   <div class="row">
     <div class="col">
-      <div class="form-group mt-3">
-        <h5 class="mb-4">Lägg till användare</h5>
-        <input type="text" class="form-control mt-3" placeholder="Namn">
-        <input type="text" class="form-control mt-3" placeholder="Mailadress">
-        <input type="text" class="form-control mt-3" placeholder="Avdelning">
-        <input type="text" class="form-control mt-3" placeholder="Anställningsnummer">
-        <div class="d-flex justify-content-center">
-          <button type="button" class="minw-100 btn btn-light m-4">Lägg till användare och skicka ut lösenord</button>
+      <form (ngSubmit)="createUser()" [formGroup]="addForm">
+        <div class="form-group mt-3">
+          <h5 class="mb-4">Lägg till användare</h5>
+          <input formControlName="name" type="text" class="form-control mt-3" placeholder="Namn">
+          <input formControlName="email" type="text" class="form-control mt-3" placeholder="Mailadress">
+          <input formControlName="department" type="text" class="form-control mt-3" placeholder="Avdelning">
+          <input formControlName="employeenumber" type="text" class="form-control mt-3" placeholder="Anställningsnummer">
+          <div class="d-flex justify-content-center">
+            <div>Lösenord</div>
+            <button type="submit" class="minw-100 btn btn-light m-4">Lägg till användare och generera lösenord</button>
+            <button type="button"(click)="create()">Klicka här</button>
+          </div>
         </div>
-      </div>
+      </form>
     </div>
   </div>
   <h5 class="mb-4 mt-4">Hantera användare</h5>
@@ -24,4 +28,6 @@
       <button type="button" class="btn btn-danger">Ta bort</button>
     </div>
   </div>
+
+  <app-user-list></app-user-list>
 </div>
