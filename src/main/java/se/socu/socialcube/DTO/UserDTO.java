@@ -14,4 +14,20 @@ public class UserDTO {
     private String employmentnumber;
     private String department;
     private long companyorganizationnumber;
+
+
+    @Override
+    public String toString() {
+        return "UserDTO{" +
+                "id=" + id +
+                ", usertype=" + usertype +
+                ", name='" + name + '\'' +
+                ", email='" + email + '\'' +
+                ", employmentnumber='" + employmentnumber + '\'' +
+                ", department='" + department + '\'' +
+                ", companyorganizationnumber=" + companyorganizationnumber +
+                '}';
+    }
 }
+
+

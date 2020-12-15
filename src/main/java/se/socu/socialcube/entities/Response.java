@@ -9,4 +9,12 @@ public class Response {
 
     String status;
     String message;
+
+    public Response() {
+    }
+
+    public Response(String status, String message) {
+        this.status = status;
+        this.message = message;
+    }
 }

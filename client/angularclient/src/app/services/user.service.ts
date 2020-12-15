@@ -9,7 +9,7 @@
 // }
 
 import { Injectable } from '@angular/core';
-import { HttpClient, HttpHeaders } from '@angular/common/http';
+import {HttpClient, HttpHeaders, HttpParams} from '@angular/common/http';
 import { Usersocu } from '../classes/usersocu';
 import { Observable } from 'rxjs';
 import {map} from "rxjs/operators";
@@ -45,10 +45,9 @@ export class UserService {
     }));
   }
 
-  public sendUser(string: string) {
-
+  public sendUser(usersocu: Usersocu) {
     const headerDict = {
-      'Content-Type': 'text/plain',
+      'Content-Type': 'application/json',
       'Accept': 'application/json',
       'Access-Control-Allow-Headers': '*',
       'Access-Control-Allow-Methods': '*'
@@ -56,16 +55,19 @@ export class UserService {
     const requestOptions = {
       headers: new HttpHeaders(headerDict),
     };
-
     console.log('SendUser()');
-    // let user2 = JSON.stringify(user);
-    let val = ['Hej', 'da'];
-    console.log(string);
-    return this.http.post('http://localhost:8080/api/users/add', val, requestOptions).pipe(map(data => {
+    let user2 = JSON.stringify(usersocu);
+    return this.http.post('http://localhost:8080/api/users/add', user2, requestOptions).subscribe(data => {
       let data2 = JSON.stringify(data);
       console.log(data2);
       return JSON.parse(data2);
-    }));
+    });
   }
 
+  public deleteUser(id: number){
+    console.log('Trying to delete');
+   return this.http.delete('http://localhost:8080/api/users/delete/' + id).subscribe(data =>{
+      console.log(data);
+    });
+  }
 }

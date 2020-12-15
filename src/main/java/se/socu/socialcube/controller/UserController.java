@@ -60,10 +60,10 @@ public class UserController {
         }
     }
 
-    //    @CrossOrigin(origins = "*")
     @PostMapping(path = "/api/users/add", produces = MediaType.APPLICATION_JSON_VALUE)
-    public ResponseEntity<Response> saveNewUser(@RequestBody String[] string) {
+    public ResponseEntity<Response> saveNewUser(@RequestBody UserDTO userDTO) {
         System.out.println("mottagit ny användare");
+        System.out.println(userDTO);
         Response response = new Response();
         HttpHeaders httpHeaders = new HttpHeaders();
         httpHeaders.set("Access-Control-Allow-Origin", "*");
@@ -72,5 +72,9 @@ public class UserController {
         return ResponseEntity.ok().headers(httpHeaders).body(response);
     }
 
-
+    @DeleteMapping("/api/users/delete/{id}")
+    public Response deleteUser(@PathVariable Long id){
+        System.out.println("Användare borttagen");
+        return new Response("OK", "Användare borttagen");
+    }
 }
