@@ -1,17 +1,21 @@
-import {Component, OnInit} from '@angular/core';
+import {Component, OnDestroy, OnInit} from '@angular/core';
 import {FormBuilder, FormGroup, Validators} from "@angular/forms";
 import {Usersocu} from "../classes/usersocu";
 import {LoginService} from "../services/login.service";
 import {UserService} from "../services/user.service";
+import {Subscription} from "rxjs";
+import {Response} from "../classes/response";
 
 @Component({
   selector: 'app-administration',
   templateUrl: './administration.component.html',
   styleUrls: ['./administration.component.css']
 })
-export class AdministrationComponent implements OnInit {
+export class AdministrationComponent implements OnInit, OnDestroy {
 
   addForm: FormGroup;
+  response: Response;
+  subscription: Subscription;
 
   constructor(private formBuilder: FormBuilder,
               private loginService: LoginService,
@@ -20,6 +24,9 @@ export class AdministrationComponent implements OnInit {
 
   ngOnInit(): void {
     this.createForm();
+    this.response = new Response();
+    this.response.message = "";
+    this.response.status = "";
   }
 
   createForm() {
@@ -40,7 +47,16 @@ export class AdministrationComponent implements OnInit {
     usersocu.employmentnumber = this.addForm.get('employeenumber').value;
     usersocu.usertype = 0;
     usersocu.companyorganizationnumber = this.loginService.getUserValue().companyorganizationnumber;
-    this.userService.sendUser(usersocu);
+    this.subscription = this.userService.sendUser(usersocu).subscribe(data => {
+        let data1 = JSON.stringify(data);
+        this.response = JSON.parse(data1);
+      }
+    );
+
     this.addForm.reset();
+  }
+
+  ngOnDestroy(): void {
+    this.subscription.unsubscribe();
   }
 }

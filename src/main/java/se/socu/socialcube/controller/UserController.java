@@ -52,19 +52,18 @@ public class UserController {
     }
 
     @PostMapping(path = "/api/users/add", produces = MediaType.APPLICATION_JSON_VALUE)
-    public ResponseEntity<Response> saveNewUser(@RequestBody UserDTO userDTO) {
+    public Response saveNewUser(@RequestBody UserDTO userDTO) {
         System.out.println("Mottagit ny användare");
         userService.saveNewUser(userDTO);
         Response response = new Response();
-        HttpHeaders httpHeaders = new HttpHeaders();
-        httpHeaders.set("Access-Control-Allow-Origin", "*");
         response.setStatus("OK");
         response.setMessage("111");
-        return ResponseEntity.ok().headers(httpHeaders).body(response);
+        return response;
     }
 
     @DeleteMapping("/api/users/delete/{id}")
     public Response deleteUser(@PathVariable Long id){
+        this.userService.deleteUser(id);
         System.out.println("Användare borttagen");
         return new Response("OK", "Användare borttagen");
     }

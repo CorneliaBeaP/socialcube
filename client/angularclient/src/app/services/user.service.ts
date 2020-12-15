@@ -8,10 +8,10 @@
 //   constructor() { }
 // }
 
-import { Injectable } from '@angular/core';
+import {Injectable} from '@angular/core';
 import {HttpClient, HttpHeaders, HttpParams} from '@angular/common/http';
-import { Usersocu } from '../classes/usersocu';
-import { Observable } from 'rxjs';
+import {Usersocu} from '../classes/usersocu';
+import {Observable} from 'rxjs';
 import {map} from "rxjs/operators";
 import {Activity} from "../classes/activity";
 
@@ -39,7 +39,7 @@ export class UserService {
       headers: new HttpHeaders(headerDict),
     };
     // console.log(JSON.stringify(user));
-    return this.http.post('http://localhost:8080/api/users/add', string, requestOptions).pipe(map(data =>{
+    return this.http.post('http://localhost:8080/api/users/add', string, requestOptions).pipe(map(data => {
       let data2 = JSON.stringify(data);
       return JSON.parse(data2);
     }));
@@ -57,17 +57,17 @@ export class UserService {
     };
     console.log('SendUser()');
     let user2 = JSON.stringify(usersocu);
-    return this.http.post('http://localhost:8080/api/users/add', user2, requestOptions).subscribe(data => {
+    return this.http.post('http://localhost:8080/api/users/add', user2, requestOptions).pipe(map(data => {
       let data2 = JSON.stringify(data);
-      console.log(data2);
       return JSON.parse(data2);
-    });
+    }));
   }
 
-  public deleteUser(id: number){
+  public deleteUser(id: number) {
     console.log('Trying to delete');
-   return this.http.delete('http://localhost:8080/api/users/delete/' + id).subscribe(data =>{
-      console.log(data);
-    });
+    return this.http.delete('http://localhost:8080/api/users/delete/' + id).pipe(map(data => {
+    let data2 = JSON.stringify(data);
+    return JSON.parse(data2);
+    }));
   }
 }

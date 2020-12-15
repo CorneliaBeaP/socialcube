@@ -94,4 +94,11 @@ public class UserService {
         userSocu.setPassword("111");
         userRepository.save(userSocu);
     }
+
+    public void deleteUser(Long id){
+       Optional<UserSocu> userSocu = userRepository.findById(id);
+       if(userSocu.isPresent()){
+           userRepository.delete(userSocu.get());
+       }
+    }
 }
