@@ -30,5 +30,3 @@ export const APP_DATE_FORMATS: MatDateFormats = {
     monthYearA11yLabel: {year: 'numeric', month: 'long'},
   }
 };
-
-//TODO: fortsätt här, lägg in sista delen
