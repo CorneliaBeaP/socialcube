@@ -59,7 +59,9 @@ export class UserService {
 
     console.log('SendUser()');
     // let user2 = JSON.stringify(user);
-    return this.http.post<String>('http://localhost:8080/api/users/add', string, requestOptions).pipe(map(data => {
+    let val = ['Hej', 'da'];
+    console.log(string);
+    return this.http.post('http://localhost:8080/api/users/add', val, requestOptions).pipe(map(data => {
       let data2 = JSON.stringify(data);
       console.log(data2);
       return JSON.parse(data2);

@@ -1,20 +1,21 @@
-<div class="card my-5">
-  <div class="card-body">
-    <table class="table table-bordered table-striped">
-      <thead class="thead-dark">
-      <tr>
-        <th scope="col">#</th>
-        <th scope="col">Name</th>
-        <th scope="col">Email</th>
-      </tr>
-      </thead>
-      <tbody>
-      <tr *ngFor="let user of users">
-        <td>{{ user.id }}</td>
-        <td>{{ user.name }}</td>
-        <td><a href="mailto:{{ user.email }}">{{ user.email }}</a></td>
-      </tr>
-      </tbody>
-    </table>
-  </div>
-</div>
+<table class="table">
+  <thead>
+  <tr>
+    <th scope="col">Namn</th>
+    <th scope="col">Emailadress</th>
+    <th scope="col">Avdelning</th>
+    <th scope="col"></th>
+  </tr>
+  </thead>
+  <tbody>
+  <tr *ngFor="let user of users">
+    <td>{{ user.name }}</td>
+    <td><a href="mailto:{{ user.email }}">{{ user.email }}</a></td>
+    <td>{{user.department}}</td>
+    <td>
+      <button type="button" class="btn btn-primary m-1"><i class="fas fa-pen"></i></button>
+      <button type="button" class="btn btn-danger"><i class="fas fa-trash-alt"></i></button>
+    </td>
+  </tr>
+  </tbody>
+</table>

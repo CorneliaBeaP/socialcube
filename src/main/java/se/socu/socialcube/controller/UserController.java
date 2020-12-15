@@ -61,8 +61,8 @@ public class UserController {
     }
 
     //    @CrossOrigin(origins = "*")
-    @PostMapping(path = "/api/users/add", produces = MediaType.APPLICATION_JSON_VALUE, consumes = MediaType.TEXT_PLAIN_VALUE)
-    public ResponseEntity<Response> saveNewUser(@RequestBody String string) {
+    @PostMapping(path = "/api/users/add", produces = MediaType.APPLICATION_JSON_VALUE)
+    public ResponseEntity<Response> saveNewUser(@RequestBody String[] string) {
         System.out.println("mottagit ny användare");
         Response response = new Response();
         HttpHeaders httpHeaders = new HttpHeaders();
