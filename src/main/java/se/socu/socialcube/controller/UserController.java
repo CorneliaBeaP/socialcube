@@ -53,13 +53,13 @@ public class UserController {
 
     @PostMapping(path = "/api/users/add", produces = MediaType.APPLICATION_JSON_VALUE)
     public ResponseEntity<Response> saveNewUser(@RequestBody UserDTO userDTO) {
-        System.out.println("mottagit ny användare");
-        System.out.println(userDTO);
+        System.out.println("Mottagit ny användare");
+        userService.saveNewUser(userDTO);
         Response response = new Response();
         HttpHeaders httpHeaders = new HttpHeaders();
         httpHeaders.set("Access-Control-Allow-Origin", "*");
         response.setStatus("OK");
-        response.setMessage("Ny användare mottagen");
+        response.setMessage("111");
         return ResponseEntity.ok().headers(httpHeaders).body(response);
     }
 
