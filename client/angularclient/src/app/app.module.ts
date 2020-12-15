@@ -23,6 +23,7 @@ import {MatDatepickerModule} from "@angular/material/datepicker";
 import {MatNativeDateModule} from "@angular/material/core";
 import {MatInputModule} from "@angular/material/input";
 import { ErrorpageComponent } from './error/errorpage/errorpage.component';
+import { Page404Component } from './error/page404/page404.component';
 
 @NgModule({
   declarations: [
@@ -37,7 +38,8 @@ import { ErrorpageComponent } from './error/errorpage/errorpage.component';
     UpcomingActivitiesComponent,
     ProfileComponent,
     AdministrationComponent,
-    ErrorpageComponent
+    ErrorpageComponent,
+    Page404Component
   ],
   imports: [
     BrowserModule,
