@@ -1,5 +1,6 @@
 import {Component, OnInit} from '@angular/core';
 import {LoginService} from "../../services/login.service";
+import {Usersocu} from "../../classes/usersocu";
 
 @Component({
   selector: 'app-header',
@@ -8,12 +9,14 @@ import {LoginService} from "../../services/login.service";
 })
 export class HeaderComponent implements OnInit {
   isAdmin = false;
+  user: Usersocu;
 
   constructor(private loginService: LoginService) {
     this.getAdmin();
   }
 
   ngOnInit(): void {
+    this.getLoggedInUser();
   }
 
   logout() {
@@ -27,7 +30,7 @@ export class HeaderComponent implements OnInit {
     }
   }
 
-  goToProfile(){
-
+  getLoggedInUser(){
+    this.user = this.loginService.getUserValue();
   }
 }
