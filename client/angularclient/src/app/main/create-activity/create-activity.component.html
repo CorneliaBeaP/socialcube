@@ -5,25 +5,30 @@
       <div class="form-group ml-3 mt-2">
         <label for="activitytype" class="mt-4 ml-1">Typ</label>
         <input formControlName="activitytype" type="text" class="form-control m-1" id="activitytype" required>
-        <label class="mt-4 ml-1">Datum för aktivitet</label>
-        <mat-form-field  appearance="outline">
-          <mat-label>Välj ett datum</mat-label>
-          <input formControlName="activitydate" matInput [matDatepicker]="activitydate">
-          <mat-datepicker-toggle matSuffix [for]="activitydate"></mat-datepicker-toggle>
-          <mat-datepicker #activitydate></mat-datepicker>
-        </mat-form-field>
-
+        <div class="mt-5 ml-1">Datum för aktivitet</div>
+        <div>
+          <mat-form-field  appearance="outline">
+            <mat-label>Välj ett datum</mat-label>
+            <input formControlName="activitydate" matInput [matDatepicker]="activitydate">
+            <mat-datepicker-toggle matSuffix [for]="activitydate"></mat-datepicker-toggle>
+            <mat-datepicker #activitydate></mat-datepicker>
+          </mat-form-field>
+        </div>
+        <div class="mt-4 ml-1">Tid för aktivitet</div>
         <div class="md-form md-outline">
-          <input formControlName="activitytime" type="time" id="default-picker" class="form-control" placeholder="Select time">
+          <input formControlName="activitytime" type="time" id="default-picker" class="form-control" placeholder="Välj tid">
         </div>
 
-        <label class="mt-4 ml-1">Datum O.S.A senast</label>
-        <mat-form-field  appearance="outline">
-          <mat-label>Välj ett datum</mat-label>
-          <input formControlName="rsvpdate" matInput [matDatepicker]="rsvpdate">
-          <mat-datepicker-toggle matSuffix [for]="rsvpdate"></mat-datepicker-toggle>
-          <mat-datepicker #rsvpdate></mat-datepicker>
-        </mat-form-field>
+        <div class="mt-5 ml-1">Datum O.S.A senast</div>
+        <div>
+          <mat-form-field  appearance="outline">
+            <mat-label>Välj ett datum</mat-label>
+            <input formControlName="rsvpdate" matInput [matDatepicker]="rsvpdate">
+            <mat-datepicker-toggle matSuffix [for]="rsvpdate"></mat-datepicker-toggle>
+            <mat-datepicker #rsvpdate></mat-datepicker>
+          </mat-form-field>
+        </div>
+
         <label class="mt-4 ml-1">Plats</label>
         <input formControlName="locationname" type="text" class="form-control m-1" id="locationname" placeholder="Namn">
         <input formControlName="locationaddress" type="text" class="form-control m-1" id="locationaddress" placeholder="Adress">

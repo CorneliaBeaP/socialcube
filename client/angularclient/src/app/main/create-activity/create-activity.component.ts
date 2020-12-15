@@ -4,12 +4,18 @@ import {ActivatedRoute, Router} from "@angular/router";
 import {Activity} from "../../classes/activity";
 import {ActivityService} from "../../services/activity.service";
 import {LoginService} from "../../services/login.service";
+import {DateAdapter, MAT_DATE_FORMATS} from "@angular/material/core";
+import {APP_DATE_FORMATS, AppDateAdapter} from "../../helpers/app-date-adapter";
 
 
 @Component({
   selector: 'app-create-activity',
   templateUrl: './create-activity.component.html',
-  styleUrls: ['./create-activity.component.css']
+  styleUrls: ['./create-activity.component.css'],
+  providers: [
+    {provide: DateAdapter, useClass: AppDateAdapter},
+    {provide: MAT_DATE_FORMATS, useValue: APP_DATE_FORMATS}
+  ]
 })
 export class CreateActivityComponent implements OnInit {
 
