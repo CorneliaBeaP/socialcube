@@ -38,15 +38,6 @@ public class UserController {
 //        return userRepository.findById(id);
 //    }
 
-//    @RequestMapping(value = "/login", method = RequestMethod.POST, produces = MediaType.TEXT_PLAIN_VALUE)
-//    @ResponseBody
-//    public ResponseEntity<Boolean> checkAuthenticationStatus(@RequestParam String[] usercredentials) {
-//        HttpHeaders httpHeaders = new HttpHeaders();
-//        httpHeaders.set("Access-Control-Allow-Origin", "*");
-//        System.out.println(ResponseEntity.ok().header("Access-Control-Allow-Origin", "*").body(false));
-//        System.out.println("authenticationApproved()");
-//        return ResponseEntity.ok().headers(httpHeaders).body(userService.checkIfLoginCredentialsAreCorrect(usercredentials[0], usercredentials[1]));
-//    }
 
     @PostMapping(path = "/api/login", produces = MediaType.APPLICATION_JSON_VALUE)
     public UserDTO getAuthenticationStatus(@RequestBody String[] usercredentials) {

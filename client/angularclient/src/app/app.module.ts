@@ -3,7 +3,7 @@ import { NgModule } from '@angular/core';
 
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
-import { UserListComponent } from './userlist/user-list/user-list.component';
+import {UserListComponent} from "./administration/userlist/user-list/user-list.component";
 import { UserService } from "./services/user.service";
 import {HttpClientModule} from "@angular/common/http";
 import { HeaderComponent } from './navigation/header/header.component';
