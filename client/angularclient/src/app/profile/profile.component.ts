@@ -4,6 +4,7 @@ import {LoginService} from "../services/login.service";
 import {Observable, of} from "rxjs";
 import {catchError, map} from "rxjs/operators";
 import {HttpClient} from "@angular/common/http";
+import {Usersocu} from "../classes/usersocu";
 
 
 @Component({
@@ -15,6 +16,7 @@ export class ProfileComponent implements OnInit {
 
   url: string | ArrayBuffer;
   url2: string;
+  user: Usersocu;
 
 
   constructor(private userService: UserService,
@@ -23,8 +25,13 @@ export class ProfileComponent implements OnInit {
   }
 
   ngOnInit(): void {
+    this.getLoggedInUser();
     this.getProfilePicture(this.loginService.getUserValue().id);
 
+  }
+
+  getLoggedInUser() {
+    this.user = this.loginService.getUserValue();
   }
 
   onSelectFile(event) { // called each time file input changes
@@ -76,5 +83,9 @@ export class ProfileComponent implements OnInit {
   triggerFileUpload(){
     let element:HTMLElement = document.getElementById('fileupload') as HTMLElement;
     element.click();
+  }
+
+  removeProfilePicture(){
+
   }
 }
