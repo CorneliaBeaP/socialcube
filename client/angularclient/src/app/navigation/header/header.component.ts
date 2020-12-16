@@ -56,7 +56,7 @@ export class HeaderComponent implements OnInit {
           return `${folderPath}/${id}.png`;
         }),
         catchError(error => {
-          console.clear();
+          // console.clear();
           return of(`${folderPath}/default.png`);
         })
       );
