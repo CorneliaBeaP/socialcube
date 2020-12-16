@@ -24,6 +24,7 @@ import {MatNativeDateModule} from "@angular/material/core";
 import {MatInputModule} from "@angular/material/input";
 import { ErrorpageComponent } from './error/errorpage/errorpage.component';
 import { Page404Component } from './error/page404/page404.component';
+import { StartredirecterComponent } from './startredirecter/startredirecter.component';
 
 @NgModule({
   declarations: [
@@ -39,7 +40,8 @@ import { Page404Component } from './error/page404/page404.component';
     ProfileComponent,
     AdministrationComponent,
     ErrorpageComponent,
-    Page404Component
+    Page404Component,
+    StartredirecterComponent
   ],
   imports: [
     BrowserModule,

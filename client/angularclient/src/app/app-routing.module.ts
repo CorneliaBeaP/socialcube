@@ -8,6 +8,7 @@ import {AdministrationComponent} from "./administration/administration.component
 import {ErrorpageComponent} from "./error/errorpage/errorpage.component";
 import {AdminGuard} from "./auth/admin.guard";
 import {Page404Component} from "./error/page404/page404.component";
+import {StartredirecterComponent} from "./startredirecter/startredirecter.component";
 
 const routes: Routes = [
   {path: 'login', component: LoginComponent},
@@ -15,7 +16,7 @@ const routes: Routes = [
   {path: 'profile', component: ProfileComponent, canActivate: [AuthGuard]},
   {path: 'admin', component: AdministrationComponent, canActivate: [AuthGuard, AdminGuard]},
   {path: 'error', component: ErrorpageComponent},
-  {path: '', redirectTo: '/login', pathMatch: 'full'},
+  {path: '', component: StartredirecterComponent},
   {path: '**', component: Page404Component}
 ];
 
