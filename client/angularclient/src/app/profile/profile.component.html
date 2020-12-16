@@ -3,13 +3,14 @@
 <div class="container">
   <div class="row">
     <div class="col d-flex justify-content-center m-3">
-      <a href="https://placeholder.com"><img src="https://via.placeholder.com/200"></a>
+      <img [src]="url" height="200"> <br/>
     </div>
   </div>
   <div class="row">
     <div class="col">
       <div class="d-flex justify-content-center">
-        <button class="btn btn-light minw-100 m-4">Byt bild</button>
+        <input type='file' class="btn btn-light minw-100 m-4" accept="image/*" #imageInput
+               (change)="onSelectFile($event)">
         <button class="btn btn-light minw-100 m-4">Ta bort bild</button>
       </div>
     </div>

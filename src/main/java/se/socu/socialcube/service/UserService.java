@@ -5,14 +5,19 @@ import org.slf4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.logging.LoggerGroup;
 import org.springframework.stereotype.Service;
+import org.springframework.web.multipart.MultipartFile;
 import se.socu.socialcube.DTO.UserDTO;
 import se.socu.socialcube.entities.Company;
 import se.socu.socialcube.entities.UserSocu;
 import se.socu.socialcube.repository.CompanyRepository;
 import se.socu.socialcube.repository.UserRepository;
 
+import java.nio.file.Files;
+import java.nio.file.Path;
+import java.nio.file.Paths;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Objects;
 import java.util.Optional;
 
 @Service
@@ -38,7 +43,7 @@ public class UserService {
         return userDTO;
     }
 
-    public UserSocu convertToUserSocuFromUserDTO(UserDTO userDTO){
+    public UserSocu convertToUserSocuFromUserDTO(UserDTO userDTO) {
         UserSocu userSocu = new UserSocu();
         userSocu.setName(userDTO.getName());
         userSocu.setEmail(userDTO.getEmail());
@@ -46,7 +51,7 @@ public class UserService {
         userSocu.setDepartment(userDTO.getDepartment());
         userSocu.setEmploymentnumber(userDTO.getEmploymentnumber());
         Optional<Company> company = companyRepository.findById(userDTO.getCompanyorganizationnumber());
-        if(company.isPresent()){
+        if (company.isPresent()) {
             userSocu.setCompany(company.get());
         }
         return userSocu;
@@ -68,8 +73,8 @@ public class UserService {
         UserDTO userDTO = new UserDTO();
         if (!(username == null)) {
             Optional<UserSocu> userSocu = userRepository.findByEmail(username.toLowerCase());
-            if(userSocu.isPresent()){
-                if (!(userSocu.get().getEmail().length()<1) && userSocu.get().getPassword().equals(password)) {
+            if (userSocu.isPresent()) {
+                if (!(userSocu.get().getEmail().length() < 1) && userSocu.get().getPassword().equals(password)) {
                     userDTO = convertToUserDTOfromUserSocu(userSocu.get());
                 }
             }
@@ -89,16 +94,36 @@ public class UserService {
         return allUsersDTO;
     }
 
-    public void saveNewUser(UserDTO userDTO){
+    public void saveNewUser(UserDTO userDTO) {
         UserSocu userSocu = convertToUserSocuFromUserDTO(userDTO);
         userSocu.setPassword("111");
         userRepository.save(userSocu);
     }
 
-    public void deleteUser(Long id){
-       Optional<UserSocu> userSocu = userRepository.findById(id);
-       if(userSocu.isPresent()){
-           userRepository.delete(userSocu.get());
-       }
+    public void deleteUser(Long id) {
+        Optional<UserSocu> userSocu = userRepository.findById(id);
+        if (userSocu.isPresent()) {
+            userRepository.delete(userSocu.get());
+        }
+    }
+
+    public void saveImage(MultipartFile imagefile, Long userid) throws Exception {
+        String folder = "C:\\Users\\corne\\OneDrive\\Dokument\\SocialCube\\Kod\\ProfilePictures\\";
+        byte[] bytes = imagefile.getBytes();
+        String fileName = userid.toString();
+        String fileend = "";
+        if (Objects.requireNonNull(imagefile.getOriginalFilename()).endsWith(".png")) {
+            fileend = ".png";
+        } else if (Objects.requireNonNull(imagefile.getOriginalFilename()).endsWith(".jpg")) {
+            fileend = ".jpg";
+        } else if (Objects.requireNonNull(imagefile.getOriginalFilename()).endsWith(".gif")) {
+            fileend = ".gif";
+        }
+        Path path = Paths.get(folder + fileName + fileend);
+        try {
+            Files.write(path, bytes);
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
     }
 }

@@ -1,10 +1,8 @@
 package se.socu.socialcube.controller;
 
-import org.springframework.data.annotation.CreatedBy;
-import org.springframework.http.HttpHeaders;
 import org.springframework.http.MediaType;
-import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.multipart.MultipartFile;
 import se.socu.socialcube.DTO.UserDTO;
 import se.socu.socialcube.entities.Response;
 import se.socu.socialcube.service.UserService;
@@ -62,9 +60,19 @@ public class UserController {
     }
 
     @DeleteMapping("/api/users/delete/{id}")
-    public Response deleteUser(@PathVariable Long id){
-        this.userService.deleteUser(id);
+    public Response deleteUser(@PathVariable Long id) {
+        userService.deleteUser(id);
         System.out.println("Användare borttagen");
         return new Response("OK", "Användare borttagen");
+    }
+
+    @PostMapping(value = "/api/users/add/image/{id}")
+    public Response addProfilePicture(@RequestParam("name") MultipartFile multipartFile, @PathVariable Long id) {
+        try {
+            userService.saveImage(multipartFile, id);
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        return new Response("OK", "Bild mottagen");
     }
 }
