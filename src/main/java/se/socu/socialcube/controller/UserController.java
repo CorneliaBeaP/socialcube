@@ -64,7 +64,7 @@ public class UserController {
     public Response deleteUser(@PathVariable Long id) {
         userService.deleteUser(id);
         System.out.println("Användare borttagen");
-        return new Response("OK", "Användare borttagen");
+        return new Response("OK", "Anrop mottaget");
     }
 
     @PostMapping(value = "/api/users/add/image/{id}")
@@ -74,11 +74,13 @@ public class UserController {
         } catch (Exception e) {
             e.printStackTrace();
         }
-        return new Response("OK", "Bild mottagen");
+        return new Response("OK", "Anrop mottaget");
     }
 
-    @GetMapping("/api/users/{id}/image")
-    public Response getProfilePicture(@PathVariable Long id){
-       return new Response("OK", "C:\\Users\\corne\\OneDrive\\Dokument\\SocialCube\\Kod\\ProfilePictures\\4.png");
+    @GetMapping("/api/users/delete/image/{id}")
+    public Response deleteProfilePicture(@PathVariable Long id){
+        System.out.println("Mottagit anrop om att ta bort bild");
+        userService.deleteProfilePicture(id);
+        return new Response("OK", "Anrop mottaget");
     }
 }

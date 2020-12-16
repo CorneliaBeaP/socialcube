@@ -59,7 +59,7 @@ export class ProfileComponent implements OnInit {
   }
 
   getProfilePicture(id: number) {
-    this.getFolder(id).subscribe(data =>{
+    this.getFolder(id).subscribe(data => {
       this.url2 = data;
     });
   }
@@ -80,12 +80,14 @@ export class ProfileComponent implements OnInit {
 
   }
 
-  triggerFileUpload(){
-    let element:HTMLElement = document.getElementById('fileupload') as HTMLElement;
+  triggerFileUpload() {
+    let element: HTMLElement = document.getElementById('fileupload') as HTMLElement;
     element.click();
   }
 
-  removeProfilePicture(){
-
+  removeProfilePicture() {
+    this.url2 = `../../../../assets/ProfilePictures/${this.user.id}.png`;
+    this.userService.removeProfilePicture(this.user.id);
+    location.reload();
   }
 }

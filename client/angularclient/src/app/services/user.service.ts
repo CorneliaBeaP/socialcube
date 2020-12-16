@@ -60,4 +60,10 @@ export class UserService {
       console.log(data);
     });
   }
+
+  public removeProfilePicture(id: number){
+    this.http.get(this.usersUrl + `/delete/image/${id}`).subscribe(data=>{
+      console.log(data);
+    });
+  }
 }

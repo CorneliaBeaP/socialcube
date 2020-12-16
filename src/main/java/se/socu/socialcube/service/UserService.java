@@ -1,6 +1,7 @@
 package se.socu.socialcube.service;
 
 import org.apache.catalina.User;
+import org.apache.tomcat.util.http.fileupload.FileUtils;
 import org.slf4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.logging.LoggerGroup;
@@ -128,6 +129,17 @@ public class UserService {
         try {
             Files.write(path, bytes);
         } catch (Exception e) {
+            e.printStackTrace();
+        }
+    }
+
+    public void deleteProfilePicture(Long id) {
+        String folder = "C:\\Users\\corne\\OneDrive\\Dokument\\SocialCube\\Kod\\IntelliJ\\client\\angularclient\\src\\assets\\ProfilePictures\\";
+        String fileName = id.toString() + ".png";
+        Path path = Paths.get(folder + fileName);
+        try{
+            Files.deleteIfExists(path);
+        } catch (IOException e) {
             e.printStackTrace();
         }
     }
