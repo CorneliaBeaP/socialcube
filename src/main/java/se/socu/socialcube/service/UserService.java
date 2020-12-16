@@ -137,7 +137,7 @@ public class UserService {
         String folder = "C:\\Users\\corne\\OneDrive\\Dokument\\SocialCube\\Kod\\IntelliJ\\client\\angularclient\\src\\assets\\ProfilePictures\\";
         String fileName = id.toString() + ".png";
         Path path = Paths.get(folder + fileName);
-        try{
+        try {
             Files.deleteIfExists(path);
         } catch (IOException e) {
             e.printStackTrace();
