@@ -8,3 +8,6 @@
   padding: 70px;
 }
 
+input[type=file] {
+display: none;
+}

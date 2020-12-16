@@ -9,8 +9,9 @@
   <div class="row">
     <div class="col">
       <div class="d-flex justify-content-center">
-        <input type='file' class="btn btn-light minw-100 m-4" accept="image/*" #imageInput
-               (change)="onSelectFile($event)">
+        <input type='file' accept="image/*"
+               (change)="onSelectFile($event)" id="fileupload">
+        <button class="btn btn-light minw-100 m-4"(click)="triggerFileUpload()">Byt Bild</button>
         <button class="btn btn-light minw-100 m-4">Ta bort bild</button>
       </div>
     </div>

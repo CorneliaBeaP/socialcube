@@ -16,6 +16,7 @@ export class ProfileComponent implements OnInit {
   url: string | ArrayBuffer;
   url2: string;
 
+
   constructor(private userService: UserService,
               private loginService: LoginService,
               private http: HttpClient) {
@@ -70,5 +71,10 @@ export class ProfileComponent implements OnInit {
         })
       );
 
+  }
+
+  triggerFileUpload(){
+    let element:HTMLElement = document.getElementById('fileupload') as HTMLElement;
+    element.click();
   }
 }
