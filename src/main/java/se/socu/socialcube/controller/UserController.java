@@ -7,6 +7,7 @@ import se.socu.socialcube.DTO.UserDTO;
 import se.socu.socialcube.entities.Response;
 import se.socu.socialcube.service.UserService;
 
+import java.awt.*;
 import java.util.List;
 
 @CrossOrigin(origins = "http://localhost:4200", allowedHeaders = "*")
@@ -74,5 +75,10 @@ public class UserController {
             e.printStackTrace();
         }
         return new Response("OK", "Bild mottagen");
+    }
+
+    @GetMapping("/api/users/{id}/image")
+    public Response getProfilePicture(@PathVariable Long id){
+       return new Response("OK", "C:\\Users\\corne\\OneDrive\\Dokument\\SocialCube\\Kod\\ProfilePictures\\4.png");
     }
 }

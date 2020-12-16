@@ -12,6 +12,10 @@ import se.socu.socialcube.entities.UserSocu;
 import se.socu.socialcube.repository.CompanyRepository;
 import se.socu.socialcube.repository.UserRepository;
 
+import javax.imageio.ImageIO;
+import java.awt.*;
+import java.io.File;
+import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
@@ -108,18 +112,19 @@ public class UserService {
     }
 
     public void saveImage(MultipartFile imagefile, Long userid) throws Exception {
-        String folder = "C:\\Users\\corne\\OneDrive\\Dokument\\SocialCube\\Kod\\ProfilePictures\\";
+        String folder = "C:\\Users\\corne\\OneDrive\\Dokument\\SocialCube\\Kod\\IntelliJ\\client\\angularclient\\src\\assets\\ProfilePictures\\";
         byte[] bytes = imagefile.getBytes();
         String fileName = userid.toString();
-        String fileend = "";
-        if (Objects.requireNonNull(imagefile.getOriginalFilename()).endsWith(".png")) {
-            fileend = ".png";
-        } else if (Objects.requireNonNull(imagefile.getOriginalFilename()).endsWith(".jpg")) {
-            fileend = ".jpg";
-        } else if (Objects.requireNonNull(imagefile.getOriginalFilename()).endsWith(".gif")) {
-            fileend = ".gif";
-        }
-        Path path = Paths.get(folder + fileName + fileend);
+
+//        String fileend = "";
+//        if (Objects.requireNonNull(imagefile.getOriginalFilename()).endsWith(".png")) {
+//            fileend = ".png";
+//        } else if (Objects.requireNonNull(imagefile.getOriginalFilename()).endsWith(".jpg")) {
+//            fileend = ".jpg";
+//        } else if (Objects.requireNonNull(imagefile.getOriginalFilename()).endsWith(".gif")) {
+//            fileend = ".gif";
+//        }
+        Path path = Paths.get(folder + fileName + ".png");
         try {
             Files.write(path, bytes);
         } catch (Exception e) {

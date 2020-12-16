@@ -11,12 +11,15 @@ import {LoginService} from "../services/login.service";
 export class ProfileComponent implements OnInit {
 
   url: string | ArrayBuffer;
+  // url2: string = 'http:\\C:\\Users\\corne\\OneDrive\\Dokument\\SocialCube\\Kod\\ProfilePictures\\4.png';
+  url2: string;
 
   constructor(private userService: UserService,
               private loginService: LoginService) {
   }
 
   ngOnInit(): void {
+    this.url2 = '../../../assets/ProfilePictures/' + this.loginService.getUserValue().id + '.png'
   }
 
   onSelectFile(event) { // called each time file input changes
@@ -42,6 +45,4 @@ export class ProfileComponent implements OnInit {
     this.userService.uploadProfilePicture(formData, this.loginService.getUserValue().id);
 
   }
-
-
 }
