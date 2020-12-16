@@ -1,6 +1,9 @@
 import {Component, OnInit} from '@angular/core';
 import {UserService} from "../services/user.service";
 import {LoginService} from "../services/login.service";
+import {Observable, of} from "rxjs";
+import {catchError, map} from "rxjs/operators";
+import {HttpClient} from "@angular/common/http";
 
 
 @Component({
@@ -11,15 +14,16 @@ import {LoginService} from "../services/login.service";
 export class ProfileComponent implements OnInit {
 
   url: string | ArrayBuffer;
-  // url2: string = 'http:\\C:\\Users\\corne\\OneDrive\\Dokument\\SocialCube\\Kod\\ProfilePictures\\4.png';
   url2: string;
 
   constructor(private userService: UserService,
-              private loginService: LoginService) {
+              private loginService: LoginService,
+              private http: HttpClient) {
   }
 
   ngOnInit(): void {
-    this.url2 = '../../../assets/ProfilePictures/' + this.loginService.getUserValue().id + '.png'
+    this.getProfilePicture(this.loginService.getUserValue().id);
+
   }
 
   onSelectFile(event) { // called each time file input changes
@@ -43,6 +47,28 @@ export class ProfileComponent implements OnInit {
     let formData = new FormData();
     formData.append('name', file);
     this.userService.uploadProfilePicture(formData, this.loginService.getUserValue().id);
+
+  }
+
+  getProfilePicture(id: number) {
+    this.getFolder(id).subscribe(data =>{
+      this.url2 = data;
+    });
+  }
+
+  getFolder(id: number): Observable<string> {
+    const folderPath = `../../../../assets/ProfilePictures`;
+    return this.http
+      .get(`${folderPath}/${id}.png`, {observe: 'response', responseType: 'blob'})
+      .pipe(
+        map(response => {
+          return `${folderPath}/${id}.png`;
+        }),
+        catchError(error => {
+          console.clear();
+          return of(`${folderPath}/default.png`);
+        })
+      );
 
   }
 }

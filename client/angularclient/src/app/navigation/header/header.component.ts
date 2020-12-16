@@ -1,6 +1,10 @@
 import {Component, OnInit} from '@angular/core';
 import {LoginService} from "../../services/login.service";
 import {Usersocu} from "../../classes/usersocu";
+import {Observable, of} from "rxjs";
+import {HttpClient} from "@angular/common/http";
+import {catchError, map} from "rxjs/operators";
+
 
 @Component({
   selector: 'app-header',
@@ -10,13 +14,16 @@ import {Usersocu} from "../../classes/usersocu";
 export class HeaderComponent implements OnInit {
   isAdmin = false;
   user: Usersocu;
+  profilepictureurl: string;
 
-  constructor(private loginService: LoginService) {
+  constructor(private http: HttpClient,
+              private loginService: LoginService) {
     this.getAdmin();
   }
 
   ngOnInit(): void {
     this.getLoggedInUser();
+    this.getProfilePicture(this.user.id);
   }
 
   logout() {
@@ -30,7 +37,29 @@ export class HeaderComponent implements OnInit {
     }
   }
 
-  getLoggedInUser(){
+  getLoggedInUser() {
     this.user = this.loginService.getUserValue();
+  }
+
+  getProfilePicture(id: number) {
+    this.getFolder(id).subscribe(data =>{
+      this.profilepictureurl = data;
+    });
+  }
+
+  getFolder(id: number): Observable<string> {
+    const folderPath = `../../../../assets/ProfilePictures`;
+    return this.http
+      .get(`${folderPath}/${id}.png`, {observe: 'response', responseType: 'blob'})
+      .pipe(
+        map(response => {
+          return `${folderPath}/${id}.png`;
+        }),
+        catchError(error => {
+          console.clear();
+          return of(`${folderPath}/default.png`);
+        })
+      );
+
   }
 }
