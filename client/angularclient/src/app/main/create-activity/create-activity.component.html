@@ -1,7 +1,7 @@
 <div class="container">
   <h4 class="mt-5" (click)="showPlanActivity = !showPlanActivity">Planera aktivitet <i *ngIf="!showPlanActivity" class="fas fa-angle-right"></i><i *ngIf="showPlanActivity" class="fas fa-angle-down"></i></h4>
   <div *ngIf="showPlanActivity">
-    <form (ngSubmit)="sendActivity()" [formGroup]="form">
+    <form (ngSubmit)="onSubmit()" [formGroup]="form">
       <div class="form-group ml-3 mt-2">
         <label for="activitytype" class="mt-4 ml-1">Typ</label>
         <input formControlName="activitytype" type="text" class="form-control m-1" id="activitytype" required>
@@ -19,7 +19,7 @@
           <input formControlName="activitytime" type="time" id="default-picker" class="form-control" placeholder="Välj tid">
         </div>
 
-        <div class="mt-5 ml-1">Datum O.S.A senast</div>
+        <div class="mt-5 ml-1">Datum O.S.A senast <i class="fas fa-info-circle" [matTooltip]="tooltiprsvp" [matTooltipPosition]="'right'"></i></div>
         <div>
           <mat-form-field  appearance="outline">
             <mat-label>Välj ett datum</mat-label>

@@ -26,8 +26,7 @@ export class CreateActivityComponent implements OnInit, OnDestroy {
   form: FormGroup;
   subscription: Subscription;
 
-
-  // location: Location;
+  tooltiprsvp = "Här fyller du i datumet man senast behöver tacka ja till eventet. Om detta inte är aktuellt kan du lämna fältet tomt.";
 
   constructor(private route: ActivatedRoute,
               private router: Router,
@@ -45,7 +44,7 @@ export class CreateActivityComponent implements OnInit, OnDestroy {
       activitytype: ['', Validators.required],
       activitydate: ['', Validators.required],
       activitytime: ['', Validators.required],
-      rsvpdate: ['', Validators.required],
+      rsvpdate: [''],
       descriptionsocu: ['', Validators.required],
       locationname: ['', Validators.required],
       locationaddress: ['', Validators.required]
@@ -57,33 +56,6 @@ export class CreateActivityComponent implements OnInit, OnDestroy {
     if (this.form.invalid) {
       return;
     }
-
-    // let location = new Location();
-    // location.name = this.form.get('locationname').value;
-    // location.address = this.form.get('locationaddress').value;
-    //
-    // let date = new Date(this.form.get('activitydate').value);
-    // let time = this.form.get('activitytime').value;
-    // let hours = time.toString().substring(0, 2);
-    // let minutes = time.toString().substring(3, 5);
-    // let concatDate = new Date(date.getFullYear(), date.getMonth(), date.getDate(), hours, minutes);
-    // let activity = new Activity();
-    // activity.activitytype = this.form.get('activitytype').value;
-    // activity.activitydate = concatDate;
-    // activity.rsvpdate = this.form.get('rsvpdate').value;
-    // activity.descriptionsocu = this.form.get('descriptionsocu').value;
-    // activity.locationname = this.form.get('locationname').value;
-    // activity.locationaddress = this.form.get('locationaddress').value;
-    // activity.createdbyid = this.loginService.getUserValue().id;
-    // activity.companyorganizationnumber = this.loginService.getUserValue().companyorganizationnumber;
-    // // this.createActivity(activity);
-  }
-
-  // createActivity(activity: Activity) {
-  //   this.activityService.save(activity);
-  // }
-
-  sendActivity() {
     let activity = new Activity();
     let date = new Date(this.form.get('activitydate').value);
     let time = this.form.get('activitytime').value;
@@ -105,9 +77,10 @@ export class CreateActivityComponent implements OnInit, OnDestroy {
     console.log(new Date());
     console.log(activity);
 
-   this.subscription = this.activityService.sendActivity(activity).subscribe(next => {
+    this.subscription = this.activityService.sendActivity(activity).subscribe(next => {
       console.log(next);
     });
+    this.form.reset();
   }
 
   ngOnDestroy(): void {
