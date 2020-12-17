@@ -1,3 +1,16 @@
+body, html {
+  height: 100%;
+}
+.bg {
+  /* The image used */
+  /*background-image: url("https://mdbootstrap.com/img/Photos/Horizontal/Nature/full page/img(11).jpg");*/
+ background-image: url("../../assets/images/1BG.jpg");
+  height: 100%;
+  background-position: center;
+  background-repeat: no-repeat;
+  background-size: cover;
+}
+
 .socialcubelogin {
   font-size: 55px;
 }
@@ -6,11 +19,11 @@
   height: 600px;
   width: 450px;
   text-align: center;
-  border-width: 2px;
-  border-color: #bdbdbd;
-  border-style: solid;
+  /*border-width: 1px;*/
+  /*border-color: #f7f7f7;*/
+  /*border-style: solid;*/
   border-radius: 15px;
-
+  background: rgba(255, 255, 255, 0.4);
 }
 
 .logingroup {
@@ -18,17 +31,43 @@
 }
 
 .loginitem {
+  background-color: rgba(255, 255, 255, 0);
+  border: none;
+  border-bottom: 2px solid white;
   height: 45px;
   width: 360px;
-  border-width: 1px;
-  border-radius: 15px;
-  text-align: center;
+  color: white;
+  /*border-width: 1px;*/
+  /*border-radius: 15px;*/
+  text-align: left;
 }
 
 .noAccount {
-  color: #bdbdbd;
+  color: white;
 }
 
 input {
   outline: none;
+}
+
+.noAccountPage{
+  background-color: white;
+  padding: 20px;
+  border-width: 1px;
+  border-color: #f7f7f7;
+  border-style: solid;
+  border-radius: 15px;
+}
+
+::placeholder{
+  color: white;
+}
+::-ms-input-placeholder{
+  color: white;
+}
+input.empty {
+  font-family: FontAwesome, Roboto;
+  font-style: normal;
+  font-weight: normal;
+  text-decoration: inherit;
 }
