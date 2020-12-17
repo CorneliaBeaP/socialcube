@@ -25,6 +25,7 @@ export class CreateActivityComponent implements OnInit, OnDestroy {
 
   form: FormGroup;
   subscription: Subscription;
+  submitbuttonclicked = false;
 
   tooltiprsvp = "Här fyller du i datumet man senast behöver tacka ja till eventet. Om detta inte är aktuellt kan du lämna fältet tomt.";
 
@@ -54,6 +55,7 @@ export class CreateActivityComponent implements OnInit, OnDestroy {
 
   onSubmit() {
     if (this.form.invalid) {
+      this.submitbuttonclicked = true;
       return;
     }
     let activity = new Activity();
@@ -81,6 +83,7 @@ export class CreateActivityComponent implements OnInit, OnDestroy {
       console.log(next);
     });
     this.form.reset();
+    location.reload();
   }
 
   ngOnDestroy(): void {

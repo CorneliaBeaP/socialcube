@@ -13,3 +13,8 @@ mat-form-field{
 input{
   width: 100%;
 }
+
+.invalid-input{
+
+  border:1px solid #f00;
+}

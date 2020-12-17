@@ -4,7 +4,7 @@
     <form (ngSubmit)="onSubmit()" [formGroup]="form">
       <div class="form-group ml-3 mt-2">
         <label for="activitytype" class="mt-4 ml-1">Typ</label>
-        <input formControlName="activitytype" type="text" class="form-control m-1" id="activitytype" required>
+        <input [ngClass]="{'invalid-input': this.form.get('activitytype').invalid && this.submitbuttonclicked}" formControlName="activitytype" type="text" class="form-control m-1" id="activitytype" required>
         <div class="mt-5 ml-1">Datum för aktivitet</div>
         <div>
           <mat-form-field  appearance="outline">
@@ -15,7 +15,7 @@
           </mat-form-field>
         </div>
         <div class="mt-4 ml-1">Tid för aktivitet</div>
-        <div class="md-form md-outline">
+        <div [ngClass]="{'invalid-input': this.form.get('activitytime').invalid && this.submitbuttonclicked}" class="md-form md-outline">
           <input formControlName="activitytime" type="time" id="default-picker" class="form-control" placeholder="Välj tid">
         </div>
 
@@ -30,10 +30,10 @@
         </div>
 
         <label class="mt-4 ml-1">Plats</label>
-        <input formControlName="locationname" type="text" class="form-control m-1" id="locationname" placeholder="Namn">
-        <input formControlName="locationaddress" type="text" class="form-control m-1" id="locationaddress" placeholder="Adress">
+        <input [ngClass]="{'invalid-input': this.form.get('locationname').invalid && this.submitbuttonclicked}" formControlName="locationname" type="text" class="form-control m-1" id="locationname" placeholder="Namn">
+        <input [ngClass]="{'invalid-input': this.form.get('locationaddress').invalid && this.submitbuttonclicked}" formControlName="locationaddress" type="text" class="form-control m-1" id="locationaddress" placeholder="Adress">
         <label for="description" class="mt-4 ml-1">Beskrivning</label>
-        <textarea formControlName="descriptionsocu" class="form-control m-1" id="description" rows="3"></textarea>
+        <textarea [ngClass]="{'invalid-input': this.form.get('descriptionsocu').invalid && this.submitbuttonclicked}" formControlName="descriptionsocu" class="form-control m-1" id="description" rows="3"></textarea>
         <button class="btn btn-light mt-4">Skapa aktivitet</button>
       </div>
     </form>
