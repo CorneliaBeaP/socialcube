@@ -3,64 +3,29 @@
                                                                    class="fas fa-angle-down"></i></h4>
 <div *ngIf="showCurrentActivities">
   <div class="m-1" *ngFor="let activity of currentActivities">
-    <!--    <div class="card">-->
-    <!--      <div class="card-body">-->
-    <!--        <div class="row">-->
-    <!--          <div class="col">-->
-    <!--            {{activity.activitytype}}-->
-    <!--          </div>-->
-    <!--          <div class="col">-->
-    <!--            <i class="far fa-calendar-alt"></i> {{activity.activitydate[0]}}-<span-->
-    <!--            *ngIf="activity.activitydate[1]<10">0</span>{{activity.activitydate[1]}}-{{activity.activitydate[2]}}-->
-    <!--          </div>-->
-    <!--          <div class="col text-right">-->
-    <!--            <i class="fas fa-caret-down"></i>-->
-    <!--          </div>-->
-    <!--        </div>-->
-    <!--        <div *ngIf="showCard">-->
-    <!--          <div class="row">-->
-    <!--            <div class="col">-->
-    <!--            </div>-->
-    <!--            <div class="col">-->
-    <!--              <i class="far fa-clock"></i> {{activity.activitydate[3]}}:{{activity.activitydate[4]}}<span-->
-    <!--              *ngIf="activity.activitydate[4]==0">0</span>-->
-    <!--            </div>-->
-    <!--            <div class="col">-->
-    <!--            </div>-->
-    <!--          </div>-->
-    <!--          <div class="row">-->
-    <!--            <div class="col">-->
-    <!--              {{activity.locationname}} - {{activity.locationaddress}}-->
-    <!--            </div>-->
-    <!--          </div>-->
-    <!--          <div class="row">-->
-    <!--            <div class="col">-->
-    <!--              {{activity.descriptionsocu}}-->
-    <!--            </div>-->
-    <!--          </div>-->
-    <!--        </div>-->
-    <!--      </div>-->
-    <!--    </div>-->
     <mat-accordion>
-      <mat-expansion-panel hideToggle>
+      <mat-expansion-panel>
         <mat-expansion-panel-header>
           <mat-panel-title>
             {{activity.activitytype}}
           </mat-panel-title>
-          <mat-panel-description>
-            <i class="far fa-calendar-alt mr-2"></i>
+          <mat-panel-description class="right-aligned">
+            <i class="far fa-calendar-alt mr-2 mt-1"></i>
             <div> {{activity.activitydate[0]}}-
               <span *ngIf="activity.activitydate[1]<10">0</span>{{activity.activitydate[1]}}
               -{{activity.activitydate[2]}}
             </div>
           </mat-panel-description>
         </mat-expansion-panel-header>
-        <p>{{activity.locationname}} - {{activity.locationaddress}}</p>
+        <div class="text-right">
+          <i class="far fa-clock ml-2 mr-2 mt-1"></i> {{activity.activitydate[3]}}:<span
+          *ngIf="activity.activitydate[4]<10">0</span>{{activity.activitydate[4]}}
+        </div>
+        <div>{{activity.locationname}} - {{activity.locationaddress}}</div>
+        <div>{{activity.descriptionsocu}}</div>
       </mat-expansion-panel>
     </mat-accordion>
   </div>
-
-
   <div *ngIf="!currentActivities">
     Här kommer roliga aktiviteter att visas!
   </div>

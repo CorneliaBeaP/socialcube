@@ -5,3 +5,7 @@ h4{
 .card{
   cursor: pointer;
 }
+
+mat-panel-description.right-aligned {
+  flex-grow: 0;
+}

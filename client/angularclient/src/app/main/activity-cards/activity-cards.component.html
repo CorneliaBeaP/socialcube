@@ -14,7 +14,7 @@
         <h6>{{activity.locationname}} - {{activity.locationaddress}}</h6>
       </div>
       <div class="col">
-       <h6 class="text-right"><i class="far fa-clock"></i> {{activity.activitydate[3]}}:{{activity.activitydate[4]}}<span *ngIf="activity.activitydate[4]==0">0</span></h6>
+       <h6 class="text-right"><i class="far fa-clock"></i> {{activity.activitydate[3]}}:<span *ngIf="activity.activitydate[4]<10">0</span>{{activity.activitydate[4]}}</h6>
       </div>
     </div>
     <div class="card-text mt-4 mb-4">{{activity.descriptionsocu}}</div>
