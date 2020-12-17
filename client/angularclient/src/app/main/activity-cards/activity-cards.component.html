@@ -3,17 +3,22 @@
   <div class="card-body">
     <div class="row">
       <div class="col">
-        <h5 class="card-title">{{activity.activitytype}}</h5>
+        <h5>{{activity.activitytype}}</h5>
       </div>
       <div class="col">
-        <h5 class="card-title">{{activity.activitydate}}</h5>
-      </div>
-      <div class="col">
-        <h5 class="card-title">{{activity.locationname}} - {{activity.locationaddress}}</h5>
+        <h5 class="text-right"><i class="far fa-calendar-alt"></i> {{activity.activitydate[0]}}-<span *ngIf="activity.activitydate[1]<10">0</span>{{activity.activitydate[1]}}-{{activity.activitydate[2]}}</h5>
       </div>
     </div>
-    <p class="card-text">{{activity.descriptionsocu}}</p>
-    <p>Senaste OSA-datum: {{activity.rsvpdate}}</p>
+    <div class="row">
+      <div class="col">
+        <h6>{{activity.locationname}} - {{activity.locationaddress}}</h6>
+      </div>
+      <div class="col">
+       <h6 class="text-right"><i class="far fa-clock"></i> {{activity.activitydate[3]}}:{{activity.activitydate[4]}}<span *ngIf="activity.activitydate[4]==0">0</span></h6>
+      </div>
+    </div>
+    <div class="card-text mt-4 mb-4">{{activity.descriptionsocu}}</div>
+    <div class="text-right rsvp" *ngIf="activity.rsvpdate">Senaste OSA-datum: {{activity.rsvpdate[0]}}-{{activity.rsvpdate[1]}}-{{activity.rsvpdate[2]}}</div>
   </div>
 </div>
 <div class="float-right">

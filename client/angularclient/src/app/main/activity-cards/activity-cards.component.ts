@@ -23,7 +23,6 @@ export class ActivityCardsComponent implements OnInit, OnDestroy {
       this.sortByCreatedDate();
       this.activities = this.activities.reverse();
     });
-
   }
 
   public sortByCreatedDate(): void {
