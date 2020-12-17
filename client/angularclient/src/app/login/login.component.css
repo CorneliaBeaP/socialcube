@@ -1,18 +1,10 @@
 body, html {
   height: 100%;
 }
-.bg {
-  /* The image used */
-  /*background-image: url("https://mdbootstrap.com/img/Photos/Horizontal/Nature/full page/img(11).jpg");*/
- background-image: url("../../assets/images/1BG.jpg");
-  height: 100%;
-  background-position: center;
-  background-repeat: no-repeat;
-  background-size: cover;
-}
 
 .socialcubelogin {
   font-size: 55px;
+  color: white;
 }
 
 .loginblock {
@@ -23,7 +15,8 @@ body, html {
   /*border-color: #f7f7f7;*/
   /*border-style: solid;*/
   border-radius: 15px;
-  background: rgba(255, 255, 255, 0.4);
+  background: rgba(0, 0, 0, 0.4);
+  /*background: rgba(227, 227, 000, 0.7);*/
 }
 
 .logingroup {
@@ -31,6 +24,7 @@ body, html {
 }
 
 .loginitem {
+  font-size: 20px;
   background-color: rgba(255, 255, 255, 0);
   border: none;
   border-bottom: 2px solid white;
@@ -50,7 +44,7 @@ input {
   outline: none;
 }
 
-.noAccountPage{
+.noAccountPage {
   background-color: white;
   padding: 20px;
   border-width: 1px;
@@ -59,15 +53,28 @@ input {
   border-radius: 15px;
 }
 
-::placeholder{
+::placeholder {
   color: white;
 }
-::-ms-input-placeholder{
+
+::-ms-input-placeholder {
   color: white;
 }
+
 input.empty {
   font-family: FontAwesome, Roboto;
   font-style: normal;
   font-weight: normal;
   text-decoration: inherit;
 }
+
+img {
+  object-fit: cover;
+  height: 100vh !important;
+  width: 100vw !important;
+  opacity: 90%;
+}
+
+/*.yellowbtn{*/
+/*  background-color: rgba(231, 245, 34, 1);*/
+/*}*/

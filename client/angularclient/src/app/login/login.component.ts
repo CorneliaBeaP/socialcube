@@ -19,7 +19,23 @@ export class LoginComponent implements OnInit, OnDestroy {
   loginForm: FormGroup;
   returnUrl: string;
   submitted = false;
-  subscription;
+  subscription: Subscription;
+  background: string;
+  backgrounds = [
+    "../../assets/images/1BG.jpg",
+    "../../assets/images/2BG.jpg",
+    "../../assets/images/3BG.jpg",
+    "../../assets/images/4BG.jpg",
+    "../../assets/images/5BG.jpg",
+    "../../assets/images/6BG.jpg",
+    "../../assets/images/7BG.jpg",
+    "../../assets/images/8BG.jpg",
+    "../../assets/images/9BG.jpg",
+    "../../assets/images/10BG.jpg",
+    "../../assets/images/11BG.jpg",
+    "../../assets/images/12BG.jpg",
+    "../../assets/images/13BG.jpg",
+  ];
 
 
   constructor(private loginService: LoginService,
@@ -38,6 +54,7 @@ export class LoginComponent implements OnInit, OnDestroy {
   }
 
   ngOnInit(): void {
+    this.setBackground();
     this.createForm();
   }
 
@@ -52,7 +69,7 @@ export class LoginComponent implements OnInit, OnDestroy {
       return;
     }
 
-   this.subscription = this.loginService.authenticate(this.loginForm.get('username').value, this.loginForm.get('password').value)
+    this.subscription = this.loginService.authenticate(this.loginForm.get('username').value, this.loginForm.get('password').value)
       .pipe(first())
       .subscribe(data => {
           this.router.navigate([this.returnUrl]);
@@ -84,10 +101,10 @@ export class LoginComponent implements OnInit, OnDestroy {
   //   });
 
 
-    // this.loginService.authenticate(this.loginForm.get('username').value, this.loginForm.get('password').value);
-    // if (this.isAuthenticated) {
-    //   this.goToMainPage();
-    // }
+  // this.loginService.authenticate(this.loginForm.get('username').value, this.loginForm.get('password').value);
+  // if (this.isAuthenticated) {
+  //   this.goToMainPage();
+  // }
   // }
 
   executeErrorMessage() {
@@ -96,5 +113,13 @@ export class LoginComponent implements OnInit, OnDestroy {
 
   ngOnDestroy(): void {
     this.subscription.unsubscribe();
+  }
+
+  setBackground() {
+    let shuffled = this.backgrounds
+      .map((a) => ({sort: Math.random(), value: a}))
+      .sort((a, b) => a.sort - b.sort)
+      .map((a) => a.value);
+    this.background = shuffled[0];
   }
 }
