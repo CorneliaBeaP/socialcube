@@ -26,6 +26,8 @@ import { ErrorpageComponent } from './error/errorpage/errorpage.component';
 import { Page404Component } from './error/page404/page404.component';
 import { StartredirecterComponent } from './startredirecter/startredirecter.component';
 import {MatTooltipModule} from "@angular/material/tooltip";
+import { CurrentActivitiesComponent } from './main/current-activities/current-activities.component';
+import {MatExpansionModule} from "@angular/material/expansion";
 
 @NgModule({
   declarations: [
@@ -42,21 +44,23 @@ import {MatTooltipModule} from "@angular/material/tooltip";
     AdministrationComponent,
     ErrorpageComponent,
     Page404Component,
-    StartredirecterComponent
+    StartredirecterComponent,
+    CurrentActivitiesComponent
   ],
-    imports: [
-        BrowserModule,
-        HttpClientModule,
-        AppRoutingModule,
-        NoopAnimationsModule,
-        FormsModule,
-        ReactiveFormsModule,
-        MatFormFieldModule,
-        MatDatepickerModule,
-        MatNativeDateModule,
-        MatInputModule,
-        MatTooltipModule
-    ],
+  imports: [
+    BrowserModule,
+    HttpClientModule,
+    AppRoutingModule,
+    NoopAnimationsModule,
+    FormsModule,
+    ReactiveFormsModule,
+    MatFormFieldModule,
+    MatDatepickerModule,
+    MatNativeDateModule,
+    MatInputModule,
+    MatTooltipModule,
+    MatExpansionModule
+  ],
   providers: [UserService, LoginService],
   bootstrap: [AppComponent]
 })

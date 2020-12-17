@@ -20,16 +20,6 @@ export class MainComponent implements OnInit {
   }
 
   ngOnInit(): void {
-    this.getAllActivities();
   }
 
-  getAllActivities() {
-    this.activityService.getActivities(this.user.companyorganizationnumber).subscribe({
-      next(data) {
-        // let data2 = JSON.stringify(data)
-        // console.log('Data: ' + JSON.parse(data2));
-        console.log(data);
-      }
-    });
-  }
 }
