@@ -75,6 +75,9 @@ img {
   opacity: 90%;
 }
 
+input:focus::placeholder {
+  color: transparent;
+}
 /*.yellowbtn{*/
 /*  background-color: rgba(231, 245, 34, 1);*/
 /*}*/
