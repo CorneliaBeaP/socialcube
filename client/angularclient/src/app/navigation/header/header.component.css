@@ -3,3 +3,10 @@ img {
   height: 30px;
   width: 30px;
 }
+
+.navbar{
+  /*background: rgba(0, 0, 0, 0.4) !important;*/
+  /*backdrop-filter: blur(2px)!important;*/
+}
+
+
