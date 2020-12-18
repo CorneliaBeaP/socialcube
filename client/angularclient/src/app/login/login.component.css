@@ -8,6 +8,7 @@ body, html {
 }
 
 .loginblock {
+  backdrop-filter: blur(2px);
   height: 600px;
   width: 450px;
   text-align: center;
