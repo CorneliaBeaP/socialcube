@@ -39,7 +39,8 @@ export class ActivityCardsComponent implements OnInit, OnDestroy {
   }
 
   declineEvent(event) {
-    event.target.parentNode.parentNode.parentNode.hidden = true;
+    //TODO: om man trycker på knappen ist för Xet så tas hela raddan bort
+    // event.target.parentNode.parentNode.parentNode.hidden = true;
   //  TODO: fortsätt här så att elementet stay hidden när man uppdaterar sidan
   }
 
