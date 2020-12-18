@@ -38,8 +38,9 @@ export class ActivityCardsComponent implements OnInit, OnDestroy {
     this.activityService.attendActivity(this.loginService.getUserValue().id, activityid);
   }
 
-  declineEvent(activityid: number){
-    console.log('Decline');
+  declineEvent(event) {
+    event.target.parentNode.parentNode.parentNode.hidden = true;
+  //  TODO: fortsätt här så att elementet stay hidden när man uppdaterar sidan
   }
 
   ngOnDestroy(): void {
