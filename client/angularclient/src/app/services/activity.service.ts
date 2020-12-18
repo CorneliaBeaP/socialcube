@@ -30,4 +30,11 @@ export class ActivityService {
       return JSON.parse(data2);
     }));
   }
+
+  public attendActivity(userid: number, activityid: number) {
+    let info = [userid, activityid];
+    return this.http.post('http://localhost:8080/api/activity/attendactivity', info).subscribe(data => {
+      console.log(data);
+    });
+  }
 }

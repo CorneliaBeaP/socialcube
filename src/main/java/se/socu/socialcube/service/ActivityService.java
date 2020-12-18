@@ -5,6 +5,7 @@ import org.springframework.transaction.annotation.Transactional;
 import se.socu.socialcube.DTO.ActivityDTO;
 import se.socu.socialcube.entities.Activity;
 import se.socu.socialcube.entities.Company;
+import se.socu.socialcube.entities.Response;
 import se.socu.socialcube.entities.UserSocu;
 import se.socu.socialcube.repository.ActivityRepository;
 import se.socu.socialcube.repository.CompanyRepository;
@@ -12,6 +13,7 @@ import se.socu.socialcube.repository.UserRepository;
 
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.List;
 import java.util.Optional;
 
 @Service
@@ -54,7 +56,7 @@ public class ActivityService {
         activity.setLocationaddress(activityDTO.getLocationaddress());
         activity.setCreateddate(activityDTO.getCreateddate());
         Optional<Company> company = companyRepository.findById(activityDTO.getCompanyorganizationnumber());
-        if(company.isPresent()){
+        if (company.isPresent()) {
             activity.setCompany(company.get());
         }
         Optional<UserSocu> userSocu = userRepository.findById(activityDTO.getCreatedbyid());
@@ -65,9 +67,9 @@ public class ActivityService {
     }
 
     public void saveActivityDTO(ActivityDTO activityDTO) {
-        try{
+        try {
             activityRepository.save(convertToActivityFromActivityDTO(activityDTO));
-        }catch (Exception e){
+        } catch (Exception e) {
             // TODO: bättre felhantering
             System.out.println(Arrays.toString(e.getStackTrace()));
         }
@@ -82,5 +84,22 @@ public class ActivityService {
             activityDTOS.add(activityDTO);
         }
         return activityDTOS;
+    }
+
+    public Response attendActivity(long userid, long activityid) {
+        Response response = new Response();
+        Optional<Activity> activity = activityRepository.findById(activityid);
+        Optional<UserSocu> userSocu = userRepository.findById(userid);
+        if (activity.isPresent() && userSocu.isPresent()) {
+            List<UserSocu> attendees = activity.get().getAttendees();
+            attendees.add(userSocu.get());
+            activity.get().setAttendees(attendees);
+            response.setStatus("OK");
+            response.setMessage("Attendee added");
+        } else {
+            response.setStatus("ERROR");
+            response.setMessage("Not able to add attendee");
+        }
+        return response;
     }
 }

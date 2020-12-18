@@ -1,17 +1,12 @@
 package se.socu.socialcube.controller;
 
-import org.springframework.http.HttpHeaders;
 import org.springframework.http.MediaType;
-import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
-import org.springframework.web.filter.CorsFilter;
 import se.socu.socialcube.DTO.ActivityDTO;
-import se.socu.socialcube.DTO.UserDTO;
 import se.socu.socialcube.entities.Response;
 import se.socu.socialcube.service.ActivityService;
 
 import java.util.ArrayList;
-import java.util.TimeZone;
 
 @CrossOrigin(origins = "http://localhost:4200", allowedHeaders = "*")
 @RestController
@@ -77,5 +72,12 @@ public class ActivityController {
 //        ActivityDTO activityDTO = new ActivityDTO();
 //        return ResponseEntity.ok().body(activityDTO);
 //    }
+
+    @PostMapping(path = "/api/activity/attendactivity")
+    public Response attendActivity(@RequestBody String[] info) {
+        long userid = Long.parseLong(info[0]);
+        long activityid = Long.parseLong(info[1]);
+        return activityService.attendActivity(userid, activityid);
+    }
 
 }
