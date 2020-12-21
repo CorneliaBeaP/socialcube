@@ -29,6 +29,7 @@ export class UserService {
   }
 
   public sendUser(usersocu: Usersocu) {
+    let response: Response;
     const headerDict = {
       'Content-Type': 'application/json',
       'Accept': 'application/json',
@@ -40,9 +41,10 @@ export class UserService {
     };
     console.log('SendUser()');
     let user2 = JSON.stringify(usersocu);
-    return this.http.post('http://localhost:8080/api/users/add', user2, requestOptions).pipe(map(data => {
+   return this.http.post('http://localhost:8080/api/users/add', user2, requestOptions).pipe(map(data => {
       let data2 = JSON.stringify(data);
-      return JSON.parse(data2);
+      response = JSON.parse(data2);
+      return response;
     }));
   }
 

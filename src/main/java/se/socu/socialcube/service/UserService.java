@@ -100,7 +100,7 @@ public class UserService {
     public UserSocu saveNewUser(UserDTO userDTO) {
         UserSocu userSocu = convertToUserSocuFromUserDTO(userDTO);
         userSocu.setEmail(userSocu.getEmail().toLowerCase());
-        userSocu.setPassword(generatePassword(20));
+        userSocu.setPassword(generatePassword(11));
         System.out.println(userSocu.getPassword());
         userRepository.save(userSocu);
         return userSocu;

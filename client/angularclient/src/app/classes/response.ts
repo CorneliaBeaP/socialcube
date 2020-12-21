@@ -1,4 +1,4 @@
 export class Response {
-  status: string;
-  message: string;
+  status?: string;
+  message?: string;
 }
