@@ -3,8 +3,9 @@ import {FormBuilder, FormGroup, Validators} from "@angular/forms";
 import {Usersocu} from "../classes/usersocu";
 import {LoginService} from "../services/login.service";
 import {UserService} from "../services/user.service";
-import {Subscription} from "rxjs";
+import {Observable, Subscription} from "rxjs";
 import {Response} from "../classes/response";
+import {map} from "rxjs/operators";
 
 @Component({
   selector: 'app-administration',
@@ -16,6 +17,7 @@ export class AdministrationComponent implements OnInit, OnDestroy {
   addForm: FormGroup;
   response: Response;
   subscription: Subscription;
+  variabel: Observable<any>;
 
   constructor(private formBuilder: FormBuilder,
               private loginService: LoginService,
