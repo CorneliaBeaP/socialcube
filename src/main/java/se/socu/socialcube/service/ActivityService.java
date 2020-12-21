@@ -103,10 +103,15 @@ public class ActivityService {
         return response;
     }
 
-    public ArrayList<Activity> getAllAttendedActivities(long userid) {
+    public ArrayList<ActivityDTO> getAllAttendedActivities(long userid) {
         String string = "" + userid;
         Response response = new Response();
-        System.out.println(activityRepository.findAllAttendedActivitiesByUsersocuId(Long.parseLong(string)));
-        return activityRepository.findAllByCompany_organizationnumber(userid);
+        ArrayList<Activity> activities = activityRepository.findAllAttendedActivitiesByUsersocuId(Long.parseLong(string));
+        ArrayList<ActivityDTO> activityDTOS = new ArrayList<>();
+        for (Activity a: activities
+             ) {
+            activityDTOS.add(convertToActivityDTOfromActivity(a));
+        }
+        return activityDTOS;
     }
 }

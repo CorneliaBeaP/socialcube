@@ -82,7 +82,7 @@ public class ActivityController {
     }
 
     @GetMapping(path = "/api/activity/attendedactivities/{id}")
-    public ArrayList<Activity> getAttendedActivities(@PathVariable long id){
+    public ArrayList<ActivityDTO> getAttendedActivities(@PathVariable long id){
        return activityService.getAllAttendedActivities(id);
     }
 

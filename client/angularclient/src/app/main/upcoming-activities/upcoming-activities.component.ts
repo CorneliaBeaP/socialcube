@@ -9,7 +9,7 @@ import {LoginService} from "../../services/login.service";
   styleUrls: ['./upcoming-activities.component.css']
 })
 export class UpcomingActivitiesComponent implements OnInit {
-  activities: Object;
+  activities: Activity[];
 
   constructor(private activityService: ActivityService,
               private loginService: LoginService) {
@@ -23,6 +23,7 @@ export class UpcomingActivitiesComponent implements OnInit {
     console.log('getActivities');
     this.activityService.getattendedActivities(this.loginService.getUserValue().id).subscribe(data => {
       this.activities = data;
+      console.log(this.activities);
     });
   }
 

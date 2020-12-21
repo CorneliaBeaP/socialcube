@@ -1,1 +1,26 @@
-<h4>Kommande aktiviteter</h4>
+<h4 class="mb-5">Kommande aktiviteter</h4>
+<div class="mb-4" *ngFor="let activity of activities">
+
+  <div class="row">
+    <div class="col">
+      <h5>{{activity.activitytype}}</h5>
+    </div>
+    <div class="col">
+      <h5 class="text-right"><i class="far fa-calendar-alt"></i> {{activity.activitydate[0]}}-<span
+        *ngIf="activity.activitydate[1]<10">0</span>{{activity.activitydate[1]}}-{{activity.activitydate[2]}}</h5>
+    </div>
+  </div>
+  <div class="row">
+    <div class="col">
+      <h6>{{activity.locationname}} - {{activity.locationaddress}}</h6>
+    </div>
+    <div class="col">
+      <h6 class="text-right"><i class="far fa-clock"></i> {{activity.activitydate[3]}}:<span
+        *ngIf="activity.activitydate[4]<10">0</span>{{activity.activitydate[4]}}</h6>
+    </div>
+  </div>
+  <div class="card-text">{{activity.descriptionsocu}}</div>
+  <div class="text-right rsvp" *ngIf="activity.rsvpdate">Senaste OSA-datum: {{activity.rsvpdate[0]}}
+    -{{activity.rsvpdate[1]}}-{{activity.rsvpdate[2]}}</div>
+</div>
+
