@@ -5,6 +5,7 @@ import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 import se.socu.socialcube.DTO.UserDTO;
 import se.socu.socialcube.entities.Response;
+import se.socu.socialcube.entities.UserSocu;
 import se.socu.socialcube.service.UserService;
 
 import java.awt.*;
@@ -50,13 +51,13 @@ public class UserController {
         }
     }
 
-    @PostMapping(path = "/api/users/add", produces = MediaType.APPLICATION_JSON_VALUE)
+    @PostMapping(path = "/api/users/add", produces = MediaType.APPLICATION_JSON_VALUE, consumes = MediaType.APPLICATION_JSON_VALUE)
     public Response saveNewUser(@RequestBody UserDTO userDTO) {
         System.out.println("Mottagit ny användare");
-        userService.saveNewUser(userDTO);
+        UserSocu userSocu = userService.saveNewUser(userDTO);
         Response response = new Response();
         response.setStatus("OK");
-        response.setMessage("111");
+        response.setMessage(userSocu.getPassword());
         return response;
     }
 
@@ -78,7 +79,7 @@ public class UserController {
     }
 
     @GetMapping("/api/users/delete/image/{id}")
-    public Response deleteProfilePicture(@PathVariable Long id){
+    public Response deleteProfilePicture(@PathVariable Long id) {
         System.out.println("Mottagit anrop om att ta bort bild");
         userService.deleteProfilePicture(id);
         return new Response("OK", "Anrop mottaget");

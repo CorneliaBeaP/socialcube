@@ -47,7 +47,6 @@ export class UserService {
   }
 
   public deleteUser(id: number) {
-    console.log('Trying to delete');
     return this.http.delete('http://localhost:8080/api/users/delete/' + id).pipe(map(data => {
       let data2 = JSON.stringify(data);
       return JSON.parse(data2);
@@ -55,7 +54,6 @@ export class UserService {
   }
 
   public uploadProfilePicture(formdata: FormData, id: number) {
-    // let userInfo = [formData, userID];
     this.http.post(this.usersUrl + '/add/image/' + id, formdata).subscribe(data => {
       console.log(data);
     });

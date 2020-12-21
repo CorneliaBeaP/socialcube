@@ -97,12 +97,13 @@ public class UserService {
         return allUsersDTO;
     }
 
-    public void saveNewUser(UserDTO userDTO) {
+    public UserSocu saveNewUser(UserDTO userDTO) {
         UserSocu userSocu = convertToUserSocuFromUserDTO(userDTO);
         userSocu.setEmail(userSocu.getEmail().toLowerCase());
         userSocu.setPassword(generatePassword(20));
         System.out.println(userSocu.getPassword());
         userRepository.save(userSocu);
+        return userSocu;
     }
 
     public void deleteUser(Long id) {
