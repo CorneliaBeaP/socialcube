@@ -11,13 +11,9 @@ body, html {
   height: 600px;
   width: 450px;
   text-align: center;
-  /*border-width: 1px;*/
-  /*border-color: #f7f7f7;*/
-  /*border-style: solid;*/
   border-radius: 15px;
   background: rgba(0, 0, 0, 0.4);
   backdrop-filter: blur(2px);
-  /*background: rgba(227, 227, 000, 0.7);*/
 }
 
 .logingroup {
@@ -25,15 +21,13 @@ body, html {
 }
 
 .loginitem {
-  font-size: 20px;
+  font-size: 17px;
   background-color: rgba(255, 255, 255, 0);
   border: none;
   border-bottom: 2px solid white;
   height: 45px;
   width: 360px;
   color: white;
-  /*border-width: 1px;*/
-  /*border-radius: 15px;*/
   text-align: left;
 }
 
@@ -79,6 +73,3 @@ img {
 input:focus::placeholder {
   color: transparent;
 }
-/*.yellowbtn{*/
-/*  background-color: rgba(231, 245, 34, 1);*/
-/*}*/
