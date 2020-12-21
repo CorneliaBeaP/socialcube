@@ -64,6 +64,6 @@ export class AdministrationComponent implements OnInit, OnDestroy {
   }
 
   mailto(emailaddress: string){
-    window.location.assign('mailto:' + emailaddress);
+    window.location.assign(`mailto:${emailaddress}?subject=Lösenord för SocialCube&body=Hej! Du har precis blivit tillagd som användare på SocialCube av ${this.loginService.getUserValue().name}.%0D%0ADitt användarnamn: ${emailaddress}%0D%0ADitt lösenord: ${this.response.message}`);
   }
 }
