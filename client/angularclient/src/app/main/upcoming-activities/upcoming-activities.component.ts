@@ -20,10 +20,8 @@ export class UpcomingActivitiesComponent implements OnInit {
   }
 
   getActivities() {
-    console.log('getActivities');
     this.activityService.getattendedActivities(this.loginService.getUserValue().id).subscribe(data => {
       this.activities = data;
-      console.log(this.activities);
     });
   }
 

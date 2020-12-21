@@ -41,7 +41,7 @@ export class ActivityService {
   public getattendedActivities(userid: number) {
     return this.http.get(`http://localhost:8080/api/activity/attendedactivities/` + userid).pipe(map(data => {
       let data2 = JSON.stringify(data);
-      console.log(data2);
-      return JSON.parse(data2);    }));
+      return JSON.parse(data2);
+    }));
   }
 }
