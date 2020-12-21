@@ -20,10 +20,8 @@ import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
-import java.util.ArrayList;
+import java.util.*;
 import java.util.List;
-import java.util.Objects;
-import java.util.Optional;
 
 @Service
 public class UserService {
@@ -102,7 +100,8 @@ public class UserService {
     public void saveNewUser(UserDTO userDTO) {
         UserSocu userSocu = convertToUserSocuFromUserDTO(userDTO);
         userSocu.setEmail(userSocu.getEmail().toLowerCase());
-        userSocu.setPassword("111");
+        userSocu.setPassword(generatePassword(20));
+        System.out.println(userSocu.getPassword());
         userRepository.save(userSocu);
     }
 
@@ -143,5 +142,16 @@ public class UserService {
         } catch (IOException e) {
             e.printStackTrace();
         }
+    }
+
+    public String generatePassword(int length) {
+        String characters = "0123456789ABCDEFGHIJKLMNOPQRSTUVWXabcdefghijklmnopqrstuvwxyz";
+        Random random = new Random();
+
+        StringBuilder stringBuilder = new StringBuilder(length);
+        for (int i = 0; i < length; i++){
+            stringBuilder.append(characters.charAt(random.nextInt(characters.length())));
+        }
+        return stringBuilder.toString();
     }
 }

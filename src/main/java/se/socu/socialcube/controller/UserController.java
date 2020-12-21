@@ -83,4 +83,5 @@ public class UserController {
         userService.deleteProfilePicture(id);
         return new Response("OK", "Anrop mottaget");
     }
+
 }
