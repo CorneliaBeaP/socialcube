@@ -3,6 +3,7 @@ package se.socu.socialcube.controller;
 import org.springframework.http.MediaType;
 import org.springframework.web.bind.annotation.*;
 import se.socu.socialcube.DTO.ActivityDTO;
+import se.socu.socialcube.entities.Activity;
 import se.socu.socialcube.entities.Response;
 import se.socu.socialcube.service.ActivityService;
 
@@ -78,6 +79,11 @@ public class ActivityController {
         long userid = Long.parseLong(info[0]);
         long activityid = Long.parseLong(info[1]);
         return activityService.attendActivity(userid, activityid);
+    }
+
+    @GetMapping(path = "/api/activity/attendedactivities/{id}")
+    public ArrayList<Activity> getAttendedActivities(@PathVariable long id){
+       return activityService.getAllAttendedActivities(id);
     }
 
 }

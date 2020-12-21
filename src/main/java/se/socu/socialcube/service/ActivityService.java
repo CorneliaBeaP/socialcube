@@ -102,4 +102,11 @@ public class ActivityService {
         }
         return response;
     }
+
+    public ArrayList<Activity> getAllAttendedActivities(long userid) {
+        String string = "" + userid;
+        Response response = new Response();
+        System.out.println(activityRepository.findAllAttendedActivitiesByUsersocuId(Long.parseLong(string)));
+        return activityRepository.findAllByCompany_organizationnumber(userid);
+    }
 }

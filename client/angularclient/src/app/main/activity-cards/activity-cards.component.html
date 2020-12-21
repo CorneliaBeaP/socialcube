@@ -1,28 +1,33 @@
-<div class="m-5"  *ngFor="let activity of activities">
-<div class="card">
-  <div class="card-body">
-    <div class="row">
-      <div class="col">
-        <h5>{{activity.activitytype}}</h5>
+<div class="m-5" *ngFor="let activity of activities">
+  <div class="card">
+    <div class="card-body">
+      <div class="row">
+        <div class="col">
+          <h5>{{activity.activitytype}}</h5>
+        </div>
+        <div class="col">
+          <h5 class="text-right"><i class="far fa-calendar-alt"></i> {{activity.activitydate[0]}}-<span
+            *ngIf="activity.activitydate[1]<10">0</span>{{activity.activitydate[1]}}-{{activity.activitydate[2]}}</h5>
+        </div>
       </div>
-      <div class="col">
-        <h5 class="text-right"><i class="far fa-calendar-alt"></i> {{activity.activitydate[0]}}-<span *ngIf="activity.activitydate[1]<10">0</span>{{activity.activitydate[1]}}-{{activity.activitydate[2]}}</h5>
+      <div class="row">
+        <div class="col">
+          <h6>{{activity.locationname}} - {{activity.locationaddress}}</h6>
+        </div>
+        <div class="col">
+          <h6 class="text-right"><i class="far fa-clock"></i> {{activity.activitydate[3]}}:<span
+            *ngIf="activity.activitydate[4]<10">0</span>{{activity.activitydate[4]}}</h6>
+        </div>
       </div>
+      <div class="card-text mt-4 mb-4">{{activity.descriptionsocu}}</div>
+      <div class="text-right rsvp" *ngIf="activity.rsvpdate">Senaste OSA-datum: {{activity.rsvpdate[0]}}
+        -{{activity.rsvpdate[1]}}-{{activity.rsvpdate[2]}}</div>
     </div>
-    <div class="row">
-      <div class="col">
-        <h6>{{activity.locationname}} - {{activity.locationaddress}}</h6>
-      </div>
-      <div class="col">
-       <h6 class="text-right"><i class="far fa-clock"></i> {{activity.activitydate[3]}}:<span *ngIf="activity.activitydate[4]<10">0</span>{{activity.activitydate[4]}}</h6>
-      </div>
-    </div>
-    <div class="card-text mt-4 mb-4">{{activity.descriptionsocu}}</div>
-    <div class="text-right rsvp" *ngIf="activity.rsvpdate">Senaste OSA-datum: {{activity.rsvpdate[0]}}-{{activity.rsvpdate[1]}}-{{activity.rsvpdate[2]}}</div>
   </div>
-</div>
-<div class="float-right">
-  <button type="button" class="accept choicebutton" (click)="attendEvent(activity.id)"><i class="fas fa-check"></i></button>
-  <button type="button" class="refuse choicebutton" (click)="declineEvent($event)"><i class="fas fa-times"></i></button>
-</div>
+  <div class="float-right">
+    <button type="button" class="accept choicebutton" (click)="attendEvent(activity.id)"><i class="fas fa-check"></i>
+    </button>
+    <button type="button" class="refuse choicebutton" (click)="declineEvent($event)"><i class="fas fa-times"></i>
+    </button>
+  </div>
 </div>

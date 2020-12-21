@@ -34,7 +34,6 @@ export class ActivityCardsComponent implements OnInit, OnDestroy {
   }
 
   attendEvent(activityid: number) {
-    console.log('Attend');
     this.activityService.attendActivity(this.loginService.getUserValue().id, activityid);
   }
 
