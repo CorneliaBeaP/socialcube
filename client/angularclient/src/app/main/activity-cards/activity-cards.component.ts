@@ -42,6 +42,7 @@ export class ActivityCardsComponent implements OnInit, OnDestroy {
 
   attendEvent(activityid: number) {
     this.activityService.attendActivity(this.loginService.getUserValue().id, activityid);
+    location.reload();
   }
 
   declineEvent(id: number) {
