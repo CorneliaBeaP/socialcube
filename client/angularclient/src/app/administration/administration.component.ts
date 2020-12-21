@@ -17,6 +17,8 @@ export class AdministrationComponent implements OnInit, OnDestroy {
   addForm: FormGroup;
   response: Response;
   subscription: Subscription;
+  emailstring= 'mailto:';
+  newuseremail: string;
 
   constructor(private formBuilder: FormBuilder,
               private loginService: LoginService,
@@ -49,16 +51,19 @@ export class AdministrationComponent implements OnInit, OnDestroy {
     usersocu.usertype = 0;
     usersocu.companyorganizationnumber = this.loginService.getUserValue().companyorganizationnumber;
     this.subscription = this.userService.sendUser(usersocu).subscribe(data => {
-        let data1 = JSON.stringify(data);
-        this.response = JSON.parse(data1);
-      }
-    );
-
+      let data1 = JSON.stringify(data);
+      this.response = JSON.parse(data1);
+    });
+    this.mailto(usersocu.email.toString());
     this.addForm.reset();
     window.location.reload();
     this.subscription.unsubscribe();
   }
 
   ngOnDestroy(): void {
+  }
+
+  mailto(emailaddress: string){
+    window.location.assign('mailto:' + emailaddress);
   }
 }
