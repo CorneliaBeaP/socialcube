@@ -21,6 +21,7 @@ export class LoginComponent implements OnInit, OnDestroy {
   submitted = false;
   subscription: Subscription;
   background: string;
+  isWrongCredentials: boolean;
   backgrounds = [
     "../../assets/images/1BG.jpg",
     "../../assets/images/2BG.jpg",
@@ -63,52 +64,21 @@ export class LoginComponent implements OnInit, OnDestroy {
   }
 
   onSubmit() {
-    this.submitted = true;
-
+    this.isWrongCredentials = false;
     if (this.loginForm.invalid) {
+      this.submitted = true;
       return;
     }
 
     this.subscription = this.loginService.authenticate(this.loginForm.get('username').value, this.loginForm.get('password').value)
       .pipe(first())
       .subscribe(data => {
+          if (data == null) {
+            this.isWrongCredentials = true;
+            this.loginForm.reset();
+          }
           this.router.navigate([this.returnUrl]);
-        },
-        error => {
-          //TODO: fixa alertservice av nåt slag
         });
-
-
-  }
-
-
-  // loginUser(event) {
-  //   let current: string = '';
-  //   Promise.resolve().then(value => {
-  //     this.loginService.authenticate(this.loginForm.get('username').value, this.loginForm.get('password').value);
-  //     setTimeout(() => {
-  //       console.log(sessionStorage.getItem('id'));
-  //       current = (sessionStorage.getItem('id'));
-  //     }, 100);
-  //     setTimeout(() => {
-  //       if (!(current == null)) {
-  //         console.log('approved!');
-  //         this.goToMainPage();
-  //       } else {
-  //         console.log('not approved');
-  //       }
-  //     }, 500);
-  //   });
-
-
-  // this.loginService.authenticate(this.loginForm.get('username').value, this.loginForm.get('password').value);
-  // if (this.isAuthenticated) {
-  //   this.goToMainPage();
-  // }
-  // }
-
-  executeErrorMessage() {
-    //TODO: lägg in så att felmeddelande visas när man försöker logga in och skriver fel uppgifter
   }
 
   ngOnDestroy(): void {

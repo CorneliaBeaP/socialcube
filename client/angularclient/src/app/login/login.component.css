@@ -17,7 +17,7 @@ body, html {
 }
 
 .logingroup {
-  margin-top: 170px;
+  margin-top: 130px;
 }
 
 .loginitem {
@@ -72,4 +72,16 @@ img {
 
 input:focus::placeholder {
   color: transparent;
+}
+
+.invalid-input {
+  border-bottom: 1px solid #ff5e5e;
+}
+
+#errorholder {
+  color: rgba(255, 255, 255, 0);
+}
+
+.errormessage {
+  color: #ff5e5e;
 }

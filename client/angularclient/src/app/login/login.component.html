@@ -1,32 +1,39 @@
-
-  <img [src]="background">
-  <div class="loginblock centerofpage" *ngIf="loginpage">
-    <div class="socialcubelogin socialcube m-5">
-      Socialcube
-    </div>
-    <div class="logingroup ">
-      <form (ngSubmit)="onSubmit()" [formGroup]="loginForm" novalidate>
-        <input formControlName="username" autocomplete="off" type="email" class="empty p-1 m-3 loginitem" id="emailinput"
-               placeholder="&#xf406;   Mailadress"
-               required name="username">
-        <input formControlName="password" autocomplete="off" type="password" class="empty p-1 m-3 loginitem"
-               id="passwordinput" placeholder="&#xf023;   Lösenord"
-               required name="password">
-        <button class="yellowbtn btn btn-light m-2" type="submit">Logga in</button>
-      </form>
-    </div>
-    <button class="btn btn-link noAccount" (click)="showLoginPage(false)" type="button"> Jag har inget konto!</button>
+<img [src]="background">
+<div class="loginblock centerofpage" *ngIf="loginpage">
+  <div class="socialcubelogin socialcube m-5">
+    Socialcube
   </div>
-
-  <ng-template [ngIf]="!loginpage">
-    <div class="centerofpage">
-      <div class="noAccountPage">
-        <div class="text-center">
-          <h3 class="m-5">Vad kul att du vill skapa ett konto hos oss!</h3>
-          Just nu är vi i pilot och därför behöver du kontakta oss för att skapa ett konto för dig eller ditt företag.
-          Detta gör du genom att maila oss på <b>kontakt@socialcube</b>.
-        </div>
-        <button type="button" class="btn btn-light mt-5" (click)="showLoginPage(true)">Tillbaka</button>
+  <div class="logingroup ">
+    <form (ngSubmit)="onSubmit()" [formGroup]="loginForm" novalidate>
+      <input [ngClass]="{'invalid-input': this.loginForm.get('username').invalid && this.submitted && !this.isWrongCredentials}"
+             formControlName="username" autocomplete="off" type="email" class="empty p-1 m-3 loginitem" id="emailinput"
+             placeholder="&#xf406;   Mailadress"
+             required name="username">
+      <input [ngClass]="{'invalid-input': this.loginForm.get('password').invalid && this.submitted}"
+             formControlName="password" autocomplete="off" type="password" class="empty p-1 m-3 loginitem"
+             id="passwordinput" placeholder="&#xf023;   Lösenord"
+             required name="password">
+      <div *ngIf="!isWrongCredentials" id="errorholder">
+               _
       </div>
+      <div class="errormessage" *ngIf="isWrongCredentials">
+        Felaktigt användarnamn eller lösenord.
+      </div>
+      <button class="yellowbtn btn btn-light m-3" type="submit">Logga in</button>
+    </form>
+  </div>
+  <button class="btn btn-link noAccount mt-2" (click)="showLoginPage(false)" type="button"> Jag har inget konto!</button>
+</div>
+
+<ng-template [ngIf]="!loginpage">
+  <div class="centerofpage">
+    <div class="noAccountPage">
+      <div class="text-center">
+        <h3 class="m-5">Vad kul att du vill skapa ett konto hos oss!</h3>
+        Just nu är vi i pilot och därför behöver du kontakta oss för att skapa ett konto för dig eller ditt företag.
+        Detta gör du genom att maila oss på <b>kontakt@socialcube</b>.
+      </div>
+      <button type="button" class="btn btn-light mt-5" (click)="showLoginPage(true)">Tillbaka</button>
     </div>
-  </ng-template>
+  </div>
+</ng-template>
