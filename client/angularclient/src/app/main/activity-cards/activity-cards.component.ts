@@ -3,6 +3,7 @@ import {Activity} from "../../classes/activity";
 import {ActivityService} from "../../services/activity.service";
 import {LoginService} from "../../services/login.service";
 import {Subscription} from "rxjs";
+import {Usersocu} from "../../classes/usersocu";
 
 @Component({
   selector: 'app-activity-cards',
@@ -14,14 +15,16 @@ export class ActivityCardsComponent implements OnInit, OnDestroy {
   activities: Activity[];
   subscription: Subscription;
   declinedActivityIDs: number[];
+  user: Usersocu;
 
   constructor(private activityService: ActivityService, private loginService: LoginService) {
   }
 
   ngOnInit(): void {
+    this.user = this.loginService.getUserValue();
     this.subscription = this.activityService.getActivities(this.loginService.getUserValue().companyorganizationnumber).subscribe(activityarray => {
       this.activities = activityarray;
-      this.sortByCreatedDate();
+      // this.sortByCreatedDate();
       this.activities = this.activities.reverse();
       this.getDeclinedActivityIDs();
       this.sortAwayDeclinedActivities();
@@ -42,8 +45,8 @@ export class ActivityCardsComponent implements OnInit, OnDestroy {
   }
 
   declineEvent(id: number) {
-    let declinedAs: number[] = JSON.parse(localStorage.getItem('declinedActivityIDs'));
-    if (localStorage.getItem('declinedActivityIDs') == null) {
+    let declinedAs: number[] = JSON.parse(localStorage.getItem('declinedActivityIDs' + this.user.id));
+    if (localStorage.getItem('declinedActivityIDs' + this.user.id) == null) {
       declinedAs = [id];
     } else {
       if (!declinedAs.includes(id)) {
@@ -51,7 +54,7 @@ export class ActivityCardsComponent implements OnInit, OnDestroy {
       }
     }
     location.reload();
-    localStorage.setItem('declinedActivityIDs', JSON.stringify(declinedAs));
+    localStorage.setItem('declinedActivityIDs' + this.user.id, JSON.stringify(declinedAs));
   }
 
   ngOnDestroy(): void {
@@ -59,12 +62,11 @@ export class ActivityCardsComponent implements OnInit, OnDestroy {
   }
 
   public getDeclinedActivityIDs() {
-    this.declinedActivityIDs = JSON.parse(localStorage.getItem('declinedActivityIDs'));
+    this.declinedActivityIDs = JSON.parse(localStorage.getItem('declinedActivityIDs' + this.user.id));
     console.log(this.declinedActivityIDs);
   }
 
   sortAwayDeclinedActivities() {
-    console.log(this.activities);
     if (!(this.declinedActivityIDs == null)) {
       this.declinedActivityIDs.forEach(id => {
         this.activities.forEach(activity => {
