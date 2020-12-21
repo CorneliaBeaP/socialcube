@@ -15,7 +15,7 @@ public interface ActivityRepository extends CrudRepository<Activity, Long> {
 
     ArrayList<Activity> findAllByCompany_organizationnumber(long company_organizationnumber);
 
-    @Query(value = "SELECT * FROM attendedactivities left JOIN activity where activity.id = activityid and usersocuid=?1", nativeQuery = true)
+    @Query(value = "SELECT DISTINCT * FROM attendedactivities left JOIN activity where activity.id = activityid and usersocuid=?1", nativeQuery = true)
     ArrayList<Activity> findAllAttendedActivitiesByUsersocuId(long userid);
 
 }
