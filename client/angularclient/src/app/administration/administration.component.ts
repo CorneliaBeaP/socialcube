@@ -55,18 +55,16 @@ export class AdministrationComponent implements OnInit, OnDestroy {
     usersocu.companyorganizationnumber = this.loginService.getUserValue().companyorganizationnumber;
     this.subscription = this.userService.sendUser(usersocu).subscribe((data) => {
       this.response = data;
-      console.log(data);
-      console.log(this.response.message);
+      this.mailto(usersocu.email.toString());
     });
-    // this.mailto(usersocu.email.toString());
-    // this.addForm.reset();
-    // window.location.reload();
+    this.addForm.reset();
+    window.location.reload();
   }
 
   ngOnDestroy(): void {
   }
 
   mailto(emailaddress: string) {
-    window.location.assign(`mailto:${emailaddress}?subject=Lösenord för SocialCube&body=Hej! Du har precis blivit tillagd som användare på SocialCube av ${this.loginService.getUserValue().name}.%0D%0ADitt användarnamn: ${emailaddress}%0D%0ADitt lösenord: ${this.response.message}`);
+    window.location.assign(`mailto:${emailaddress}?subject=Lösenord för SocialCube&body=Hej! Du har precis blivit tillagd som användare på SocialCube av ${this.loginService.getUserValue().name}.%0D%0ADitt användarnamn: ${emailaddress}%0D%0ADitt lösenord: ${this.response.message}%0D%0ANär du loggat in för första gången bör du byta ditt lösenord. Detta gör du i din profil.`);
   }
 }
