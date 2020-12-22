@@ -1,4 +1,4 @@
-import {Component, OnInit} from '@angular/core';
+import {Component, OnDestroy, OnInit} from '@angular/core';
 import {UserService} from "../services/user.service";
 import {LoginService} from "../services/login.service";
 import {Observable, of, Subscription} from "rxjs";
@@ -14,7 +14,7 @@ import {Response} from "../classes/response";
   templateUrl: './profile.component.html',
   styleUrls: ['./profile.component.css']
 })
-export class ProfileComponent implements OnInit {
+export class ProfileComponent implements OnInit, OnDestroy {
 
   url: string | ArrayBuffer;
   url2: string;
@@ -39,13 +39,16 @@ export class ProfileComponent implements OnInit {
   ngOnInit(): void {
     this.getLoggedInUser();
     this.getProfilePicture(this.loginService.getUserValue().id);
-    this.createInfoform();
-    this.createPassform()
-
   }
 
   getLoggedInUser() {
-    this.user = this.loginService.getUserValue();
+    this.subscription = this.userService.getUser(this.loginService.getUserValue().id).subscribe((data) => {
+      let data2 = JSON.stringify(data);
+      this.user = JSON.parse(data2);
+      console.log(this.user);
+      this.createPassform();
+      this.createInfoform();
+    });
   }
 
   onSelectFile(event) { // called each time file input changes
@@ -107,8 +110,8 @@ export class ProfileComponent implements OnInit {
 
   createInfoform() {
     this.infoform = this.formBuilder.group({
-      name: [this.user.name],
-      email: [this.user.email],
+      name: [this.user.name, Validators.required],
+      email: [this.user.email, [Validators.required, Validators.email]],
       department: [this.user.department]
     });
   }
@@ -121,25 +124,18 @@ export class ProfileComponent implements OnInit {
     });
   }
 
-  checkIfMatchingPasswords(passwordKey: string, passwordConfirmationKey: string) {
-    return (group: FormGroup) => {
-      let passwordInput = group.controls[passwordKey],
-        passwordConfirmationInput = group.controls[passwordConfirmationKey];
-      if (passwordInput.value !== passwordConfirmationInput.value) {
-        return passwordConfirmationInput.setErrors({notEquivalent: true})
-      } else {
-        return passwordConfirmationInput.setErrors(null);
-      }
-    }
-  }
-
   onSubmitInfoform() {
     if (this.infoform.invalid) {
       this.isInfoSaveButtonClicked = true;
-      console.log('error');
       return;
     }
-    console.log('submit');
+    this.subscription = this.userService.updateUserInformation(this.user.id, this.infoform.get('name').value, this.infoform.get('email').value, this.infoform.get('department').value).subscribe((data) => {
+      this.subscrip = this.userService.getUser(this.user.id).subscribe((data) => {
+        let data2 = JSON.stringify(data);
+        this.user = JSON.parse(data2);
+      });
+      console.log(data);
+    });
   }
 
   onSubmitPassform() {
@@ -161,10 +157,19 @@ export class ProfileComponent implements OnInit {
           this.isOldPasswordWrong = true;
         } else {
           this.subscrip = this.userService.changePassword(this.passform.get('oldpassword').value, this.passform.get('newpassword').value, this.user.id).subscribe((data) => {
-           let data2 = JSON.stringify(data);
+            let data2 = JSON.stringify(data);
             this.response = JSON.parse(data2);
           });
         }
       });
+  }
+
+  ngOnDestroy(): void {
+    if (!this.subscription.closed) {
+      this.subscription.unsubscribe();
+    }
+    if (!this.subscrip.closed) {
+      this.subscrip.unsubscribe();
+    }
   }
 }

@@ -8,6 +8,7 @@ import se.socu.socialcube.entities.Response;
 import se.socu.socialcube.entities.UserSocu;
 import se.socu.socialcube.service.UserService;
 
+import java.util.Arrays;
 import java.util.List;
 
 @CrossOrigin(origins = "http://localhost:4200", allowedHeaders = "*")
@@ -85,10 +86,17 @@ public class UserController {
     }
 
     @PutMapping(value = "/api/users/password/{id}", consumes = MediaType.APPLICATION_JSON_VALUE)
-    public Response changePassword(@PathVariable Long id, @RequestBody String[] passwordinfo){
-        System.out.println(passwordinfo[0]);
-        System.out.println(passwordinfo[1]);
-        System.out.println(id);
+    public Response changePassword(@PathVariable Long id, @RequestBody String[] passwordinfo) {
         return userService.changePassword(passwordinfo[0], passwordinfo[1], id);
+    }
+
+    @PutMapping(value = "/api/users/update/{id}")
+    public Response updateUserInformation(@PathVariable long id, @RequestBody String[] userinfo) {
+        return userService.updateUserInformation(id, userinfo[0], userinfo[1], userinfo[2]);
+    }
+
+    @GetMapping(value = "/api/user/{id}")
+    public UserDTO getUser(@PathVariable long id) {
+        return userService.getUserDTOById(id);
     }
 }

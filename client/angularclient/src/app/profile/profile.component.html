@@ -19,18 +19,18 @@
 
   <div class="row">
     <div class="col">
-      <form (ngSubmit)="onSubmitInfoform()" [formGroup]="infoform" novalidate>
+      <form *ngIf="infoform" (ngSubmit)="onSubmitInfoform()" [formGroup]="infoform" novalidate>
         <div class="form-group mt-3">
           <input formControlName="name" autocomplete="off" type="text" class="form-control">
-          <input formControlName="email" autocomplete="off" type="text" class="form-control mt-3">
-          <input formControlName="department" autocomplete="off" type="text" class="form-control mt-3">
+          <input formControlName="email" autocomplete="off" type="email" class="form-control mt-3">
+          <input formControlName="department" autocomplete="off" type="text" class="form-control mt-3" placeholder="Avdelning">
           <div class="d-flex justify-content-center">
             <button type="submit" class="minw-100 btn btn-light m-5">Spara</button>
           </div>
         </div>
       </form>
 
-      <form (ngSubmit)="onSubmitPassform()" [formGroup]="passform" novalidate>
+      <form *ngIf="passform" (ngSubmit)="onSubmitPassform()" [formGroup]="passform" novalidate>
         <div class="form-group mt-3">
           <label for="changePassword" id="label" class="ml-1 mt-5">Byt lösenord</label>
           <input

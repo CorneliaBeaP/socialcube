@@ -167,4 +167,38 @@ public class UserService {
         }
         return response;
     }
+
+    public Response updateUserInformation(long userid, String name, String email, String department) {
+        Response response = new Response();
+
+        Optional<UserSocu> userSocu = userRepository.findById(userid);
+        if (userSocu.isPresent()) {
+            UserSocu user = userSocu.get();
+            user.setName(name);
+            user.setEmail(email);
+            user.setDepartment(department);
+            try {
+                userRepository.save(user);
+                response.setMessage("Informationen uppdaterad!");
+                response.setStatus("OK");
+            } catch (Exception e) {
+                e.printStackTrace();
+                response.setMessage("Kunde inte uppdatera informationen. Försök igen senare.");
+                response.setStatus("ERROR");
+            }
+        } else {
+            response.setMessage("Kunde inte uppdatera informationen. Försök igen senare.");
+            response.setStatus("ERROR");
+        }
+        return response;
+    }
+
+    public UserDTO getUserDTOById(long id) {
+        UserDTO dto = new UserDTO();
+        Optional<UserSocu> userSocu = userRepository.findById(id);
+        if (userSocu.isPresent()) {
+            dto = convertToUserDTOfromUserSocu(userSocu.get());
+        }
+        return dto;
+    }
 }

@@ -43,7 +43,7 @@ export class UserService {
     console.log('SendUser()');
     let user2 = JSON.stringify(usersocu);
 
-   return this.http.post('http://localhost:8080/api/users/add', user2, requestOptions).pipe(map(data => {
+    return this.http.post('http://localhost:8080/api/users/add', user2, requestOptions).pipe(map(data => {
       let data2 = JSON.stringify(data);
       return JSON.parse(data2);
     }));
@@ -68,8 +68,8 @@ export class UserService {
     });
   }
 
-  public changePassword(oldPassword: string, newPassword: string, userid: number){
-   let passw = [oldPassword, newPassword];
+  public changePassword(oldPassword: string, newPassword: string, userid: number) {
+    let passw = [oldPassword, newPassword];
     const headerDict = {
       'Content-Type': 'application/json',
       'Accept': 'application/json',
@@ -80,6 +80,21 @@ export class UserService {
       headers: new HttpHeaders(headerDict),
     };
     return this.http.put(`http://localhost:8080/api/users/password/${userid}`, passw, requestOptions).pipe(map(data => {
+      let data2 = JSON.stringify(data);
+      return JSON.parse(data2);
+    }));
+  }
+
+  public updateUserInformation(id: number, name: string, email: string, department: string) {
+    let information = [name, email, department];
+    return this.http.put(`http://localhost:8080/api/users/update/${id}`, information).pipe(map(data => {
+      let data2 = JSON.stringify(data);
+      return JSON.parse(data2);
+    }));
+  }
+
+  public getUser(id: number) {
+    return this.http.get(`http://localhost:8080/api/user/${id}`).pipe(map(data => {
       let data2 = JSON.stringify(data);
       return JSON.parse(data2);
     }));

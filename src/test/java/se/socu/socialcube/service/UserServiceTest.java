@@ -14,10 +14,7 @@ import static org.junit.jupiter.api.Assertions.*;
 class UserServiceTest {
 
    private UserRepository userRepository = new UserRepository() {
-       @Override
-       public Optional<UserSocu> findById(long id) {
-           return Optional.empty();
-       }
+
 
        @Override
        public Optional<UserSocu> findByEmail(String email) {
