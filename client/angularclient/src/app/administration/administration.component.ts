@@ -33,7 +33,7 @@ export class AdministrationComponent implements OnInit, OnDestroy {
 
   createForm() {
     this.addForm = this.formBuilder.group({
-      name: ['', [Validators.required, Validators.pattern(/^[a-z ,.'-]+$/i)]],
+      name: ['', [Validators.required, Validators.pattern(/^[a-z ,.'-åäö]+$/i)]],
       email: ['', [Validators.required, Validators.email]],
       department: [''],
       employeenumber: ['']
