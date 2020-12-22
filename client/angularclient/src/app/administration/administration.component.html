@@ -6,11 +6,11 @@
       <form (ngSubmit)="onSubmit()" [formGroup]="addForm">
         <div class="form-group mt-3">
           <h5 class="mb-4">Lägg till användare</h5>
-          <input formControlName="name" type="text" class="form-control mt-3" placeholder="Namn">
-          <input formControlName="email" type="text" class="form-control mt-3" placeholder="Mailadress">
-          <input formControlName="department" type="text" class="form-control mt-3" placeholder="Avdelning">
+          <input [ngClass]="{'invalid-input': this.addForm.get('name').invalid && this.isSubmitButtonClicked}" formControlName="name" type="text" class="form-control mt-3" placeholder="Namn">
+          <input [ngClass]="{'invalid-input': this.addForm.get('email').invalid && this.isSubmitButtonClicked}" formControlName="email" type="text" class="form-control mt-3" placeholder="Mailadress">
+          <input formControlName="department" type="text" class="form-control mt-3" placeholder="Avdelning (valfritt)">
           <input formControlName="employeenumber" type="text" class="form-control mt-3"
-                 placeholder="Anställningsnummer">
+                 placeholder="Anställningsnummer (valfritt)">
           <div class="d-flex justify-content-center">
             <button type="submit" class="minw-100 btn btn-light m-4">Lägg till användare och generera lösenord</button>
           </div>

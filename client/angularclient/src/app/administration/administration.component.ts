@@ -17,8 +17,7 @@ export class AdministrationComponent implements OnInit, OnDestroy {
   addForm: FormGroup;
   response: Response;
   subscription: Subscription;
-  emailstring= 'mailto:';
-  newuseremail: string;
+  isSubmitButtonClicked = false;
 
   constructor(private formBuilder: FormBuilder,
               private loginService: LoginService,
@@ -34,14 +33,18 @@ export class AdministrationComponent implements OnInit, OnDestroy {
 
   createForm() {
     this.addForm = this.formBuilder.group({
-      name: ['', Validators.required],
-      email: ['', Validators.required],
-      department: ['', Validators.required],
-      employeenumber: ['', Validators.required]
+      name: ['', [Validators.required, Validators.pattern(/^[a-z ,.'-]+$/i)]],
+      email: ['', [Validators.required, Validators.email]],
+      department: [''],
+      employeenumber: ['']
     });
   }
 
   onSubmit() {
+    if (this.addForm.invalid) {
+      this.isSubmitButtonClicked = true;
+      return;
+    }
     let usersocu = new Usersocu();
     usersocu.name = this.addForm.get('name').value;
     usersocu.name = this.addForm.get('name').value;
@@ -63,7 +66,7 @@ export class AdministrationComponent implements OnInit, OnDestroy {
   ngOnDestroy(): void {
   }
 
-  mailto(emailaddress: string){
+  mailto(emailaddress: string) {
     window.location.assign(`mailto:${emailaddress}?subject=Lösenord för SocialCube&body=Hej! Du har precis blivit tillagd som användare på SocialCube av ${this.loginService.getUserValue().name}.%0D%0ADitt användarnamn: ${emailaddress}%0D%0ADitt lösenord: ${this.response.message}`);
   }
 }

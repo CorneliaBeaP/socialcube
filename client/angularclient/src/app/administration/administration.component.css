@@ -8,3 +8,6 @@
   padding: 70px;
 }
 
+.invalid-input {
+  border: 1px solid #ff5e5e;
+}
