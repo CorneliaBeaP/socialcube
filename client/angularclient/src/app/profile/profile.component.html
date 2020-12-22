@@ -35,17 +35,17 @@
           <label for="changePassword" id="label" class="ml-1 mt-5">Byt lösenord</label>
           <input
             [ngClass]="{'invalid-input': this.passform.get('oldpassword').invalid && this.isPassSaveButtonClicked || this.isOldPasswordWrong}"
-            formControlName="oldpassword" autocomplete="off" type="text" class="form-control mt-3"
+            formControlName="oldpassword" autocomplete="off" type="password" class="form-control mt-3"
             placeholder="Gammalt lösenord" id="changePassword">
           <div *ngIf="isOldPasswordWrong">
             Felaktigt lösenord.
           </div>
           <input [ngClass]="{'invalid-input': this.passform.get('newpassword').invalid && this.isPassSaveButtonClicked}"
-                 formControlName="newpassword" autocomplete="off" type="text" class="form-control mt-3"
+                 formControlName="newpassword" autocomplete="off" type="password" class="form-control mt-3"
                  placeholder="Nytt lösenord">
           <input
             [ngClass]="{'invalid-input': this.passform.get('newpasswordrepeat').invalid && this.isPassSaveButtonClicked || this.isPasswordsNotMatching}"
-            formControlName="newpasswordrepeat" autocomplete="off" type="text" class="form-control mt-3"
+            formControlName="newpasswordrepeat" autocomplete="off" type="password" class="form-control mt-3"
             placeholder="Upprepa lösenord">
           <div *ngIf="isPasswordsNotMatching">
             Lösenordet matchar inte.
