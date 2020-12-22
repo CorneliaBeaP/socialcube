@@ -13,6 +13,7 @@ import {HttpClient, HttpHeaders, HttpParams} from '@angular/common/http';
 import {Usersocu} from '../classes/usersocu';
 import {Observable} from 'rxjs';
 import {map} from "rxjs/operators";
+import {Response} from "../classes/response";
 
 
 @Injectable()
@@ -41,10 +42,10 @@ export class UserService {
     };
     console.log('SendUser()');
     let user2 = JSON.stringify(usersocu);
+
    return this.http.post('http://localhost:8080/api/users/add', user2, requestOptions).pipe(map(data => {
       let data2 = JSON.stringify(data);
-      response = JSON.parse(data2);
-      return response;
+      return JSON.parse(data2);
     }));
   }
 
@@ -61,8 +62,8 @@ export class UserService {
     });
   }
 
-  public removeProfilePicture(id: number){
-    this.http.get(this.usersUrl + `/delete/image/${id}`).subscribe(data=>{
+  public removeProfilePicture(id: number) {
+    this.http.get(this.usersUrl + `/delete/image/${id}`).subscribe(data => {
       console.log(data);
     });
   }

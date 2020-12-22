@@ -53,14 +53,14 @@ export class AdministrationComponent implements OnInit, OnDestroy {
     usersocu.employmentnumber = this.addForm.get('employeenumber').value;
     usersocu.usertype = 0;
     usersocu.companyorganizationnumber = this.loginService.getUserValue().companyorganizationnumber;
-    this.subscription = this.userService.sendUser(usersocu).subscribe(data => {
-      let data1 = JSON.stringify(data);
-      this.response = JSON.parse(data1);
+    this.subscription = this.userService.sendUser(usersocu).subscribe((data) => {
+      this.response = data;
+      console.log(data);
+      console.log(this.response.message);
     });
-    this.mailto(usersocu.email.toString());
-    this.addForm.reset();
-    window.location.reload();
-    this.subscription.unsubscribe();
+    // this.mailto(usersocu.email.toString());
+    // this.addForm.reset();
+    // window.location.reload();
   }
 
   ngOnDestroy(): void {
