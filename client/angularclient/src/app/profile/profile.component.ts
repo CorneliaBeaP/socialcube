@@ -6,7 +6,7 @@ import {catchError, first, map} from "rxjs/operators";
 import {HttpClient} from "@angular/common/http";
 import {Usersocu} from "../classes/usersocu";
 import {FormBuilder, FormGroup, Validators} from "@angular/forms";
-
+import {Response} from "../classes/response";
 
 
 @Component({
@@ -27,6 +27,7 @@ export class ProfileComponent implements OnInit {
   isOldPasswordWrong = false;
   subscription: Subscription;
   subscrip: Subscription;
+  response: Response;
 
 
   constructor(private userService: UserService,
@@ -160,8 +161,9 @@ export class ProfileComponent implements OnInit {
           this.isOldPasswordWrong = true;
         } else {
           this.subscrip = this.userService.changePassword(this.passform.get('oldpassword').value, this.passform.get('newpassword').value, this.user.id).subscribe((data) => {
-              console.log(data)
-            });
+           let data2 = JSON.stringify(data);
+            this.response = JSON.parse(data2);
+          });
         }
       });
   }

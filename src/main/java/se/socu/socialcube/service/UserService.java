@@ -156,7 +156,7 @@ public class UserService {
                 userSocu.get().setPassword(newpass);
                 userRepository.save(userSocu.get());
                 response.setStatus("OK");
-                response.setMessage("Lösenord ändrat");
+                response.setMessage("Lösenord ändrat!");
             } else {
                 response.setStatus("ERROR");
                 response.setMessage("Gammalt lösenord ej godkänt.");

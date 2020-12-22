@@ -22,3 +22,11 @@ img {
 .invalid-input {
   border: 1px solid #ff5e5e;
 }
+
+.successgreen{
+  color: #2dcf00;
+}
+
+.errorred{
+ color: #ff5e5e;
+}

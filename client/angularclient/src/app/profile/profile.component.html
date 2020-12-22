@@ -33,21 +33,28 @@
       <form (ngSubmit)="onSubmitPassform()" [formGroup]="passform" novalidate>
         <div class="form-group mt-3">
           <label for="changePassword" id="label" class="ml-1 mt-5">Byt lösenord</label>
-          <input [ngClass]="{'invalid-input': this.passform.get('oldpassword').invalid && this.isPassSaveButtonClicked || this.isOldPasswordWrong}" formControlName="oldpassword" autocomplete="off" type="text" class="form-control mt-3"
-                 placeholder="Gammalt lösenord" id="changePassword">
+          <input
+            [ngClass]="{'invalid-input': this.passform.get('oldpassword').invalid && this.isPassSaveButtonClicked || this.isOldPasswordWrong}"
+            formControlName="oldpassword" autocomplete="off" type="text" class="form-control mt-3"
+            placeholder="Gammalt lösenord" id="changePassword">
           <div *ngIf="isOldPasswordWrong">
             Felaktigt lösenord.
           </div>
-          <input [ngClass]="{'invalid-input': this.passform.get('newpassword').invalid && this.isPassSaveButtonClicked}" formControlName="newpassword" autocomplete="off" type="text" class="form-control mt-3"
+          <input [ngClass]="{'invalid-input': this.passform.get('newpassword').invalid && this.isPassSaveButtonClicked}"
+                 formControlName="newpassword" autocomplete="off" type="text" class="form-control mt-3"
                  placeholder="Nytt lösenord">
-          <input [ngClass]="{'invalid-input': this.passform.get('newpasswordrepeat').invalid && this.isPassSaveButtonClicked || this.isPasswordsNotMatching}" formControlName="newpasswordrepeat" autocomplete="off" type="text" class="form-control mt-3"
-                 placeholder="Upprepa lösenord">
+          <input
+            [ngClass]="{'invalid-input': this.passform.get('newpasswordrepeat').invalid && this.isPassSaveButtonClicked || this.isPasswordsNotMatching}"
+            formControlName="newpasswordrepeat" autocomplete="off" type="text" class="form-control mt-3"
+            placeholder="Upprepa lösenord">
           <div *ngIf="isPasswordsNotMatching">
             Lösenordet matchar inte.
           </div>
-
+          <div *ngIf="response?.status=='OK'"
+               class="d-flex justify-content-center mt-3 successgreen">{{this.response?.message}}</div>
+          <div *ngIf="!(response?.status=='OK')" class="d-flex justify-content-center mt-3 errorred">{{this.response?.message}}</div>
           <div class="d-flex justify-content-center">
-            <button type="submit" class="minw-100 btn btn-light m-5">Spara</button>
+            <button type="submit" class="minw-100 btn btn-light m-4">Spara</button>
           </div>
         </div>
       </form>
