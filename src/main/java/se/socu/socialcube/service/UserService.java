@@ -9,6 +9,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
 import se.socu.socialcube.DTO.UserDTO;
 import se.socu.socialcube.entities.Company;
+import se.socu.socialcube.entities.Response;
 import se.socu.socialcube.entities.UserSocu;
 import se.socu.socialcube.repository.CompanyRepository;
 import se.socu.socialcube.repository.UserRepository;
@@ -117,15 +118,6 @@ public class UserService {
         String folder = "C:\\Users\\corne\\OneDrive\\Dokument\\SocialCube\\Kod\\IntelliJ\\client\\angularclient\\src\\assets\\ProfilePictures\\";
         byte[] bytes = imagefile.getBytes();
         String fileName = userid.toString();
-
-//        String fileend = "";
-//        if (Objects.requireNonNull(imagefile.getOriginalFilename()).endsWith(".png")) {
-//            fileend = ".png";
-//        } else if (Objects.requireNonNull(imagefile.getOriginalFilename()).endsWith(".jpg")) {
-//            fileend = ".jpg";
-//        } else if (Objects.requireNonNull(imagefile.getOriginalFilename()).endsWith(".gif")) {
-//            fileend = ".gif";
-//        }
         Path path = Paths.get(folder + fileName + ".png");
         try {
             Files.write(path, bytes);
@@ -150,9 +142,29 @@ public class UserService {
         Random random = new Random();
 
         StringBuilder stringBuilder = new StringBuilder(length);
-        for (int i = 0; i < length; i++){
+        for (int i = 0; i < length; i++) {
             stringBuilder.append(characters.charAt(random.nextInt(characters.length())));
         }
         return stringBuilder.toString();
+    }
+
+    public Response changePassword(String oldpass, String newpass, Long userid) {
+        Response response = new Response();
+        Optional<UserSocu> userSocu = userRepository.findById(userid);
+        if (userSocu.isPresent()) {
+            if (userSocu.get().getPassword().equals(oldpass)) {
+                userSocu.get().setPassword(newpass);
+                userRepository.save(userSocu.get());
+                response.setStatus("OK");
+                response.setMessage("Lösenord ändrat");
+            } else {
+                response.setStatus("ERROR");
+                response.setMessage("Gammalt lösenord ej godkänt.");
+            }
+        } else {
+            response.setStatus("ERROR");
+            response.setMessage("Kan inte hitta användare");
+        }
+        return response;
     }
 }

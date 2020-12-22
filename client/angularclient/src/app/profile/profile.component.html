@@ -12,25 +12,46 @@
         <input type='file' accept="image/*"
                (change)="onSelectFile($event)" id="fileupload">
         <button class="btn btn-light minw-100 m-4" (click)="triggerFileUpload()">Byt Bild</button>
-<!--        <button class="btn btn-light minw-100 m-4" (click)="removeProfilePicture()">Ta bort bild</button>-->
+        <!--        <button class="btn btn-light minw-100 m-4" (click)="removeProfilePicture()">Ta bort bild</button>-->
       </div>
     </div>
   </div>
 
   <div class="row">
     <div class="col">
-      <div class="form-group mt-3">
-        <input type="text" class="form-control" value="{{user.name}}">
-        <input type="text" class="form-control mt-3" value="{{user.email}}">
-        <input type="text" class="form-control mt-3" value="{{user.department}}">
-        <label for="changePassword" id="label" class="ml-1 mt-5">Byt lösenord</label>
-        <input type="text" class="form-control mt-3" placeholder="Gammalt lösenord" id="changePassword">
-        <input type="text" class="form-control mt-3" placeholder="Nytt lösenord">
-        <input type="text" class="form-control mt-3" placeholder="Upprepa lösenord">
-        <div class="d-flex justify-content-center">
-          <button type="button" class="minw-100 btn btn-light m-5">Spara</button>
+      <form (ngSubmit)="onSubmitInfoform()" [formGroup]="infoform" novalidate>
+        <div class="form-group mt-3">
+          <input formControlName="name" autocomplete="off" type="text" class="form-control">
+          <input formControlName="email" autocomplete="off" type="text" class="form-control mt-3">
+          <input formControlName="department" autocomplete="off" type="text" class="form-control mt-3">
+          <div class="d-flex justify-content-center">
+            <button type="submit" class="minw-100 btn btn-light m-5">Spara</button>
+          </div>
         </div>
-      </div>
+      </form>
+
+      <form (ngSubmit)="onSubmitPassform()" [formGroup]="passform" novalidate>
+        <div class="form-group mt-3">
+          <label for="changePassword" id="label" class="ml-1 mt-5">Byt lösenord</label>
+          <input [ngClass]="{'invalid-input': this.passform.get('oldpassword').invalid && this.isPassSaveButtonClicked || this.isOldPasswordWrong}" formControlName="oldpassword" autocomplete="off" type="text" class="form-control mt-3"
+                 placeholder="Gammalt lösenord" id="changePassword">
+          <div *ngIf="isOldPasswordWrong">
+            Felaktigt lösenord.
+          </div>
+          <input [ngClass]="{'invalid-input': this.passform.get('newpassword').invalid && this.isPassSaveButtonClicked}" formControlName="newpassword" autocomplete="off" type="text" class="form-control mt-3"
+                 placeholder="Nytt lösenord">
+          <input [ngClass]="{'invalid-input': this.passform.get('newpasswordrepeat').invalid && this.isPassSaveButtonClicked || this.isPasswordsNotMatching}" formControlName="newpasswordrepeat" autocomplete="off" type="text" class="form-control mt-3"
+                 placeholder="Upprepa lösenord">
+          <div *ngIf="isPasswordsNotMatching">
+            Lösenordet matchar inte.
+          </div>
+
+          <div class="d-flex justify-content-center">
+            <button type="submit" class="minw-100 btn btn-light m-5">Spara</button>
+          </div>
+        </div>
+      </form>
     </div>
   </div>
 </div>
+

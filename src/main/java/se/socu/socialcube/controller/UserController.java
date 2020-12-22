@@ -8,7 +8,6 @@ import se.socu.socialcube.entities.Response;
 import se.socu.socialcube.entities.UserSocu;
 import se.socu.socialcube.service.UserService;
 
-import java.awt.*;
 import java.util.List;
 
 @CrossOrigin(origins = "http://localhost:4200", allowedHeaders = "*")
@@ -85,4 +84,11 @@ public class UserController {
         return new Response("OK", "Anrop mottaget");
     }
 
+    @PutMapping(value = "/api/users/password/{id}", consumes = MediaType.APPLICATION_JSON_VALUE)
+    public Response changePassword(@PathVariable Long id, @RequestBody String[] passwordinfo){
+        System.out.println(passwordinfo[0]);
+        System.out.println(passwordinfo[1]);
+        System.out.println(id);
+        return userService.changePassword(passwordinfo[0], passwordinfo[1], id);
+    }
 }

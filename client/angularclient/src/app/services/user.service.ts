@@ -67,4 +67,21 @@ export class UserService {
       console.log(data);
     });
   }
+
+  public changePassword(oldPassword: string, newPassword: string, userid: number){
+   let passw = [oldPassword, newPassword];
+    const headerDict = {
+      'Content-Type': 'application/json',
+      'Accept': 'application/json',
+      'Access-Control-Allow-Headers': '*',
+      'Access-Control-Allow-Methods': '*'
+    };
+    const requestOptions = {
+      headers: new HttpHeaders(headerDict),
+    };
+    return this.http.put(`http://localhost:8080/api/users/password/${userid}`, passw, requestOptions).pipe(map(data => {
+      let data2 = JSON.stringify(data);
+      return JSON.parse(data2);
+    }));
+  }
 }
