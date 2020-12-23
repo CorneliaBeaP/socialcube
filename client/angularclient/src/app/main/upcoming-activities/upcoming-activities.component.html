@@ -1,5 +1,5 @@
 <h4 class="mb-5">Kommande aktiviteter</h4>
-<div class="mb-4" *ngFor="let activity of activities">
+<div class="mb-4 m-3" *ngFor="let activity of activities">
 
   <div class="row">
     <div class="col">
@@ -20,7 +20,5 @@
     </div>
   </div>
   <div class="card-text">{{activity.descriptionsocu}}</div>
-  <div class="text-right rsvp" *ngIf="activity.rsvpdate">Senaste OSA-datum: {{activity.rsvpdate[0]}}
-    -{{activity.rsvpdate[1]}}-{{activity.rsvpdate[2]}}</div>
 </div>
 
