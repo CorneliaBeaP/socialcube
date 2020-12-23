@@ -165,11 +165,6 @@ export class ProfileComponent implements OnInit, OnDestroy {
   }
 
   ngOnDestroy(): void {
-    if (!this.subscription.closed) {
-      this.subscription.unsubscribe();
-    }
-    if (!this.subscrip.closed) {
-      this.subscrip.unsubscribe();
-    }
+
   }
 }
