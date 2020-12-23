@@ -13,7 +13,7 @@ import {Subscription} from "rxjs";
 })
 export class CurrentActivitiesComponent implements OnInit, OnDestroy {
 
-  showCurrentActivities = true;
+  showCurrentActivities = false;
   showCard = false;
   currentActivities: Activity[];
   user: Usersocu;
