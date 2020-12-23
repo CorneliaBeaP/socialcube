@@ -45,6 +45,14 @@ export class LoginComponent implements OnInit, OnDestroy {
               private formBuilder: FormBuilder) {
   }
 
+
+
+  ngOnInit(): void {
+    this.resetLocalStorage();
+    this.setBackground();
+    this.createForm();
+  }
+
   createForm() {
     this.loginForm = this.formBuilder.group({
       username: ['', Validators.required],
@@ -52,11 +60,6 @@ export class LoginComponent implements OnInit, OnDestroy {
     });
 
     this.returnUrl = this.route.snapshot.queryParams['returnUrl'] || '/home';
-  }
-
-  ngOnInit(): void {
-    this.setBackground();
-    this.createForm();
   }
 
   showLoginPage(login: boolean): void {
@@ -91,5 +94,9 @@ export class LoginComponent implements OnInit, OnDestroy {
       .sort((a, b) => a.sort - b.sort)
       .map((a) => a.value);
     this.background = shuffled[0];
+  }
+
+  resetLocalStorage(){
+    this.loginService.logout();
   }
 }
