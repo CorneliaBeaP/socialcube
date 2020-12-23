@@ -1,13 +1,17 @@
-<div class="container">
-  <h4 class="mt-5" (click)="showPlanActivity = !showPlanActivity">Planera aktivitet <i *ngIf="!showPlanActivity" class="fas fa-angle-right"></i><i *ngIf="showPlanActivity" class="fas fa-angle-down"></i></h4>
+<div class="glassbox m-4 mt-5 p-4">
+  <h4 class="mt-5" (click)="showPlanActivity = !showPlanActivity">Planera aktivitet <i *ngIf="!showPlanActivity"
+                                                                                       class="fas fa-angle-right"></i><i
+    *ngIf="showPlanActivity" class="fas fa-angle-down"></i></h4>
   <div *ngIf="showPlanActivity">
     <form (ngSubmit)="onSubmit()" [formGroup]="form">
       <div class="form-group ml-3 mt-2">
         <label for="activitytype" class="mt-4 ml-1">Typ</label>
-        <input [ngClass]="{'invalid-input': this.form.get('activitytype').invalid && this.submitbuttonclicked}" formControlName="activitytype" type="text" class="form-control m-1" id="activitytype" required>
+        <input [ngClass]="{'invalid-input': this.form.get('activitytype').invalid && this.submitbuttonclicked}"
+               formControlName="activitytype" type="text" class="form-control m-1 default-input" id="activitytype"
+               required>
         <div class="mt-5 ml-1">Datum för aktivitet</div>
         <div>
-          <mat-form-field  appearance="outline">
+          <mat-form-field appearance="standard">
             <mat-label>Välj ett datum</mat-label>
             <input formControlName="activitydate" matInput [matDatepicker]="activitydate">
             <mat-datepicker-toggle matSuffix [for]="activitydate"></mat-datepicker-toggle>
@@ -15,13 +19,16 @@
           </mat-form-field>
         </div>
         <div class="mt-4 ml-1">Tid för aktivitet</div>
-        <div [ngClass]="{'invalid-input': this.form.get('activitytime').invalid && this.submitbuttonclicked}" class="md-form md-outline">
-          <input formControlName="activitytime" type="time" id="default-picker" class="form-control" placeholder="Välj tid">
+        <div [ngClass]="{'invalid-input': this.form.get('activitytime').invalid && this.submitbuttonclicked}"
+             class="md-form md-outline">
+          <input formControlName="activitytime" type="time" id="default-picker" class="form-control default-input"
+                 placeholder="Välj tid">
         </div>
 
-        <div class="mt-5 ml-1">Datum O.S.A senast <i class="fas fa-info-circle" [matTooltip]="tooltiprsvp" [matTooltipPosition]="'right'"></i></div>
+        <div class="mt-5 ml-1">Datum O.S.A senast <i class="fas fa-info-circle" [matTooltip]="tooltiprsvp"
+                                                     [matTooltipPosition]="'right'"></i></div>
         <div>
-          <mat-form-field  appearance="outline">
+          <mat-form-field appearance="standard">
             <mat-label>Välj ett datum</mat-label>
             <input formControlName="rsvpdate" matInput [matDatepicker]="rsvpdate">
             <mat-datepicker-toggle matSuffix [for]="rsvpdate"></mat-datepicker-toggle>
@@ -30,13 +37,21 @@
         </div>
 
         <label class="mt-4 ml-1">Plats</label>
-        <input [ngClass]="{'invalid-input': this.form.get('locationname').invalid && this.submitbuttonclicked}" formControlName="locationname" type="text" class="form-control m-1" id="locationname" placeholder="Namn">
-        <input [ngClass]="{'invalid-input': this.form.get('locationaddress').invalid && this.submitbuttonclicked}" formControlName="locationaddress" type="text" class="form-control m-1" id="locationaddress" placeholder="Adress">
+        <input [ngClass]="{'invalid-input': this.form.get('locationname').invalid && this.submitbuttonclicked}"
+               formControlName="locationname" type="text" class="form-control m-1 default-input" id="locationname"
+               placeholder="Namn">
+        <input [ngClass]="{'invalid-input': this.form.get('locationaddress').invalid && this.submitbuttonclicked}"
+               formControlName="locationaddress" type="text" class="form-control m-1 default-input" id="locationaddress"
+               placeholder="Adress">
         <label for="description" class="mt-4 ml-1">Beskrivning</label>
-        <textarea [ngClass]="{'invalid-input': this.form.get('descriptionsocu').invalid && this.submitbuttonclicked}" formControlName="descriptionsocu" class="form-control m-1" id="description" rows="3"></textarea>
-        <button class="btn btn-light mt-4">Skapa aktivitet</button>
+        <textarea [ngClass]="{'invalid-input': this.form.get('descriptionsocu').invalid && this.submitbuttonclicked}"
+                  formControlName="descriptionsocu" class="form-control m-1 default-input" id="description"
+                  rows="3"></textarea>
+        <div class="d-flex justify-content-center">
+          <button class="btn btn-glass mt-4">Skapa aktivitet</button>
+        </div>
       </div>
     </form>
   </div>
-<app-current-activities></app-current-activities>
+  <app-current-activities></app-current-activities>
 </div>

@@ -20,7 +20,7 @@ import {Subscription} from "rxjs";
 })
 export class CreateActivityComponent implements OnInit, OnDestroy {
 
-  showPlanActivity = false;
+  showPlanActivity = true;
 
   form: FormGroup;
   subscription: Subscription;

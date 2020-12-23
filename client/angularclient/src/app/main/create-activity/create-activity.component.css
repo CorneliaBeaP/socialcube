@@ -10,6 +10,10 @@ mat-form-field{
   width: 100%;
 }
 
+.matpicker{
+background-color: white;
+}
+
 input{
   width: 100%;
 }
@@ -17,4 +21,22 @@ input{
 .invalid-input{
 
   border:1px solid #f00;
+}
+
+
+
+.default-input{
+  background-color: rgba(0,0,0,0);
+  border: none;
+  border-color: #686b6e !important;
+  border-bottom: 1px solid;
+  border-radius: 0px;
+}
+
+.btn-glass{
+  background-color: rgba(255, 255, 255, 0.3);
+}
+
+.btn-glass:hover{
+  background-color: rgba(255, 255, 255, 0.5);
 }
