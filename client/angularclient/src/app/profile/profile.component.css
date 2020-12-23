@@ -6,6 +6,7 @@
   border-radius: 20px;
   margin-bottom: 50px;
   padding: 70px;
+  background-color: white;
 }
 
 input[type=file] {
@@ -29,4 +30,14 @@ img {
 
 .errorred{
  color: #ff5e5e;
+}
+
+.background{
+  background-image: url("src/assets/images/M5.jpg") !important;
+  background-repeat: repeat;
+  background-color: #ffffff;
+}
+
+.backgroundblur{
+  backdrop-filter: blur(50px);
 }

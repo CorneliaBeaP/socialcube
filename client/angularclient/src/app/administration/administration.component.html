@@ -1,23 +1,31 @@
-<app-header></app-header>
-<h3 class="d-flex justify-content-center m-5">Hantera användare</h3>
-<div class="container">
-  <div class="row">
-    <div class="col">
-      <form (ngSubmit)="onSubmit()" [formGroup]="addForm">
-        <div class="form-group mt-3">
-          <h5 class="mb-4">Lägg till användare</h5>
-          <input [ngClass]="{'invalid-input': this.addForm.get('name').invalid && this.isSubmitButtonClicked}" formControlName="name" type="text" class="form-control mt-3" placeholder="Namn">
-          <input [ngClass]="{'invalid-input': this.addForm.get('email').invalid && this.isSubmitButtonClicked}" formControlName="email" type="text" class="form-control mt-3" placeholder="Mailadress">
-          <input formControlName="department" type="text" class="form-control mt-3" placeholder="Avdelning (valfritt)">
-          <input formControlName="employeenumber" type="text" class="form-control mt-3"
-                 placeholder="Anställningsnummer (valfritt)">
-          <div class="d-flex justify-content-center">
-            <button type="submit" class="minw-100 btn btn-light m-4">Lägg till användare och generera lösenord</button>
-          </div>
+<div class="background">
+  <div class="backgroundblur">
+    <app-header></app-header>
+    <h3 class="d-flex justify-content-center m-5">Hantera användare</h3>
+    <div class="container mb-5">
+      <div class="row">
+        <div class="col">
+          <form (ngSubmit)="onSubmit()" [formGroup]="addForm">
+            <div class="form-group mt-3">
+              <h5 class="mb-4">Lägg till användare</h5>
+              <input [ngClass]="{'invalid-input': this.addForm.get('name').invalid && this.isSubmitButtonClicked}"
+                     formControlName="name" type="text" class="form-control mt-3" placeholder="Namn">
+              <input [ngClass]="{'invalid-input': this.addForm.get('email').invalid && this.isSubmitButtonClicked}"
+                     formControlName="email" type="text" class="form-control mt-3" placeholder="Mailadress">
+              <input formControlName="department" type="text" class="form-control mt-3"
+                     placeholder="Avdelning (valfritt)">
+              <input formControlName="employeenumber" type="text" class="form-control mt-3"
+                     placeholder="Anställningsnummer (valfritt)">
+              <div class="d-flex justify-content-center">
+                <button type="submit" class="minw-100 btn btn-light m-4">Lägg till användare och generera lösenord
+                </button>
+              </div>
+            </div>
+          </form>
         </div>
-      </form>
+      </div>
+      <h5 class="mb-4 mt-4">Hantera användare</h5>
+      <app-user-list></app-user-list>
     </div>
   </div>
-  <h5 class="mb-4 mt-4">Hantera användare</h5>
-  <app-user-list></app-user-list>
 </div>
