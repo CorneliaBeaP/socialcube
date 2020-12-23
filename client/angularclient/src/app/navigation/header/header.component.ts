@@ -4,6 +4,7 @@ import {Usersocu} from "../../classes/usersocu";
 import {Observable, of} from "rxjs";
 import {HttpClient} from "@angular/common/http";
 import {catchError, map} from "rxjs/operators";
+import {Router} from "@angular/router";
 
 
 @Component({
@@ -17,7 +18,8 @@ export class HeaderComponent implements OnInit {
   profilepictureurl: string;
 
   constructor(private http: HttpClient,
-              private loginService: LoginService) {
+              private loginService: LoginService,
+              private router: Router) {
     this.getAdmin();
   }
 
@@ -60,6 +62,9 @@ export class HeaderComponent implements OnInit {
           return of(`${folderPath}/default.png`);
         })
       );
+  }
 
+  goToProfile(){
+    this.router.navigate(['/profile']);
   }
 }
