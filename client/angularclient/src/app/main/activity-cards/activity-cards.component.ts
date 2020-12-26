@@ -39,14 +39,6 @@ export class ActivityCardsComponent implements OnInit, OnDestroy {
     this.getProfilePicture(4);
   }
 
-  public sortByCreatedDate(): void {
-    this.activities.sort(function (ac1, ac2) {
-      let ac1date = new Date(ac1.createddate).getTime();
-      let ac2date = new Date(ac2.createddate).getTime();
-      return ac1date > ac2date ? -1 : 1;
-    });
-  }
-
   attendEvent(activityid: number) {
     this.activityService.attendActivity(this.loginService.getUserValue().id, activityid);
     location.reload();
@@ -63,10 +55,6 @@ export class ActivityCardsComponent implements OnInit, OnDestroy {
     }
     location.reload();
     localStorage.setItem('declinedActivityIDs' + this.user.id, JSON.stringify(declinedAs));
-  }
-
-  ngOnDestroy(): void {
-    this.subscription.unsubscribe();
   }
 
   public getDeclinedActivityIDs() {
@@ -91,5 +79,9 @@ export class ActivityCardsComponent implements OnInit, OnDestroy {
 
   getProfilePicture(id: number): string {
     return `../../../../assets/ProfilePictures/${id}.png`;
+  }
+
+  ngOnDestroy(): void {
+    this.subscription.unsubscribe();
   }
 }

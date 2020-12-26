@@ -92,14 +92,21 @@ public class ActivityService {
 
     public Response attendActivity(long userid, long activityid) {
         Response response = new Response();
+        List<Activity> attendedActivities = new ArrayList<>();
         Optional<Activity> activity = activityRepository.findById(activityid);
         Optional<UserSocu> userSocu = userRepository.findById(userid);
         if (activity.isPresent() && userSocu.isPresent()) {
-            List<UserSocu> attendees = activity.get().getAttendees();
-            attendees.add(userSocu.get());
-            activity.get().setAttendees(attendees);
-            response.setStatus("OK");
-            response.setMessage("Attendee added");
+            attendedActivities = activityRepository.findAllAttendedActivitiesByUsersocuId(userSocu.get().getId());
+            if (!(attendedActivities.contains(activity.get()))) {
+                List<UserSocu> attendees = activity.get().getAttendees();
+                attendees.add(userSocu.get());
+                activity.get().setAttendees(attendees);
+                response.setStatus("OK");
+                response.setMessage("Attendee added");
+            } else {
+                response.setStatus("ERROR");
+                response.setMessage("User already an attendee");
+            }
         } else {
             response.setStatus("ERROR");
             response.setMessage("Not able to add attendee");
@@ -111,8 +118,8 @@ public class ActivityService {
         String string = "" + userid;
         ArrayList<Activity> activities = activityRepository.findAllAttendedActivitiesByUsersocuId(Long.parseLong(string));
         ArrayList<ActivityDTO> activityDTOS = new ArrayList<>();
-        for (Activity a: activities
-             ) {
+        for (Activity a : activities
+        ) {
             activityDTOS.add(convertToActivityDTOfromActivity(a));
         }
         return activityDTOS;
