@@ -129,7 +129,6 @@ public class UserService {
     }
 
     public void copyDefaultPictureForNewUser(long id) {
-        String folder = "C:\\Users\\corne\\OneDrive\\Dokument\\SocialCube\\Kod\\IntelliJ\\client\\angularclient\\src\\assets\\ProfilePictures\\";
         File source = new File("C:\\Users\\corne\\OneDrive\\Dokument\\SocialCube\\Kod\\IntelliJ\\client\\angularclient\\src\\assets\\ProfilePictures\\default.png");
         File newFile = new File("C:\\Users\\corne\\OneDrive\\Dokument\\SocialCube\\Kod\\IntelliJ\\client\\angularclient\\src\\assets\\ProfilePictures\\" + id + ".png");
         try {
@@ -145,6 +144,7 @@ public class UserService {
         Path path = Paths.get(folder + fileName);
         try {
             Files.deleteIfExists(path);
+            copyDefaultPictureForNewUser(id);
         } catch (IOException e) {
             e.printStackTrace();
         }

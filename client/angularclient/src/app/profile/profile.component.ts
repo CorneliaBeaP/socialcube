@@ -1,8 +1,8 @@
 import {Component, OnDestroy, OnInit} from '@angular/core';
 import {UserService} from "../services/user.service";
 import {LoginService} from "../services/login.service";
-import {Observable, of, Subscription} from "rxjs";
-import {catchError, first, map} from "rxjs/operators";
+import {Subscription} from "rxjs";
+import {first} from "rxjs/operators";
 import {HttpClient} from "@angular/common/http";
 import {Usersocu} from "../classes/usersocu";
 import {FormBuilder, FormGroup, Validators} from "@angular/forms";
@@ -45,7 +45,6 @@ export class ProfileComponent implements OnInit, OnDestroy {
     this.subscription = this.userService.getUser(this.loginService.getUserValue().id).subscribe((data) => {
       let data2 = JSON.stringify(data);
       this.user = JSON.parse(data2);
-      console.log(this.user);
       this.createPassform();
       this.createInfoform();
     });
@@ -75,8 +74,8 @@ export class ProfileComponent implements OnInit, OnDestroy {
 
   }
 
-  getProfilePicture(id: number): string {
-    return `../../../../assets/ProfilePictures/${id}.png`;
+  getProfilePicture(id: number) {
+    this.url2 = `../../../../assets/ProfilePictures/${id}.png`;
   }
 
   triggerFileUpload() {
@@ -116,7 +115,6 @@ export class ProfileComponent implements OnInit, OnDestroy {
         let data2 = JSON.stringify(data);
         this.user = JSON.parse(data2);
       });
-      console.log(data);
     });
   }
 
