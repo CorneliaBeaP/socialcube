@@ -31,12 +31,7 @@ public class ActivityController {
 
     @PostMapping(path = "/api/activity/add", produces = MediaType.APPLICATION_JSON_VALUE)
     public Response save(@RequestBody ActivityDTO activityDTO) {
-        System.out.println("Lägger till aktivitet...");
-        activityService.saveActivityDTO(activityDTO);
-        Response response = new Response();
-        response.setMessage("Aktivitet sparad");
-        response.setStatus("OK");
-        return response;
+        return activityService.saveActivityDTO(activityDTO);
     }
 
     @PostMapping(path = "/api/activity/attendactivity")

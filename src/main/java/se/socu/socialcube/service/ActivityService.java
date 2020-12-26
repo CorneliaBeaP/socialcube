@@ -70,13 +70,23 @@ public class ActivityService {
         return activity;
     }
 
-    public void saveActivityDTO(ActivityDTO activityDTO) {
+    public Response saveActivityDTO(ActivityDTO activityDTO) {
+        Response response = new Response();
+        Activity activity = convertToActivityFromActivityDTO(activityDTO);
+        List<UserSocu> attendees = new ArrayList<>();
+        attendees.add(activity.getCreatedby());
+        activity.setAttendees(attendees);
         try {
-            activityRepository.save(convertToActivityFromActivityDTO(activityDTO));
+            activityRepository.save(activity);
+            response.setStatus("OK");
+            response.setMessage("Activity added");
         } catch (Exception e) {
-            // TODO: bättre felhantering
-            System.out.println(Arrays.toString(e.getStackTrace()));
+            e.printStackTrace();
+            response.setStatus("ERROR");
+            response.setMessage("Activity could not be added");
         }
+
+        return response;
     }
 
     public ArrayList<ActivityDTO> findAllActivitiesByCompany_organizationnumber(long organizationnumber) {
