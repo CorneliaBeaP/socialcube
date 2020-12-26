@@ -1,11 +1,11 @@
 <div class="m-5" *ngFor="let activity of activities">
   <div class="row">
     <div class="col">
-      <img [src]="getProfilePicture(activity.createdBy.id)" alt="">
+      <img [src]="getProfilePicture(activity.createdBy.id)" alt="Skapad av {{activity.createdBy.name}}" [matTooltip]="activity.createdBy.name">
     </div>
     <div class="col text-right">
     <span *ngFor="let attendee of activity.attendees">
-      <img [src]="getProfilePicture(attendee.id)" alt="">
+      <img [src]="getProfilePicture(attendee.id)" alt="{{attendee.name}}" [matTooltip]="attendee.name">
     </span>
     </div>
   </div>
