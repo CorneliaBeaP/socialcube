@@ -11,9 +11,7 @@
           </mat-panel-title>
           <mat-panel-description class="right-aligned">
             <i class="far fa-calendar-alt mr-2 mt-1"></i>
-            <div> {{activity.activitydate[0]}}-
-              <span *ngIf="activity.activitydate[1]<10">0</span>{{activity.activitydate[1]}}
-              -{{activity.activitydate[2]}}
+            <div> {{activity.activitydate[0]}}-<span *ngIf="activity.activitydate[1]<10">0</span>{{activity.activitydate[1]}}-<span *ngIf="activity.activitydate[2]<10">0</span>{{activity.activitydate[2]}}
             </div>
           </mat-panel-description>
         </mat-expansion-panel-header>
