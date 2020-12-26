@@ -75,26 +75,8 @@ export class ProfileComponent implements OnInit, OnDestroy {
 
   }
 
-  getProfilePicture(id: number) {
-    this.getFolder(id).subscribe(data => {
-      this.url2 = data;
-    });
-  }
-
-  getFolder(id: number): Observable<string> {
-    const folderPath = `../../../../assets/ProfilePictures`;
-    return this.http
-      .get(`${folderPath}/${id}.png`, {observe: 'response', responseType: 'blob'})
-      .pipe(
-        map(response => {
-          return `${folderPath}/${id}.png`;
-        }),
-        catchError(error => {
-          console.clear();
-          return of(`${folderPath}/default.png`);
-        })
-      );
-
+  getProfilePicture(id: number): string {
+    return `../../../../assets/ProfilePictures/${id}.png`;
   }
 
   triggerFileUpload() {

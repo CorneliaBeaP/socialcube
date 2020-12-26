@@ -1,9 +1,7 @@
 import {Component, OnInit} from '@angular/core';
 import {LoginService} from "../../services/login.service";
 import {Usersocu} from "../../classes/usersocu";
-import {Observable, of} from "rxjs";
 import {HttpClient} from "@angular/common/http";
-import {catchError, map} from "rxjs/operators";
 import {Router} from "@angular/router";
 
 
@@ -15,7 +13,6 @@ import {Router} from "@angular/router";
 export class HeaderComponent implements OnInit {
   isAdmin = false;
   user: Usersocu;
-  profilepictureurl: string;
 
   constructor(private http: HttpClient,
               private loginService: LoginService,
@@ -43,25 +40,8 @@ export class HeaderComponent implements OnInit {
     this.user = this.loginService.getUserValue();
   }
 
-  getProfilePicture(id: number) {
-    this.getFolder(id).subscribe(data =>{
-      this.profilepictureurl = data;
-    });
-  }
-
-  getFolder(id: number): Observable<string> {
-    const folderPath = `../../../../assets/ProfilePictures`;
-    return this.http
-      .get(`${folderPath}/${id}.png`, {observe: 'response', responseType: 'blob'})
-      .pipe(
-        map(response => {
-          return `${folderPath}/${id}.png`;
-        }),
-        catchError(error => {
-          // console.clear();
-          return of(`${folderPath}/default.png`);
-        })
-      );
+  getProfilePicture(id: number): string {
+    return `../../../../assets/ProfilePictures/${id}.png`;
   }
 
   goToProfile(){
