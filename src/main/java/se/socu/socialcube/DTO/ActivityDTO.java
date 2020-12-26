@@ -19,6 +19,7 @@ public class ActivityDTO {
     private String locationname;
     private String locationaddress;
     private long companyorganizationnumber;
+    private UserDTO createdBy;
 
 
     @Override

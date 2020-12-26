@@ -6,6 +6,7 @@ import {Observable, of, Subscription} from "rxjs";
 import {Usersocu} from "../../classes/usersocu";
 import {catchError, map} from "rxjs/operators";
 import {HttpClient} from "@angular/common/http";
+import {UserService} from "../../services/user.service";
 
 @Component({
   selector: 'app-activity-cards',
@@ -18,10 +19,12 @@ export class ActivityCardsComponent implements OnInit, OnDestroy {
   subscription: Subscription;
   declinedActivityIDs: number[];
   user: Usersocu;
+  profilepictureurl: string;
 
   constructor(private activityService: ActivityService,
               private loginService: LoginService,
-              private http: HttpClient) {
+              private http: HttpClient,
+              private userService: UserService) {
   }
 
   ngOnInit(): void {
@@ -38,6 +41,8 @@ export class ActivityCardsComponent implements OnInit, OnDestroy {
       this.getDeclinedActivityIDs();
       this.sortAwayDeclinedActivities();
     });
+
+    this.getProfilePicture(4);
   }
 
   public sortByCreatedDate(): void {
@@ -90,29 +95,7 @@ export class ActivityCardsComponent implements OnInit, OnDestroy {
     }
   }
 
-  getAttendeeProfilePicture(id: number) {
-
-    //TODO: fortsätt här
-    let string: string;
-    let promise = this.getFolder(id).pipe(map(data => {
-      string = data.toString();
-      console.log(data);
-      }
-    ));
-  }
-
-  getFolder(id: number): Observable<string> {
-    const folderPath = `../../../../assets/ProfilePictures`;
-    return this.http
-      .get(`${folderPath}/${id}.png`, {observe: 'response', responseType: 'blob'})
-      .pipe(
-        map(response => {
-          return `${folderPath}/${id}.png`;
-        }),
-        catchError(error => {
-          // console.clear();
-          return of(`${folderPath}/default.png`);
-        })
-      );
+  getProfilePicture(id: number): string {
+    return `../../../../assets/ProfilePictures/${id}.png`;
   }
 }

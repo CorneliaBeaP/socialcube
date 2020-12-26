@@ -35,7 +35,7 @@ public class UserService {
     private UserRepository userRepository;
     private CompanyRepository companyRepository;
 
-    private UserDTO convertToUserDTOfromUserSocu(UserSocu userSocu) {
+    public UserDTO convertToUserDTOfromUserSocu(UserSocu userSocu) {
         UserDTO userDTO = new UserDTO();
         userDTO.setId(userSocu.getId());
         userDTO.setName(userSocu.getName());
@@ -47,7 +47,7 @@ public class UserService {
         return userDTO;
     }
 
-    private UserSocu convertToUserSocuFromUserDTO(UserDTO userDTO) {
+    public UserSocu convertToUserSocuFromUserDTO(UserDTO userDTO) {
         UserSocu userSocu = new UserSocu();
         userSocu.setName(userDTO.getName());
         userSocu.setEmail(userDTO.getEmail());
@@ -104,6 +104,8 @@ public class UserService {
         userSocu.setPassword(generatePassword(11));
         System.out.println(userSocu.getPassword());
         userRepository.save(userSocu);
+        Optional<UserSocu> userSocu1 = userRepository.findByEmail(userDTO.getEmail());
+        userSocu1.ifPresent(socu -> copyDefaultPictureForNewUser(socu.getId()));
         return userSocu;
     }
 
@@ -121,6 +123,17 @@ public class UserService {
         Path path = Paths.get(folder + fileName + ".png");
         try {
             Files.write(path, bytes);
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+    }
+
+    public void copyDefaultPictureForNewUser(long id) {
+        String folder = "C:\\Users\\corne\\OneDrive\\Dokument\\SocialCube\\Kod\\IntelliJ\\client\\angularclient\\src\\assets\\ProfilePictures\\";
+        File source = new File("C:\\Users\\corne\\OneDrive\\Dokument\\SocialCube\\Kod\\IntelliJ\\client\\angularclient\\src\\assets\\ProfilePictures\\default.png");
+        File newFile = new File("C:\\Users\\corne\\OneDrive\\Dokument\\SocialCube\\Kod\\IntelliJ\\client\\angularclient\\src\\assets\\ProfilePictures\\" + id + ".png");
+        try {
+            Files.copy(source.toPath(), newFile.toPath());
         } catch (Exception e) {
             e.printStackTrace();
         }
@@ -202,10 +215,10 @@ public class UserService {
         return dto;
     }
 
-    public ArrayList<UserDTO> getAttendees(long activityid){
+    public ArrayList<UserDTO> getAttendees(long activityid) {
         ArrayList<UserSocu> usersocus = userRepository.findAllAttendeesByActivityId(activityid);
         ArrayList<UserDTO> userDTOS = new ArrayList<>();
-        for (UserSocu u: usersocus
+        for (UserSocu u : usersocus
         ) {
             userDTOS.add(convertToUserDTOfromUserSocu(u));
             System.out.println(u.toString());

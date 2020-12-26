@@ -24,11 +24,13 @@ public class ActivityService {
     private ActivityRepository activityRepository;
     private UserRepository userRepository;
     private CompanyRepository companyRepository;
+    private UserService userService;
 
-    public ActivityService(ActivityRepository activityRepository, UserRepository userRepository, CompanyRepository companyRepository) {
+    public ActivityService(ActivityRepository activityRepository, UserRepository userRepository, CompanyRepository companyRepository, UserService userService) {
         this.activityRepository = activityRepository;
         this.userRepository = userRepository;
         this.companyRepository = companyRepository;
+        this.userService = userService;
     }
 
     private ActivityDTO convertToActivityDTOfromActivity(Activity activity) {
@@ -43,6 +45,7 @@ public class ActivityService {
         activityDTO.setLocationname(activity.getLocationname());
         activityDTO.setLocationaddress(activity.getLocationaddress());
         activityDTO.setCreateddate(activity.getCreateddate());
+        activityDTO.setCreatedBy(userService.convertToUserDTOfromUserSocu(activity.getCreatedby()));
         return activityDTO;
     }
 

@@ -38,3 +38,10 @@
 .rsvp {
   font-size: 15px;
 }
+
+img {
+  object-fit: cover;
+  border-radius: 50%;
+  height: 30px;
+  width: 30px;
+}
