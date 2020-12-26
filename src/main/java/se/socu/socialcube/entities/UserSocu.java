@@ -45,6 +45,16 @@ public class UserSocu implements Serializable {
         this.company = company;
     }
 
-
-
+    @Override
+    public String toString() {
+        return "UserSocu{" +
+                "id=" + id +
+                ", usertype=" + usertype +
+                ", name='" + name + '\'' +
+                ", email='" + email + '\'' +
+                ", password='" + password + '\'' +
+                ", employmentnumber='" + employmentnumber + '\'' +
+                ", department='" + department + '\'' +
+                '}';
+    }
 }

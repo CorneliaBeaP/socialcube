@@ -3,9 +3,10 @@ package se.socu.socialcube.controller;
 import org.springframework.http.MediaType;
 import org.springframework.web.bind.annotation.*;
 import se.socu.socialcube.DTO.ActivityDTO;
-import se.socu.socialcube.entities.Activity;
+import se.socu.socialcube.DTO.UserDTO;
 import se.socu.socialcube.entities.Response;
 import se.socu.socialcube.service.ActivityService;
+import se.socu.socialcube.service.UserService;
 
 import java.util.ArrayList;
 
@@ -14,11 +15,13 @@ import java.util.ArrayList;
 public class ActivityController {
 
 
-    public ActivityController(ActivityService activityService) {
+    public ActivityController(ActivityService activityService, UserService userService) {
         this.activityService = activityService;
+        this.userService = userService;
     }
 
     private final ActivityService activityService;
+    private final UserService userService;
 
 //    @PostMapping(path = "/activity")
 //    public void addActivity(@RequestBody String activity) {
@@ -86,4 +89,8 @@ public class ActivityController {
        return activityService.getAllAttendedActivities(id);
     }
 
+    @GetMapping(path = "api/activity/attendees/{id}")
+    public ArrayList<UserDTO> getAttendees(@PathVariable long id){
+       return userService.getAttendees(id);
+    }
 }

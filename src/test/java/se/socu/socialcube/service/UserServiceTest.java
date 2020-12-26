@@ -7,6 +7,7 @@ import se.socu.socialcube.entities.UserSocu;
 import se.socu.socialcube.repository.CompanyRepository;
 import se.socu.socialcube.repository.UserRepository;
 
+import java.util.ArrayList;
 import java.util.Optional;
 
 import static org.junit.jupiter.api.Assertions.*;
@@ -23,6 +24,11 @@ class UserServiceTest {
 
        @Override
        public Iterable<UserSocu> findAllByCompany_organizationnumber(Long company_organizationnumber) {
+           return null;
+       }
+
+       @Override
+       public ArrayList<UserSocu> findAllAttendeesByActivityId(long activityid) {
            return null;
        }
 

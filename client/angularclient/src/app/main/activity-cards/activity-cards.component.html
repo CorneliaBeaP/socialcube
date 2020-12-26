@@ -1,4 +1,10 @@
 <div class="m-5" *ngFor="let activity of activities">
+  <div>
+    <div *ngFor="let attendee of activity.attendees">
+      {{attendee.name}}
+      <img [src]="getAttendeeProfilePicture(attendee.id)" alt="">
+    </div>
+  </div>
   <div class="card">
     <div class="card-body">
       <div class="row">

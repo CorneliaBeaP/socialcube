@@ -2,8 +2,10 @@ import {Component, OnDestroy, OnInit} from '@angular/core';
 import {Activity} from "../../classes/activity";
 import {ActivityService} from "../../services/activity.service";
 import {LoginService} from "../../services/login.service";
-import {Subscription} from "rxjs";
+import {Observable, of, Subscription} from "rxjs";
 import {Usersocu} from "../../classes/usersocu";
+import {catchError, map} from "rxjs/operators";
+import {HttpClient} from "@angular/common/http";
 
 @Component({
   selector: 'app-activity-cards',
@@ -17,19 +19,25 @@ export class ActivityCardsComponent implements OnInit, OnDestroy {
   declinedActivityIDs: number[];
   user: Usersocu;
 
-  constructor(private activityService: ActivityService, private loginService: LoginService) {
+  constructor(private activityService: ActivityService,
+              private loginService: LoginService,
+              private http: HttpClient) {
   }
 
   ngOnInit(): void {
     this.user = this.loginService.getUserValue();
     this.subscription = this.activityService.getActivities(this.loginService.getUserValue().companyorganizationnumber).subscribe(activityarray => {
+      activityarray.forEach((activity) => {
+        this.subscription = this.activityService.getAttendees(activity.id).subscribe((data) => {
+          let data2 = JSON.stringify(data);
+          activity.attendees = JSON.parse(data2);
+        });
+      });
       this.activities = activityarray;
-      // this.sortByCreatedDate();
       this.activities = this.activities.reverse();
       this.getDeclinedActivityIDs();
       this.sortAwayDeclinedActivities();
     });
-
   }
 
   public sortByCreatedDate(): void {
@@ -80,5 +88,31 @@ export class ActivityCardsComponent implements OnInit, OnDestroy {
         });
       });
     }
+  }
+
+  getAttendeeProfilePicture(id: number) {
+
+    //TODO: fortsätt här
+    let string: string;
+    let promise = this.getFolder(id).pipe(map(data => {
+      string = data.toString();
+      console.log(data);
+      }
+    ));
+  }
+
+  getFolder(id: number): Observable<string> {
+    const folderPath = `../../../../assets/ProfilePictures`;
+    return this.http
+      .get(`${folderPath}/${id}.png`, {observe: 'response', responseType: 'blob'})
+      .pipe(
+        map(response => {
+          return `${folderPath}/${id}.png`;
+        }),
+        catchError(error => {
+          // console.clear();
+          return of(`${folderPath}/default.png`);
+        })
+      );
   }
 }

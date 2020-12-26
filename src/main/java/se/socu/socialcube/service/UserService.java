@@ -35,7 +35,7 @@ public class UserService {
     private UserRepository userRepository;
     private CompanyRepository companyRepository;
 
-    public UserDTO convertToUserDTOfromUserSocu(UserSocu userSocu) {
+    private UserDTO convertToUserDTOfromUserSocu(UserSocu userSocu) {
         UserDTO userDTO = new UserDTO();
         userDTO.setId(userSocu.getId());
         userDTO.setName(userSocu.getName());
@@ -47,7 +47,7 @@ public class UserService {
         return userDTO;
     }
 
-    public UserSocu convertToUserSocuFromUserDTO(UserDTO userDTO) {
+    private UserSocu convertToUserSocuFromUserDTO(UserDTO userDTO) {
         UserSocu userSocu = new UserSocu();
         userSocu.setName(userDTO.getName());
         userSocu.setEmail(userDTO.getEmail());
@@ -200,5 +200,18 @@ public class UserService {
             dto = convertToUserDTOfromUserSocu(userSocu.get());
         }
         return dto;
+    }
+
+    public ArrayList<UserDTO> getAttendees(long activityid){
+        ArrayList<UserSocu> usersocus = userRepository.findAllAttendeesByActivityId(activityid);
+        ArrayList<UserDTO> userDTOS = new ArrayList<>();
+        for (UserSocu u: usersocus
+        ) {
+            userDTOS.add(convertToUserDTOfromUserSocu(u));
+            System.out.println(u.toString());
+        }
+
+
+        return userDTOS;
     }
 }

@@ -3,6 +3,7 @@ package se.socu.socialcube.service;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import se.socu.socialcube.DTO.ActivityDTO;
+import se.socu.socialcube.DTO.UserDTO;
 import se.socu.socialcube.entities.Activity;
 import se.socu.socialcube.entities.Company;
 import se.socu.socialcube.entities.Response;
@@ -105,7 +106,6 @@ public class ActivityService {
 
     public ArrayList<ActivityDTO> getAllAttendedActivities(long userid) {
         String string = "" + userid;
-        Response response = new Response();
         ArrayList<Activity> activities = activityRepository.findAllAttendedActivitiesByUsersocuId(Long.parseLong(string));
         ArrayList<ActivityDTO> activityDTOS = new ArrayList<>();
         for (Activity a: activities
