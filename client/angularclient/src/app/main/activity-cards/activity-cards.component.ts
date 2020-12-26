@@ -2,11 +2,8 @@ import {Component, OnDestroy, OnInit} from '@angular/core';
 import {Activity} from "../../classes/activity";
 import {ActivityService} from "../../services/activity.service";
 import {LoginService} from "../../services/login.service";
-import {Observable, of, Subscription} from "rxjs";
+import {Subscription} from "rxjs";
 import {Usersocu} from "../../classes/usersocu";
-import {catchError, map} from "rxjs/operators";
-import {HttpClient} from "@angular/common/http";
-import {UserService} from "../../services/user.service";
 
 @Component({
   selector: 'app-activity-cards',
@@ -19,12 +16,9 @@ export class ActivityCardsComponent implements OnInit, OnDestroy {
   subscription: Subscription;
   declinedActivityIDs: number[];
   user: Usersocu;
-  profilepictureurl: string;
 
   constructor(private activityService: ActivityService,
-              private loginService: LoginService,
-              private http: HttpClient,
-              private userService: UserService) {
+              private loginService: LoginService) {
   }
 
   ngOnInit(): void {
