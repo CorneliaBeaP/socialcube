@@ -34,6 +34,7 @@ export class ActivityCardsComponent implements OnInit, OnDestroy {
       this.activities = this.activities.reverse();
       this.getDeclinedActivityIDs();
       this.sortAwayDeclinedActivities();
+      this.activities = this.sortAwayExpiredActivities(this.activities);
     });
 
     this.getProfilePicture(4);
@@ -75,6 +76,30 @@ export class ActivityCardsComponent implements OnInit, OnDestroy {
         });
       });
     }
+  }
+
+  sortAwayExpiredActivities(list: Activity[]) {
+    let today = new Date();
+    let itemsToRemove = [];
+    list.forEach((activity) => {
+      let activityDate = activity.activitydate;
+      if (activityDate[0] < today.getFullYear()) {
+        itemsToRemove.push(activity);
+      } else if (activityDate[0] == today.getFullYear()) {
+        if (activityDate[1] < (today.getMonth() + 1)) {
+          itemsToRemove.push(activity);
+        } else if (activityDate[1] == (today.getMonth() + 1)) {
+          if (activityDate[2] < today.getDate()) {
+            itemsToRemove.push(activity);
+          }
+        }
+      }
+    });
+    itemsToRemove.forEach((activity) => {
+      list.splice(list.indexOf(activity), 1);
+    });
+
+    return list;
   }
 
   getProfilePicture(id: number): string {
