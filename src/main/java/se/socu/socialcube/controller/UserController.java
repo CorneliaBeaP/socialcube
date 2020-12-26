@@ -8,7 +8,6 @@ import se.socu.socialcube.entities.Response;
 import se.socu.socialcube.entities.UserSocu;
 import se.socu.socialcube.service.UserService;
 
-import java.util.Arrays;
 import java.util.List;
 
 @CrossOrigin(origins = "http://localhost:4200", allowedHeaders = "*")
@@ -32,16 +31,8 @@ public class UserController {
         return userService.getAllUserDTOsForCompany(id);
     }
 
-
-//    @GetMapping("/user/{id}")
-//    public UserDTO getUser(@PathVariable long id) {
-//        return userRepository.findById(id);
-//    }
-
-
     @PostMapping(path = "/api/login", produces = MediaType.APPLICATION_JSON_VALUE)
     public UserDTO getAuthenticationStatus(@RequestBody String[] usercredentials) {
-//        System.out.println("usercredentials: " + usercredentials[0] + ", " + usercredentials[1] + " userDTO: " + userService.checkIfLoginCredentialsAreCorrectAndGetUser(usercredentials[0], usercredentials[1]));
         UserDTO userDTO = userService.checkIfLoginCredentialsAreCorrectAndGetUser(usercredentials[0], usercredentials[1]);
         System.out.println(userDTO.getEmail() + " email");
         if (!(userDTO.getEmail() == null)) {
