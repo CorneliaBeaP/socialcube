@@ -14,7 +14,6 @@ import {Subscription} from "rxjs";
 export class CurrentActivitiesComponent implements OnInit, OnDestroy {
 
   showCurrentActivities = false;
-  showCard = false;
   currentActivities: Activity[];
   user: Usersocu;
   subscription: Subscription;
@@ -27,17 +26,12 @@ export class CurrentActivitiesComponent implements OnInit, OnDestroy {
   ngOnInit(): void {
     this.user = this.loginService.getUserValue();
     this.getActivities();
-
   }
 
   getActivities() {
     this.subscription = this.activityService.getActivities(this.user.companyorganizationnumber).subscribe(next => {
       this.currentActivities = next;
     });
-  }
-
-  showcard(event) {
-
   }
 
   ngOnDestroy(): void {
