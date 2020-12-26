@@ -60,7 +60,6 @@ export class ActivityCardsComponent implements OnInit, OnDestroy {
 
   public getDeclinedActivityIDs() {
     this.declinedActivityIDs = JSON.parse(localStorage.getItem('declinedActivityIDs' + this.user.id));
-    console.log(this.declinedActivityIDs);
   }
 
   sortAwayDeclinedActivities() {
