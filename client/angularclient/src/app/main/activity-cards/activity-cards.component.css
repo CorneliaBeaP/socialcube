@@ -45,11 +45,11 @@ img {
 }
 
 .attending{
-  background-color: rgba(80, 146, 181, 0.2);
+  background-color: rgba(255, 255, 255, 0.3);
   color: #93a1ad;
 }
 
 .attending:hover{
-  background-color: rgba(80, 146, 181, 0.2);
+  background-color: rgba(255, 255, 255, 0.3);
   color: #93a1ad;
 }
