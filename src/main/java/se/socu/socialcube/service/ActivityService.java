@@ -85,7 +85,27 @@ public class ActivityService {
             response.setStatus("ERROR");
             response.setMessage("Activity could not be added");
         }
+        return response;
+    }
 
+    public Response declineAttendedActivity(long activityID, long userID) {
+        Response response = new Response();
+        Optional<Activity> activity = activityRepository.findById(activityID);
+        Optional<UserSocu> userSocu = userRepository.findById(userID);
+        if (activity.isPresent()) {
+            if (userSocu.isPresent()) {
+                List<UserSocu> attendees = userRepository.findAllAttendeesByActivityId(userSocu.get().getId());
+                attendees.remove(userSocu.get());
+                activity.get().setAttendees(attendees);
+                response.setStatus("OK");
+                response.setMessage("Deltagarlistan har uppdaterats.");
+            } else {
+                response.setStatus("ERROR");
+                response.setMessage("Kunde inte hitta användaren.");
+            }
+            response.setStatus("ERROR");
+            response.setMessage("Kunde inte hitta aktiviteten.");
+        }
         return response;
     }
 

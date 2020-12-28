@@ -57,6 +57,11 @@ export class ActivityCardsComponent implements OnInit, OnDestroy {
         declinedAs.push(id);
       }
     }
+    if (this.isUserAttending(this.user.id, id)) {
+      this.subscription = this.activityService.declineAttendedActivity(this.user.id, id).subscribe((data) => {
+        console.log(data);
+      });
+    }
     location.reload();
     localStorage.setItem('declinedActivityIDs' + this.user.id, JSON.stringify(declinedAs));
   }
@@ -92,7 +97,7 @@ export class ActivityCardsComponent implements OnInit, OnDestroy {
 
   isUserAttending(userid: number, activityid: number): boolean {
     let bool = false;
-    if(!(this.attendedActivities == null)) {
+    if (!(this.attendedActivities == null)) {
       this.attendedActivities.forEach((activity) => {
           if (activity.id == activityid) {
             bool = true;

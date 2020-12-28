@@ -51,4 +51,11 @@ export class ActivityService {
       return JSON.parse(data2);
     }));
   }
+
+  public declineAttendedActivity(userid: number, activityid: number) {
+    return this.http.delete(`http://localhost:8080/api/activity/decline/${activityid}/${userid}`).pipe(map(data => {
+      let data2 = JSON.stringify(data);
+      return JSON.parse(data2);
+    }));
+  }
 }

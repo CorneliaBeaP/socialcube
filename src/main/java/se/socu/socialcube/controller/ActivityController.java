@@ -42,12 +42,17 @@ public class ActivityController {
     }
 
     @GetMapping(path = "/api/activity/attendedactivities/{id}")
-    public ArrayList<ActivityDTO> getAttendedActivities(@PathVariable long id){
-       return activityService.getAllAttendedActivities(id);
+    public ArrayList<ActivityDTO> getAttendedActivities(@PathVariable long id) {
+        return activityService.getAllAttendedActivities(id);
     }
 
     @GetMapping(path = "api/activity/attendees/{id}")
-    public ArrayList<UserDTO> getAttendees(@PathVariable long id){
-       return userService.getAttendees(id);
+    public ArrayList<UserDTO> getAttendees(@PathVariable long id) {
+        return userService.getAttendees(id);
+    }
+
+    @DeleteMapping(path = "api/activity/decline/{activityid}/{userid}")
+    public Response declineAttendedActivity(@PathVariable long activityid, @PathVariable long userid) {
+        return activityService.declineAttendedActivity(activityid, userid);
     }
 }
