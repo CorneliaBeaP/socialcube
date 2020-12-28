@@ -22,6 +22,8 @@ import java.util.Random;
 @Service
 public class UserService {
 
+    private Path path;
+
     public UserService(UserRepository userRepository, CompanyRepository companyRepository) {
         this.userRepository = userRepository;
         this.companyRepository = companyRepository;
@@ -108,6 +110,7 @@ public class UserService {
         Optional<UserSocu> userSocu = userRepository.findById(id);
         if (userSocu.isPresent()) {
             userRepository.delete(userSocu.get());
+            deleteProfilePicture(id, true);
         }
     }
 
@@ -133,17 +136,21 @@ public class UserService {
         }
     }
 
-    public void deleteProfilePicture(Long id) {
+    public void deleteProfilePicture(Long id, Boolean isUserRemoved) {
         String folder = "C:\\Users\\corne\\OneDrive\\Dokument\\SocialCube\\Kod\\IntelliJ\\client\\angularclient\\src\\assets\\ProfilePictures\\";
         String fileName = id.toString() + ".png";
         Path path = Paths.get(folder + fileName);
         try {
             Files.deleteIfExists(path);
-            copyDefaultPictureForNewUser(id);
+            if(!isUserRemoved){
+                copyDefaultPictureForNewUser(id);
+            }
         } catch (IOException e) {
             e.printStackTrace();
         }
     }
+
+
 
     public String generatePassword(int length) {
         String characters = "0123456789ABCDEFGHIJKLMNOPQRSTUVWXabcdefghijklmnopqrstuvwxyz";

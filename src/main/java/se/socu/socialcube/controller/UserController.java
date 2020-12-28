@@ -72,7 +72,7 @@ public class UserController {
     @GetMapping("/api/users/delete/image/{id}")
     public Response deleteProfilePicture(@PathVariable Long id) {
         System.out.println("Mottagit anrop om att ta bort bild");
-        userService.deleteProfilePicture(id);
+        userService.deleteProfilePicture(id, false);
         return new Response("OK", "Anrop mottaget");
     }
 
