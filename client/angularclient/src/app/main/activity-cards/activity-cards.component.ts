@@ -14,6 +14,7 @@ import {ExpiredPipe} from "../../helpers/expired.pipe";
 export class ActivityCardsComponent implements OnInit, OnDestroy {
 
   activities: Activity[];
+  attendedActivities: Activity[];
   subscription: Subscription;
   declinedActivityIDs: number[];
   user: Usersocu;
@@ -38,7 +39,7 @@ export class ActivityCardsComponent implements OnInit, OnDestroy {
       this.sortAwayDeclinedActivities();
       this.activities = this.expiredPipe.transform(this.activities);
     });
-
+    this.getAttendedActivities();
     this.getProfilePicture(4);
   }
 
@@ -81,6 +82,26 @@ export class ActivityCardsComponent implements OnInit, OnDestroy {
 
   getProfilePicture(id: number): string {
     return `../../../../assets/ProfilePictures/${id}.png`;
+  }
+
+  getAttendedActivities() {
+    this.activityService.getattendedActivities(this.loginService.getUserValue().id).subscribe(data => {
+      this.attendedActivities = this.expiredPipe.transform(data);
+    });
+  }
+
+  isUserAttending(userid: number, activityid: number): boolean {
+    let bool = false;
+    if(!(this.attendedActivities == null)) {
+      this.attendedActivities.forEach((activity) => {
+          if (activity.id == activityid) {
+            bool = true;
+            return;
+          }
+        }
+      );
+    }
+    return bool;
   }
 
   ngOnDestroy(): void {

@@ -1,27 +1,24 @@
 .card {
   border-radius: 20px 20px 0 20px;
   background-color: rgba(255, 255, 255, 0.7);
+  border: none;
 }
 
 .choicebutton {
+  margin: 4px 2px 2px;
   width: 50px;
-  border-width: 1px;
-  border-color: #d1d1d1;
   background-color: rgba(255, 255, 255, 0.7);
-  border-style: solid;
-  border-top-width: 0;
+  border-style: none;
   outline: none;
   color: #686b6e;
-
 }
-
 
 .accept {
   border-bottom-left-radius: 15px;
 }
 
 .refuse {
-  border-left-width: 0;
+  margin-right: 0;
   border-bottom-right-radius: 15px;
 }
 
@@ -45,4 +42,14 @@ img {
   border-radius: 50%;
   height: 30px;
   width: 30px;
+}
+
+.attending{
+  background-color: rgba(80, 146, 181, 0.2);
+  color: #93a1ad;
+}
+
+.attending:hover{
+  background-color: rgba(80, 146, 181, 0.2);
+  color: #93a1ad;
 }
