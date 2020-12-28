@@ -65,12 +65,15 @@ export class ProfileComponent implements OnInit {
   onUpload(file: any) {
     let formData = new FormData();
     if (!(file.size > 1048576)) {
-      formData.append('name', file);
-      this.userService.uploadProfilePicture(formData, this.loginService.getUserValue().id);
+      if (file.type.match('image.jpg') || file.type.match('image.jpeg') || file.type.match('image.png')) {
+        formData.append('name', file);
+        this.userService.uploadProfilePicture(formData, this.loginService.getUserValue().id);
+      } else {
+        this.profilepicErrorMessage = `Vänligen välj en bild av typen .png eller .jpg`;
+      }
     } else {
       this.profilepicErrorMessage = 'Filen överstiger 1MB, vänligen försök med en mindre fil.'
     }
-
   }
 
   getProfilePicture(id: number) {
