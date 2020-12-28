@@ -56,9 +56,9 @@ export class AdministrationComponent implements OnInit, OnDestroy {
     this.subscription = this.userService.sendUser(usersocu).subscribe((data) => {
       this.response = data;
       this.mailto(usersocu.email.toString());
+      this.addForm.reset();
+      window.location.reload();
     });
-    this.addForm.reset();
-    window.location.reload();
   }
 
   ngOnDestroy(): void {
