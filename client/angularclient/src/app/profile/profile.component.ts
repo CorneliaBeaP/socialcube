@@ -1,4 +1,4 @@
-import {Component, OnDestroy, OnInit} from '@angular/core';
+import {Component, OnInit} from '@angular/core';
 import {UserService} from "../services/user.service";
 import {LoginService} from "../services/login.service";
 import {Subscription} from "rxjs";
@@ -28,6 +28,7 @@ export class ProfileComponent implements OnInit {
   subscription: Subscription;
   subscrip: Subscription;
   response: Response;
+  profilepicErrorMessage = "";
 
 
   constructor(private userService: UserService,
@@ -63,8 +64,12 @@ export class ProfileComponent implements OnInit {
 
   onUpload(file: any) {
     let formData = new FormData();
-    formData.append('name', file);
-    this.userService.uploadProfilePicture(formData, this.loginService.getUserValue().id);
+    if (!(file.size > 1048576)) {
+      formData.append('name', file);
+      this.userService.uploadProfilePicture(formData, this.loginService.getUserValue().id);
+    } else {
+      this.profilepicErrorMessage = 'Filen överstiger 1MB, vänligen försök med en mindre fil.'
+    }
 
   }
 

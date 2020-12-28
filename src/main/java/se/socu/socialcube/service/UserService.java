@@ -1,10 +1,5 @@
 package se.socu.socialcube.service;
 
-import org.apache.catalina.User;
-import org.apache.tomcat.util.http.fileupload.FileUtils;
-import org.slf4j.Logger;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.boot.logging.LoggerGroup;
 import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
 import se.socu.socialcube.DTO.UserDTO;
@@ -14,15 +9,15 @@ import se.socu.socialcube.entities.UserSocu;
 import se.socu.socialcube.repository.CompanyRepository;
 import se.socu.socialcube.repository.UserRepository;
 
-import javax.imageio.ImageIO;
-import java.awt.*;
 import java.io.File;
 import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
-import java.util.*;
+import java.util.ArrayList;
 import java.util.List;
+import java.util.Optional;
+import java.util.Random;
 
 @Service
 public class UserService {
