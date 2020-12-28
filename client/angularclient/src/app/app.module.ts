@@ -28,6 +28,7 @@ import { StartredirecterComponent } from './startredirecter/startredirecter.comp
 import {MatTooltipModule} from "@angular/material/tooltip";
 import { CurrentActivitiesComponent } from './main/current-activities/current-activities.component';
 import {MatExpansionModule} from "@angular/material/expansion";
+import { ExpiredPipe } from './helpers/expired.pipe';
 
 @NgModule({
   declarations: [
@@ -45,7 +46,8 @@ import {MatExpansionModule} from "@angular/material/expansion";
     ErrorpageComponent,
     Page404Component,
     StartredirecterComponent,
-    CurrentActivitiesComponent
+    CurrentActivitiesComponent,
+    ExpiredPipe
   ],
   imports: [
     BrowserModule,
@@ -61,7 +63,7 @@ import {MatExpansionModule} from "@angular/material/expansion";
     MatTooltipModule,
     MatExpansionModule
   ],
-  providers: [UserService, LoginService],
+  providers: [UserService, LoginService, ExpiredPipe],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

@@ -5,6 +5,7 @@ import {LoginService} from "../../services/login.service";
 import {Usersocu} from "../../classes/usersocu";
 import {Activity} from "../../classes/activity";
 import {Subscription} from "rxjs";
+import {ExpiredPipe} from "../../helpers/expired.pipe";
 
 @Component({
   selector: 'app-current-activities',
@@ -20,7 +21,8 @@ export class CurrentActivitiesComponent implements OnInit, OnDestroy {
 
   constructor(private activityService: ActivityService,
               private userService: UserService,
-              private loginService: LoginService) {
+              private loginService: LoginService,
+              private expiredPipe: ExpiredPipe) {
   }
 
   ngOnInit(): void {
@@ -30,32 +32,8 @@ export class CurrentActivitiesComponent implements OnInit, OnDestroy {
 
   getActivities() {
     this.subscription = this.activityService.getActivities(this.user.companyorganizationnumber).subscribe(next => {
-      this.currentActivities = this.sortAwayExpiredActivities(next);
+      this.currentActivities = this.expiredPipe.transform(next);
     });
-  }
-
-  sortAwayExpiredActivities(list: Activity[]) {
-    let today = new Date();
-    let itemsToRemove = [];
-    list.forEach((activity) => {
-      let activityDate = activity.activitydate;
-      if (activityDate[0] < today.getFullYear()) {
-        itemsToRemove.push(activity);
-      } else if (activityDate[0] == today.getFullYear()) {
-        if (activityDate[1] < (today.getMonth() + 1)) {
-          itemsToRemove.push(activity);
-        } else if (activityDate[1] == (today.getMonth() + 1)) {
-          if (activityDate[2] < today.getDate()) {
-            itemsToRemove.push(activity);
-          }
-        }
-      }
-    });
-    itemsToRemove.forEach((activity) => {
-      list.splice(list.indexOf(activity), 1);
-    });
-
-    return list;
   }
 
   ngOnDestroy(): void {
