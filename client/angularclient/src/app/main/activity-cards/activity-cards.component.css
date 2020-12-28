@@ -17,6 +17,10 @@
   border-bottom-left-radius: 15px;
 }
 
+.edit:hover {
+  color: #1f8fff;
+}
+
 .decline {
   margin-right: 0;
   border-bottom-right-radius: 15px;
@@ -44,16 +48,21 @@ img {
   width: 30px;
 }
 
-.attending {
-  background-color: rgba(255, 255, 255, 0.3);
-  color: #93a1ad;
+.choiceMade {
+  background-color: rgba(247, 242, 255, 0.4) !important;
+  color: #93a1ad!important;
 }
 
-.attending:hover {
-  background-color: rgba(255, 255, 255, 0.3);
-  color: #93a1ad;
+.choiceMade:hover {
+  background-color: rgba(247, 242, 255, 0.4) !important;
+  color: #93a1ad!important;
 }
 
 .attendingcard {
-  background: rgba(247, 242, 255, 0.7);
+  background: rgba(247, 242, 255, 0.7) !important;
+}
+
+.createdByAndDeclined{
+color: yellow !important;
+  background: yellow !important;
 }

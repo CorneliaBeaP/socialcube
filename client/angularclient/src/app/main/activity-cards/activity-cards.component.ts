@@ -48,17 +48,17 @@ export class ActivityCardsComponent implements OnInit, OnDestroy {
     location.reload();
   }
 
-  declineEvent(id: number) {
+  declineEvent(activity: Activity) {
     let declinedAs: number[] = JSON.parse(localStorage.getItem('declinedActivityIDs' + this.user.id));
     if (localStorage.getItem('declinedActivityIDs' + this.user.id) == null) {
-      declinedAs = [id];
+      declinedAs = [activity.id];
     } else {
-      if (!declinedAs.includes(id)) {
-        declinedAs.push(id);
+      if (!declinedAs.includes(activity.id)) {
+        declinedAs.push(activity.id);
       }
     }
-    if (this.isUserAttending(this.user.id, id)) {
-      this.subscription = this.activityService.declineAttendedActivity(this.user.id, id).subscribe((data) => {
+    if (this.isUserAttending(this.user.id, activity.id)) {
+      this.subscription = this.activityService.declineAttendedActivity(this.user.id, activity.id).subscribe((data) => {
         console.log(data);
       });
     }
@@ -76,7 +76,7 @@ export class ActivityCardsComponent implements OnInit, OnDestroy {
         this.activities.forEach(activity => {
           if (activity.id == id) {
             let index = this.activities.indexOf(activity);
-            if (index > -1) {
+            if (index > -1 && !(activity.createdbyid == this.user.id)) {
               this.activities.splice(index, 1);
             }
           }
@@ -105,6 +105,23 @@ export class ActivityCardsComponent implements OnInit, OnDestroy {
           }
         }
       );
+    }
+    return bool;
+  }
+
+  isUserNotAttendingButHaveCreatedEvent(activityid: number): boolean {
+    let bool = false;
+    if (!(this.declinedActivityIDs == null)) {
+      this.declinedActivityIDs.forEach(id => {
+        this.activities.forEach(activity => {
+          if (activity.id == id) {
+            if (activity.id == activityid) {
+              bool = true;
+              return;
+            }
+          }
+        });
+      });
     }
     return bool;
   }
