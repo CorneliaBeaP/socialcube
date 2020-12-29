@@ -37,14 +37,14 @@
     </div>
   </div>
   <div class="float-right">
-    <button [attr.disabled]="isUserAttending(user.id, activity.id)? true : null"
-            [ngClass]="{'choiceMade' : isUserAttending(user.id, activity.id)}" type="button" class="accept choicebutton"
+    <button [attr.disabled]="isAttendButtonDisabled(activity)? true : null"
+            [ngClass]="{'choiceMade' : isAttendButtonDisabled(activity)}" type="button" class="accept choicebutton"
             (click)="attendEvent(activity.id)"><i class="fas fa-check"></i>
     </button>
     <button *ngIf="activity.createdbyid==user.id" type="button" class="choicebutton edit"
             [ngClass]="{'attendingcard' : isUserAttending(user.id, activity.id)}"><i class="fas fa-pen"></i></button>
-    <button [attr.disabled]="isUserNotAttendingButHaveCreatedEvent(activity.id) && this.declinedActivityIDs"
-      [ngClass]="{'attendingcard' : isUserAttending(user.id, activity.id), 'choiceMade' : isUserNotAttendingButHaveCreatedEvent(activity.id) && this.declinedActivityIDs}"
+    <button [attr.disabled]="isDeclineButtonDisabled(activity)? true : null"
+      [ngClass]="{'attendingcard' : isUserAttending(user.id, activity.id), 'choiceMade' : isDeclineButtonDisabled(activity)}"
       type="button" class="decline choicebutton" (click)="declineEvent(activity)"><i class="fas fa-times"></i>
     </button>
   </div>

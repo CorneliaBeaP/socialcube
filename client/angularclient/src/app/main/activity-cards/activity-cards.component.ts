@@ -126,6 +126,45 @@ export class ActivityCardsComponent implements OnInit, OnDestroy {
     return bool;
   }
 
+  hasRSVPDateBeen(activity: Activity): boolean {
+    let bool = false;
+    let today = new Date();
+    if (!(activity.rsvpdate == null)) {
+      let activityDate = activity.rsvpdate;
+      if (activityDate[0] < today.getFullYear()) {
+        bool = true;
+      } else if (activityDate[0] == today.getFullYear()) {
+        if (activityDate[1] < (today.getMonth() + 1)) {
+          bool = true;
+        } else if (activityDate[1] == (today.getMonth() + 1)) {
+          if (activityDate[2] < today.getDate()) {
+            bool = true;
+          }
+        }
+      }
+    }
+    return bool;
+  }
+
+  isAttendButtonDisabled(activity: Activity) {
+    let isDisabled = false;
+    if ((this.hasRSVPDateBeen(activity)) || (this.isUserAttending(this.user.id, activity.id))) {
+      isDisabled = true;
+    }
+    return isDisabled;
+  }
+
+  isDeclineButtonDisabled(activity: Activity) {
+    let isDisabled = false;
+    if (this.declinedActivityIDs) {
+      if (this.isUserNotAttendingButHaveCreatedEvent(activity.id)) {
+        isDisabled = true;
+      }
+    }
+    return isDisabled;
+  }
+
+
   ngOnDestroy(): void {
     this.subscription.unsubscribe();
   }
