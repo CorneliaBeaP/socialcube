@@ -31,7 +31,7 @@
             *ngIf="activity.activitydate[4]<10">0</span>{{activity.activitydate[4]}}</h6>
         </div>
       </div>
-      <div class="card-text mt-4 mb-4">{{activity.descriptionsocu}}</div>
+      <div class="card-text mt-4 mb-4" *ngIf="!activity.cancelled">{{activity.descriptionsocu}}</div>
       <div class="text-right rsvp" *ngIf="activity.rsvpdate">Senaste OSA-datum: {{activity.rsvpdate[0]}}-<span *ngIf="activity.rsvpdate[1]<10">0</span>{{activity.rsvpdate[1]}}-<span *ngIf="activity.rsvpdate[2]<10">0</span>{{activity.rsvpdate[2]}}</div>
     </div>
   </div>
