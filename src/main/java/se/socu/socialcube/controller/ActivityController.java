@@ -59,4 +59,9 @@ public class ActivityController {
     public Response declineAttendedActivity(@PathVariable long activityid, @PathVariable long userid) {
         return activityService.declineAttendedActivity(activityid, userid);
     }
+
+    @GetMapping(path = "/api/activity/cancel/{id}")
+    public Response cancelActivity(@PathVariable long id){
+        return activityService.cancelActivity(id);
+    }
 }

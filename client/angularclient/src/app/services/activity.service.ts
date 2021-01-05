@@ -40,10 +40,10 @@ export class ActivityService {
   }
 
   public cancelActivity(id: number){
-    return this.http.get(`http://localhost:8080/api/activity/cancel${id}`).subscribe(data => {
+    return this.http.get(`http://localhost:8080/api/activity/cancel/${id}`).pipe(map(data => {
       let data2 = JSON.stringify(data);
       return JSON.parse(data2);
-    });
+    }));
   }
 
   public attendActivity(userid: number, activityid: number) {

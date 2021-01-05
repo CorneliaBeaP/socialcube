@@ -172,7 +172,7 @@ public class ActivityService {
                 updatedActivity.setActivitytype(activityDTO.getActivitytype());
                 try {
                     activityRepository.save(updatedActivity);
-                }catch (Exception e){
+                } catch (Exception e) {
                     e.printStackTrace();
                     response.setStatus("ERROR");
                     response.setMessage("Kunde inte uppdatera aktiviteten");
@@ -184,6 +184,24 @@ public class ActivityService {
         } else {
             response.setStatus("ERROR");
             response.setMessage("Ogiltig data");
+        }
+        return response;
+    }
+
+    public Response cancelActivity(long id) {
+        Response response = new Response();
+        Optional<Activity> activity = activityRepository.findById(id);
+        if (activity.isPresent()) {
+            activity.get().setCancelled(true);
+            try {
+                activityRepository.save(activity.get());
+                response.setStatus("OK");
+                response.setMessage("Aktivitet inställd");
+            } catch (Exception e) {
+                e.printStackTrace();
+                response.setStatus("ERROR");
+                response.setMessage("Kunde inte ställa in aktiviteten");
+            }
         }
         return response;
     }
