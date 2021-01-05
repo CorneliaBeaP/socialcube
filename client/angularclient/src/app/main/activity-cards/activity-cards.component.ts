@@ -5,6 +5,9 @@ import {LoginService} from "../../services/login.service";
 import {Subscription} from "rxjs";
 import {Usersocu} from "../../classes/usersocu";
 import {ExpiredPipe} from "../../helpers/expired.pipe";
+import {NgbModal} from "@ng-bootstrap/ng-bootstrap";
+import {EditModalComponent} from "./edit-modal/edit-modal.component";
+
 
 @Component({
   selector: 'app-activity-cards',
@@ -21,7 +24,8 @@ export class ActivityCardsComponent implements OnInit, OnDestroy {
 
   constructor(private activityService: ActivityService,
               private loginService: LoginService,
-              private expiredPipe: ExpiredPipe) {
+              private expiredPipe: ExpiredPipe,
+              private modalService: NgbModal) {
   }
 
   ngOnInit(): void {
@@ -164,8 +168,15 @@ export class ActivityCardsComponent implements OnInit, OnDestroy {
     return isDisabled;
   }
 
+  openEditModal(activity: Activity){
+    let modalRef = this.modalService.open(EditModalComponent);
+    modalRef.componentInstance.activity = activity;
+    modalRef['activity'] = activity;
+  }
 
   ngOnDestroy(): void {
     this.subscription.unsubscribe();
   }
 }
+
+

@@ -29,6 +29,8 @@ import {MatTooltipModule} from "@angular/material/tooltip";
 import { CurrentActivitiesComponent } from './main/current-activities/current-activities.component';
 import {MatExpansionModule} from "@angular/material/expansion";
 import { ExpiredPipe } from './helpers/expired.pipe';
+import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
+import { EditModalComponent } from './main/activity-cards/edit-modal/edit-modal.component';
 
 @NgModule({
   declarations: [
@@ -47,7 +49,8 @@ import { ExpiredPipe } from './helpers/expired.pipe';
     Page404Component,
     StartredirecterComponent,
     CurrentActivitiesComponent,
-    ExpiredPipe
+    ExpiredPipe,
+    EditModalComponent
   ],
   imports: [
     BrowserModule,
@@ -61,7 +64,8 @@ import { ExpiredPipe } from './helpers/expired.pipe';
     MatNativeDateModule,
     MatInputModule,
     MatTooltipModule,
-    MatExpansionModule
+    MatExpansionModule,
+    NgbModule
   ],
   providers: [UserService, LoginService, ExpiredPipe],
   bootstrap: [AppComponent]

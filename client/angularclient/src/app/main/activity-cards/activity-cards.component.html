@@ -41,10 +41,13 @@
             (click)="attendEvent(activity.id)"><i class="fas fa-check"></i>
     </button>
     <button *ngIf="activity.createdbyid==user.id" type="button" class="choicebutton edit"
-            [ngClass]="{'attendingcard' : isUserAttending(user.id, activity.id)}"><i class="fas fa-pen"></i></button>
+            [ngClass]="{'attendingcard' : isUserAttending(user.id, activity.id)}" (click)="openEditModal(activity)"><i class="fas fa-pen"></i></button>
     <button [attr.disabled]="isDeclineButtonDisabled(activity)? true : null"
       [ngClass]="{'attendingcard' : isUserAttending(user.id, activity.id), 'choiceMade' : isDeclineButtonDisabled(activity)}"
       type="button" class="decline choicebutton" (click)="declineEvent(activity)"><i class="fas fa-times"></i>
     </button>
   </div>
-</div>
+  <ng-template let-modal>
+    <app-edit-modal></app-edit-modal>
+  </ng-template></div>
+

@@ -1,0 +1,73 @@
+<div class="modal-header">
+  <h4 class="modal-title" id="modal-basic-title">Redigera aktivitet</h4>
+</div>
+<div class="modal-body">
+  <form [formGroup]="form">
+    <div class="form-group">
+      <div class="row">
+        <div class="col">
+          <label for="activitytype">Aktivitetstyp</label>
+        </div>
+        <div class="col">
+          <input type="text" class="m-1" formControlName="activitytype" id="activitytype">
+        </div>
+      </div>
+      <div class="row">
+        <div class="col-6">
+          <label>Datum för aktivitet</label>
+        </div>
+        <div class="col">
+          <input type="text" class="dateinput mr-2 m-1" formControlName="activitydateyear" id="activitydateyear">
+          <input type="text" class="dateinput mr-2 m-1" formControlName="activitydatemonth" id="activitydatemonth">
+          <input type="text" class="dateinput m-1" formControlName="activitydatedate" id="activitydatedate">
+        </div>
+      </div>
+      <div class="row">
+        <div class="col">
+          <label for="activitytimehour">Tid för aktivitet</label>
+        </div>
+        <div class="col">
+          <input type="text" class="dateinput m-1" formControlName="activitytimehour" id="activitytimehour">:
+          <input type="text" class="dateinput m-1" formControlName="activitytimeminute" id="activitytimeminute">
+        </div>
+      </div>
+      <div class="row">
+        <div class="col">
+          <label for="rsvpdate">Datum O.S.A senast</label>
+        </div>
+        <div class="col">
+          <input type="text" class="m-1" formControlName="rsvpdate" id="rsvpdate">
+        </div>
+      </div>
+      <div class="row">
+        <div class="col">
+          <label for="descriptionsocu">Beskrivning</label>
+        </div>
+        <div class="col">
+          <textarea type="text" class="m-1" formControlName="descriptionsocu" id="descriptionsocu"></textarea>
+        </div>
+      </div>
+      <div class="row">
+        <div class="col">
+          <label for="locationname">Plats</label>
+        </div>
+        <div class="col">
+          <input type="text" class="m-1" formControlName="locationname" id="locationname">
+        </div>
+      </div>
+      <div class="row">
+        <div class="col">
+          <label for="locationaddress"></label>
+        </div>
+        <div class="col">
+          <input type="text" class="m-1" formControlName="locationaddress" id="locationaddress">
+        </div>
+      </div>
+    </div>
+  </form>
+</div>
+<div class="modal-footer">
+  <button type="button" class="btn btn-light" (click)="activeModal.close('Save click')">Spara</button>
+  <button type="button" class="btn btn-danger" (click)="activeModal.close('Save click')">Avbryt</button>
+</div>
+
