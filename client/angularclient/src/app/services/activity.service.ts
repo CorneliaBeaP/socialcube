@@ -4,6 +4,7 @@ import {Router} from "@angular/router";
 import {Activity} from "../classes/activity";
 import {map} from "rxjs/operators";
 import {Usersocu} from "../classes/usersocu";
+import {Response} from "../classes/response";
 
 
 @Injectable({
@@ -32,13 +33,18 @@ export class ActivityService {
   }
 
   public updateActivity(activity: Activity) {
-    console.log(activity);
-    return this.http.post('http://localhost:8080/api/activity/update', activity).subscribe(data => {
+    return this.http.post('http://localhost:8080/api/activity/update', activity).pipe(map(data => {
+      let data2 = JSON.stringify(data);
+      return JSON.parse(data2);
+    }));
+  }
+
+  public cancelActivity(id: number){
+    return this.http.get(`http://localhost:8080/api/activity/cancel${id}`).subscribe(data => {
       let data2 = JSON.stringify(data);
       return JSON.parse(data2);
     });
   }
-
 
   public attendActivity(userid: number, activityid: number) {
     let info = [userid, activityid];

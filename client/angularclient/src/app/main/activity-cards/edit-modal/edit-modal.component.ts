@@ -1,22 +1,23 @@
-import {Component, Input, OnInit} from '@angular/core';
+import {Component, Input, OnDestroy, OnInit} from '@angular/core';
 import {Activity} from "../../../classes/activity";
 import {NgbActiveModal} from "@ng-bootstrap/ng-bootstrap";
 import {FormBuilder, FormGroup, Validators} from "@angular/forms";
-import {Response} from "../../../classes/response";
 import {ActivityService} from "../../../services/activity.service";
+import {Subscription} from "rxjs";
 
 @Component({
   selector: 'app-edit-modal',
   templateUrl: './edit-modal.component.html',
   styleUrls: ['./edit-modal.component.css']
 })
-export class EditModalComponent implements OnInit {
+export class EditModalComponent implements OnInit, OnDestroy {
 
   activity: Activity;
   form: FormGroup;
   updatedActivity: Activity;
   errorMessageActivityDate = '';
   errorMessageRSVPDate = '';
+  subscription: Subscription;
 
   constructor(public activeModal: NgbActiveModal,
               private formBuilder: FormBuilder,
@@ -34,16 +35,16 @@ export class EditModalComponent implements OnInit {
     if (this.updatedActivity.activitydate[4] < 10) {
       extraZero = '0';
     }
-    
+
     let rsvpyear;
     let rsvpmonth;
     let rsvpdate;
-    if(this.updatedActivity.rsvpdate == null){
+    if (this.updatedActivity.rsvpdate == null) {
       rsvpyear = '';
       rsvpmonth = '';
       rsvpdate = '';
-    }else {
-      rsvpyear =this.updatedActivity.rsvpdate[0];
+    } else {
+      rsvpyear = this.updatedActivity.rsvpdate[0];
       rsvpmonth = this.updatedActivity.rsvpdate[1];
       rsvpdate = this.updatedActivity.rsvpdate[2];
     }
@@ -68,6 +69,10 @@ export class EditModalComponent implements OnInit {
     this.errorMessageRSVPDate = '';
     this.errorMessageActivityDate = '';
     if (this.form.invalid || !this.isFormOk()) {
+      console.log(this.form.invalid);
+      console.log(this.isFormOk());
+      console.log(this.errorMessageActivityDate);
+      console.log(this.errorMessageRSVPDate);
       console.log('invalid');
       return;
     } else {
@@ -82,13 +87,17 @@ export class EditModalComponent implements OnInit {
     this.updatedActivity.activitydate[2] = this.form.get('activitydatedate').value;
     this.updatedActivity.activitydate[3] = this.form.get('activitytimehour').value;
     this.updatedActivity.activitydate[4] = Number(this.form.get('activitytimeminute').value);
-    this.updatedActivity.rsvpdate[0] = this.form.get('rsvpdateyear').value;
-    this.updatedActivity.rsvpdate[1] = this.form.get('rsvpdatemonth').value;
-    this.updatedActivity.rsvpdate[2] = this.form.get('rsvpdatedate').value;
+    if (!(this.updatedActivity.rsvpdate == null)) {
+      this.updatedActivity.rsvpdate[0] = this.form.get('rsvpdateyear').value;
+      this.updatedActivity.rsvpdate[1] = this.form.get('rsvpdatemonth').value;
+      this.updatedActivity.rsvpdate[2] = this.form.get('rsvpdatedate').value;
+    }
     this.updatedActivity.descriptionsocu = this.form.get('descriptionsocu').value;
     this.updatedActivity.locationname = this.form.get('locationname').value;
     this.updatedActivity.locationaddress = this.form.get('locationaddress').value;
-    this.activityService.updateActivity(this.updatedActivity);
+    this.subscription = this.activityService.updateActivity(this.updatedActivity).subscribe((data) => {
+      console.log(data);
+    });
     this.activeModal.close();
     location.reload();
   }
@@ -119,26 +128,38 @@ export class EditModalComponent implements OnInit {
     }
 
     //Kontroller för OSA-datum
-    if (this.form.get('rsvpdateyear').value < today.getFullYear()) {
-      isFormOk = false;
-      this.errorMessageRSVPDate = `OSA-datumet för aktiviteten har redan varit`;
-    } else if (this.form.get('rsvpdateyear').value == today.getFullYear()) {
-      if (this.form.get('rsvpdatemonth').value < (today.getMonth() + 1)) {
+    if (this.form.get('rsvpdateyear').value && this.form.get('rsvpdatemonth').value && this.form.get('rsvpdatedate').value) {
+      if (this.form.get('rsvpdateyear').value < today.getFullYear()) {
         isFormOk = false;
         this.errorMessageRSVPDate = `OSA-datumet för aktiviteten har redan varit`;
-      } else if (this.form.get('rsvpdatemonth').value == (today.getMonth() + 1)) {
-        if (this.form.get('rsvpdatedate').value < today.getDate()) {
+      } else if (this.form.get('rsvpdateyear').value == today.getFullYear()) {
+        if (this.form.get('rsvpdatemonth').value < (today.getMonth() + 1)) {
           isFormOk = false;
           this.errorMessageRSVPDate = `OSA-datumet för aktiviteten har redan varit`;
+        } else if (this.form.get('rsvpdatemonth').value == (today.getMonth() + 1)) {
+          if (this.form.get('rsvpdatedate').value < today.getDate()) {
+            isFormOk = false;
+            this.errorMessageRSVPDate = `OSA-datumet för aktiviteten har redan varit`;
+          }
         }
+      }
+
+      if ((this.form.get('rsvpdatemonth').value > 12) || (this.form.get('rsvpdatedate').value > 31)) {
+        isFormOk = false;
+        this.errorMessageRSVPDate = 'Felaktigt datum';
       }
     }
 
-    if ((this.form.get('rsvpdatemonth').value > 12) || (this.form.get('rsvpdatedate').value > 31)) {
-      isFormOk = false;
-      this.errorMessageRSVPDate = 'Felaktigt datum';
-    }
-
     return isFormOk;
+  }
+
+  cancelActivity(activity: Activity) {
+    this.activityService.cancelActivity(activity.id);
+  }
+
+  ngOnDestroy(): void {
+    if (this.subscription) {
+      this.subscription.unsubscribe();
+    }
   }
 }
