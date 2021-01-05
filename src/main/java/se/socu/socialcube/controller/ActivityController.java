@@ -34,6 +34,11 @@ public class ActivityController {
         return activityService.saveActivityDTO(activityDTO);
     }
 
+    @PostMapping(path = "/api/activity/update")
+    public Response updateActivity(@RequestBody ActivityDTO activityDTO){
+        return activityService.updateActivity(activityDTO);
+    }
+
     @PostMapping(path = "/api/activity/attendactivity")
     public Response attendActivity(@RequestBody String[] info) {
         long userid = Long.parseLong(info[0]);

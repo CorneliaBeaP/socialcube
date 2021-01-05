@@ -3,6 +3,7 @@ import {Activity} from "../../../classes/activity";
 import {NgbActiveModal} from "@ng-bootstrap/ng-bootstrap";
 import {FormBuilder, FormGroup, Validators} from "@angular/forms";
 import {Response} from "../../../classes/response";
+import {ActivityService} from "../../../services/activity.service";
 
 @Component({
   selector: 'app-edit-modal',
@@ -18,7 +19,8 @@ export class EditModalComponent implements OnInit {
   errorMessageRSVPDate = '';
 
   constructor(public activeModal: NgbActiveModal,
-              private formBuilder: FormBuilder) {
+              private formBuilder: FormBuilder,
+              private activityService: ActivityService) {
   }
 
   ngOnInit(): void {
@@ -65,14 +67,14 @@ export class EditModalComponent implements OnInit {
     this.updatedActivity.activitydate[1] = this.form.get('activitydatemonth').value;
     this.updatedActivity.activitydate[2] = this.form.get('activitydatedate').value;
     this.updatedActivity.activitydate[3] = this.form.get('activitytimehour').value;
-    this.updatedActivity.activitydate[4] = this.form.get('activitytimeminute').value;
+    this.updatedActivity.activitydate[4] = Number(this.form.get('activitytimeminute').value);
     this.updatedActivity.rsvpdate[0] = this.form.get('rsvpdateyear').value;
     this.updatedActivity.rsvpdate[1] = this.form.get('rsvpdatemonth').value;
     this.updatedActivity.rsvpdate[2] = this.form.get('rsvpdatedate').value;
     this.updatedActivity.descriptionsocu = this.form.get('descriptionsocu').value;
     this.updatedActivity.locationname = this.form.get('locationname').value;
     this.updatedActivity.locationaddress = this.form.get('locationaddress').value;
-  
+    this.activityService.updateActivity(this.updatedActivity);
   }
 
   isFormOk(): boolean {

@@ -24,12 +24,21 @@ export class ActivityService {
     }));
   }
 
-  public sendActivity(activity: Activity) {
+  public createActivity(activity: Activity) {
     return this.http.post('http://localhost:8080/api/activity/add', activity).pipe(map(data => {
       let data2 = JSON.stringify(data);
       return JSON.parse(data2);
     }));
   }
+
+  public updateActivity(activity: Activity) {
+    console.log(activity);
+    return this.http.post('http://localhost:8080/api/activity/update', activity).subscribe(data => {
+      let data2 = JSON.stringify(data);
+      return JSON.parse(data2);
+    });
+  }
+
 
   public attendActivity(userid: number, activityid: number) {
     let info = [userid, activityid];

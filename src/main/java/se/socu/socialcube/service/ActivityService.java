@@ -1,5 +1,6 @@
 package se.socu.socialcube.service;
 
+import org.springframework.stereotype.Repository;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import se.socu.socialcube.DTO.ActivityDTO;
@@ -153,5 +154,35 @@ public class ActivityService {
             activityDTOS.add(convertToActivityDTOfromActivity(a));
         }
         return activityDTOS;
+    }
+
+    public Response updateActivity(ActivityDTO activityDTO) {
+        Response response = new Response();
+        if (!(activityDTO == null)) {
+            Optional<Activity> activity = activityRepository.findById(activityDTO.getId());
+            if (activity.isPresent()) {
+                Activity updatedActivity = activity.get();
+                updatedActivity.setLocationname(activityDTO.getLocationname());
+                updatedActivity.setLocationaddress(activityDTO.getLocationaddress());
+                updatedActivity.setDescriptionsocu(activityDTO.getDescriptionsocu());
+                updatedActivity.setRsvpdate(activityDTO.getRsvpdate());
+                updatedActivity.setActivitydate(activityDTO.getActivitydate());
+                updatedActivity.setActivitytype(activityDTO.getActivitytype());
+                try {
+                    activityRepository.save(updatedActivity);
+                }catch (Exception e){
+                    e.printStackTrace();
+                    response.setStatus("ERROR");
+                    response.setMessage("Kunde inte uppdatera aktiviteten");
+                }
+            } else {
+                response.setStatus("ERROR");
+                response.setMessage("Kunde inte hitta aktiviteten");
+            }
+        } else {
+            response.setStatus("ERROR");
+            response.setMessage("Ogiltig data");
+        }
+        return response;
     }
 }

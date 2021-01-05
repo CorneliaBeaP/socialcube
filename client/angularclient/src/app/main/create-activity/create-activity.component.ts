@@ -78,7 +78,7 @@ export class CreateActivityComponent implements OnInit, OnDestroy {
     console.log(new Date());
     console.log(activity);
 
-    this.subscription = this.activityService.sendActivity(activity).subscribe(next => {
+    this.subscription = this.activityService.createActivity(activity).subscribe(next => {
       console.log(next);
     });
     this.form.reset();
