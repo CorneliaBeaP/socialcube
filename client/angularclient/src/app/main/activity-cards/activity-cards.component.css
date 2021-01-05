@@ -66,3 +66,13 @@ img {
 color: yellow !important;
   background: yellow !important;
 }
+
+.cancelled{
+  background: rgba(240, 182, 177, 0.5) !important;
+  color: grey !important;
+}
+
+.cancelled:hover{
+  background: rgba(240, 182, 177, 0.5) !important;
+  color: grey !important;
+}

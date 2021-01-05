@@ -10,7 +10,7 @@
     </span>
     </div>
   </div>
-  <div class="card" [ngClass]="{'attendingcard' : isUserAttending(user.id, activity.id)}">
+  <div class="card" [ngClass]="{'attendingcard' : isUserAttending(user.id, activity.id), 'cancelled': activity.cancelled}">
     <div class="card-body">
       <div class="row">
         <div class="col">
@@ -37,13 +37,14 @@
   </div>
   <div class="float-right">
     <button [attr.disabled]="isAttendButtonDisabled(activity)? true : null"
-            [ngClass]="{'choiceMade' : isAttendButtonDisabled(activity)}" type="button" class="accept choicebutton"
+            [ngClass]="{'choiceMade' : isAttendButtonDisabled(activity), 'cancelled' : activity.cancelled}" type="button" class="accept choicebutton"
             (click)="attendEvent(activity.id)"><i class="fas fa-check"></i>
     </button>
-    <button *ngIf="activity.createdbyid==user.id" type="button" class="choicebutton edit"
-            [ngClass]="{'attendingcard' : isUserAttending(user.id, activity.id)}" (click)="openEditModal(activity)"><i class="fas fa-pen"></i></button>
+    <button [attr.disabled]="isEditButtonDisabled(activity)? true : null"
+      *ngIf="activity.createdbyid==user.id" type="button" class="choicebutton edit"
+            [ngClass]="{'attendingcard' : isUserAttending(user.id, activity.id), 'cancelled' : activity.cancelled}" (click)="openEditModal(activity)"><i class="fas fa-pen"></i></button>
     <button [attr.disabled]="isDeclineButtonDisabled(activity)? true : null"
-      [ngClass]="{'attendingcard' : isUserAttending(user.id, activity.id), 'choiceMade' : isDeclineButtonDisabled(activity)}"
+      [ngClass]="{'attendingcard' : isUserAttending(user.id, activity.id), 'choiceMade' : isDeclineButtonDisabled(activity), 'cancelled' : activity.cancelled}"
       type="button" class="decline choicebutton" (click)="declineEvent(activity)"><i class="fas fa-times"></i>
     </button>
   </div>

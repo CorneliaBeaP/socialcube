@@ -155,6 +155,9 @@ export class ActivityCardsComponent implements OnInit, OnDestroy {
     if ((this.hasRSVPDateBeen(activity)) || (this.isUserAttending(this.user.id, activity.id))) {
       isDisabled = true;
     }
+    if (activity.cancelled) {
+      isDisabled = true;
+    }
     return isDisabled;
   }
 
@@ -165,10 +168,21 @@ export class ActivityCardsComponent implements OnInit, OnDestroy {
         isDisabled = true;
       }
     }
+    if (activity.cancelled) {
+      isDisabled = true;
+    }
     return isDisabled;
   }
 
-  openEditModal(activity: Activity){
+  isEditButtonDisabled(activity: Activity){
+    let isDisabled = false;
+    if (activity.cancelled) {
+      isDisabled = true;
+    }
+    return isDisabled;
+  }
+
+  openEditModal(activity: Activity) {
     console.log(activity);
     let modalRef = this.modalService.open(EditModalComponent);
     modalRef.componentInstance.activity = activity;
