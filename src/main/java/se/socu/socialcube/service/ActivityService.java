@@ -126,12 +126,10 @@ public class ActivityService {
         Optional<UserSocu> userSocu = userRepository.findById(userID);
         if (activity.isPresent()) {
             if (userSocu.isPresent()) {
-                //Todo: nedan ser fel ut
                 List<UserSocu> attendees = userRepository.findAllAttendeesByActivityId(activity.get().getId());
+                response = declineActivity(activityID, userID);
                 attendees.remove(userSocu.get());
                 activity.get().setAttendees(attendees);
-                response.setStatus("OK");
-                response.setMessage("Deltagarlistan har uppdaterats.");
             } else {
                 response.setStatus("ERROR");
                 response.setMessage("Kunde inte hitta användaren.");
