@@ -33,6 +33,11 @@ class UserServiceTest {
        }
 
        @Override
+       public ArrayList<UserSocu> findAllDeclinersByActivityId(long activityid) {
+           return null;
+       }
+
+       @Override
        public <S extends UserSocu> S save(S s) {
            return null;
        }

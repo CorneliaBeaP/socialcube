@@ -43,6 +43,11 @@ public class Activity implements Serializable {
     @ManyToMany(cascade = CascadeType.PERSIST)
     private List<UserSocu> attendees;
 
+    @JoinTable(name = "DECLINEDACTIVITIES", joinColumns = @JoinColumn(name = "activityid"),
+            inverseJoinColumns = @JoinColumn(name = "usersocuid"))
+    @ManyToMany(cascade = CascadeType.PERSIST)
+    private List<UserSocu> decliners;
+
     public Activity() {
     }
 

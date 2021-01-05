@@ -73,4 +73,11 @@ export class ActivityService {
       return JSON.parse(data2);
     }));
   }
+
+  public declineActivity(userid: number, activityid: number) {
+    return this.http.get(`http://localhost:8080/api/activity/decline/${activityid}/${userid}`).pipe(map(data => {
+      let data2 = JSON.stringify(data);
+      return JSON.parse(data2);
+    }));
+  }
 }

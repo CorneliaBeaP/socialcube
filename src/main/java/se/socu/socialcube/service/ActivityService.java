@@ -91,12 +91,42 @@ public class ActivityService {
         return response;
     }
 
+    public Response declineActivity(long activityID, long userID) {
+        Response response = new Response();
+        Optional<Activity> activity = activityRepository.findById(activityID);
+        Optional<UserSocu> userSocu = userRepository.findById(userID);
+        if (activity.isPresent()) {
+            if (userSocu.isPresent()) {
+                List<UserSocu> decliners = userRepository.findAllDeclinersByActivityId(activity.get().getId());
+                decliners.add(userSocu.get());
+                activity.get().setDecliners(decliners);
+                try{
+                    activityRepository.save(activity.get());
+                    response.setStatus("OK");
+                    response.setMessage("Databasen uppdaterad för aktivitetsid " + activityID);
+                }catch (Exception e){
+                    e.printStackTrace();
+                    response.setStatus("ERROR");
+                    response.setMessage("Ett fel har uppstått");
+                }
+            } else {
+                response.setStatus("ERROR");
+                response.setMessage("Kunde inte hitta användaren.");
+            }
+        } else {
+            response.setStatus("ERROR");
+            response.setMessage("Kunde inte hitta aktiviteten.");
+        }
+        return response;
+    }
+
     public Response declineAttendedActivity(long activityID, long userID) {
         Response response = new Response();
         Optional<Activity> activity = activityRepository.findById(activityID);
         Optional<UserSocu> userSocu = userRepository.findById(userID);
         if (activity.isPresent()) {
             if (userSocu.isPresent()) {
+                //Todo: nedan ser fel ut
                 List<UserSocu> attendees = userRepository.findAllAttendeesByActivityId(userSocu.get().getId());
                 attendees.remove(userSocu.get());
                 activity.get().setAttendees(attendees);
@@ -106,6 +136,7 @@ public class ActivityService {
                 response.setStatus("ERROR");
                 response.setMessage("Kunde inte hitta användaren.");
             }
+        } else {
             response.setStatus("ERROR");
             response.setMessage("Kunde inte hitta aktiviteten.");
         }

@@ -55,6 +55,11 @@ public class ActivityController {
         return userService.getAttendees(id);
     }
 
+    @GetMapping(path = "api/activity/decline/{activityid}/{userid}")
+    public Response declineActivity(@PathVariable long activityid, @PathVariable long userid){
+        return activityService.declineActivity(activityid, userid);
+    }
+
     @DeleteMapping(path = "api/activity/decline/{activityid}/{userid}")
     public Response declineAttendedActivity(@PathVariable long activityid, @PathVariable long userid) {
         return activityService.declineAttendedActivity(activityid, userid);

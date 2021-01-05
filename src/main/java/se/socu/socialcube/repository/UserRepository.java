@@ -19,4 +19,9 @@ public interface UserRepository extends CrudRepository<UserSocu, Long> {
     @Query(value = "SELECT DISTINCT * FROM attendedactivities left JOIN usersocu where usersocu.id = usersocuid and activityid=?1", nativeQuery = true)
     ArrayList<UserSocu> findAllAttendeesByActivityId(long activityid);
 
+    @Query(value = "SELECT DISTINCT * FROM declinedactivities left JOIN usersocu where usersocu.id = usersocuid and activityid=?1", nativeQuery = true)
+    ArrayList<UserSocu> findAllDeclinersByActivityId(long activityid);
+
+
+
 }

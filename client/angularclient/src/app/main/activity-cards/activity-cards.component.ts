@@ -53,21 +53,25 @@ export class ActivityCardsComponent implements OnInit, OnDestroy {
   }
 
   declineEvent(activity: Activity) {
-    let declinedAs: number[] = JSON.parse(localStorage.getItem('declinedActivityIDs' + this.user.id));
-    if (localStorage.getItem('declinedActivityIDs' + this.user.id) == null) {
-      declinedAs = [activity.id];
-    } else {
-      if (!declinedAs.includes(activity.id)) {
-        declinedAs.push(activity.id);
-      }
-    }
+    // let declinedAs: number[] = JSON.parse(localStorage.getItem('declinedActivityIDs' + this.user.id));
+    // if (localStorage.getItem('declinedActivityIDs' + this.user.id) == null) {
+    //   declinedAs = [activity.id];
+    // } else {
+    //   if (!declinedAs.includes(activity.id)) {
+    //     declinedAs.push(activity.id);
+    //   }
+    // }
     if (this.isUserAttending(this.user.id, activity.id)) {
       this.subscription = this.activityService.declineAttendedActivity(this.user.id, activity.id).subscribe((data) => {
         console.log(data);
       });
+    } else {
+      this.subscription = this.activityService.declineActivity(this.user.id, activity.id).subscribe((data) => {
+        console.log(data);
+      });
     }
-    location.reload();
-    localStorage.setItem('declinedActivityIDs' + this.user.id, JSON.stringify(declinedAs));
+    // location.reload();
+    // localStorage.setItem('declinedActivityIDs' + this.user.id, JSON.stringify(declinedAs));
   }
 
   public getDeclinedActivityIDs() {
@@ -174,7 +178,7 @@ export class ActivityCardsComponent implements OnInit, OnDestroy {
     return isDisabled;
   }
 
-  isEditButtonDisabled(activity: Activity){
+  isEditButtonDisabled(activity: Activity) {
     let isDisabled = false;
     if (activity.cancelled) {
       isDisabled = true;
