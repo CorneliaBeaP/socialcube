@@ -34,6 +34,20 @@ export class EditModalComponent implements OnInit {
     if (this.updatedActivity.activitydate[4] < 10) {
       extraZero = '0';
     }
+    
+    let rsvpyear;
+    let rsvpmonth;
+    let rsvpdate;
+    if(this.updatedActivity.rsvpdate == null){
+      rsvpyear = '';
+      rsvpmonth = '';
+      rsvpdate = '';
+    }else {
+      rsvpyear =this.updatedActivity.rsvpdate[0];
+      rsvpmonth = this.updatedActivity.rsvpdate[1];
+      rsvpdate = this.updatedActivity.rsvpdate[2];
+    }
+
     this.form = this.formBuilder.group({
       activitytype: [this.updatedActivity.activitytype, Validators.required],
       activitydateyear: [this.updatedActivity.activitydate[0], Validators.required],
@@ -41,9 +55,9 @@ export class EditModalComponent implements OnInit {
       activitydatedate: [this.updatedActivity.activitydate[2], Validators.required],
       activitytimehour: [this.updatedActivity.activitydate[3], Validators.required],
       activitytimeminute: [`${extraZero}${this.updatedActivity.activitydate[4]}`, Validators.required],
-      rsvpdateyear: [this.updatedActivity.rsvpdate[0]],
-      rsvpdatemonth: [this.updatedActivity.rsvpdate[1]],
-      rsvpdatedate: [this.updatedActivity.rsvpdate[2]],
+      rsvpdateyear: [rsvpyear],
+      rsvpdatemonth: [rsvpmonth],
+      rsvpdatedate: [rsvpdate],
       descriptionsocu: [this.updatedActivity.descriptionsocu, Validators.required],
       locationname: [this.updatedActivity.locationname, Validators.required],
       locationaddress: [this.updatedActivity.locationaddress, Validators.required]
