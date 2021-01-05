@@ -47,6 +47,7 @@ public class ActivityService {
         activityDTO.setLocationaddress(activity.getLocationaddress());
         activityDTO.setCreateddate(activity.getCreateddate());
         activityDTO.setCreatedBy(userService.convertToUserDTOfromUserSocu(activity.getCreatedby()));
+        activityDTO.setCancelled(activity.isCancelled());
         return activityDTO;
     }
 
@@ -60,6 +61,7 @@ public class ActivityService {
         activity.setLocationname(activityDTO.getLocationname());
         activity.setLocationaddress(activityDTO.getLocationaddress());
         activity.setCreateddate(activityDTO.getCreateddate());
+        activity.setCancelled(activityDTO.isCancelled());
         Optional<Company> company = companyRepository.findById(activityDTO.getCompanyorganizationnumber());
         if (company.isPresent()) {
             activity.setCompany(company.get());

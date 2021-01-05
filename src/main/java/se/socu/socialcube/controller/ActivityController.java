@@ -25,7 +25,6 @@ public class ActivityController {
 
     @GetMapping(path = "/api/home/{id}", produces = MediaType.APPLICATION_JSON_VALUE)
     public ArrayList<ActivityDTO> getAllActivitiesForCompany(@PathVariable long id) {
-        System.out.println("Skickar aktiviteter...");
         return activityService.findAllActivitiesByCompany_organizationnumber(id);
     }
 

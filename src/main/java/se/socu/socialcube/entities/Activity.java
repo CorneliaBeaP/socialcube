@@ -24,6 +24,7 @@ public class Activity implements Serializable {
     private LocalDateTime rsvpdate;
     private LocalDateTime createddate;
     private String descriptionsocu;
+    private boolean cancelled;
 
     @ManyToOne(fetch = FetchType.LAZY)
     private UserSocu createdby;
@@ -52,11 +53,14 @@ public class Activity implements Serializable {
                 ", activitytype='" + activitytype + '\'' +
                 ", activitydate=" + activitydate +
                 ", rsvpdate=" + rsvpdate +
+                ", createddate=" + createddate +
                 ", descriptionsocu='" + descriptionsocu + '\'' +
+                ", cancelled=" + cancelled +
                 ", createdby=" + createdby +
                 ", locationname='" + locationname + '\'' +
                 ", locationaddress='" + locationaddress + '\'' +
                 ", company=" + company +
+                ", attendees=" + attendees +
                 '}';
     }
 }

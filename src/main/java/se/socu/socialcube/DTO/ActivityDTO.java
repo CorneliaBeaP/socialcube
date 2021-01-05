@@ -20,7 +20,7 @@ public class ActivityDTO {
     private String locationaddress;
     private long companyorganizationnumber;
     private UserDTO createdBy;
-
+    private boolean cancelled;
 
     @Override
     public String toString() {
@@ -29,12 +29,14 @@ public class ActivityDTO {
                 ", activitytype='" + activitytype + '\'' +
                 ", activitydate=" + activitydate +
                 ", rsvpdate=" + rsvpdate +
-                ", createdDate=" + createddate +
+                ", createddate=" + createddate +
                 ", descriptionsocu='" + descriptionsocu + '\'' +
                 ", createdbyid=" + createdbyid +
                 ", locationname='" + locationname + '\'' +
                 ", locationaddress='" + locationaddress + '\'' +
                 ", companyorganizationnumber=" + companyorganizationnumber +
+                ", createdBy=" + createdBy +
+                ", cancelled=" + cancelled +
                 '}';
     }
 }

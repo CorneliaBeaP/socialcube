@@ -15,5 +15,5 @@ export class Activity {
   attendees: Usersocu[];
   companyorganizationnumber: number;
   createdBy: Usersocu;
-
+  cancelled: boolean;
 }
