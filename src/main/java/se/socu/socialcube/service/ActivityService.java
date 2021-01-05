@@ -187,6 +187,16 @@ public class ActivityService {
         return activityDTOS;
     }
 
+    public ArrayList<ActivityDTO> getAllDeclinedActivities(long userid) {
+        ArrayList<Activity> activities = activityRepository.findAllDeclinedActivitiesByUsersocuId(userid);
+        ArrayList<ActivityDTO> activityDTOS = new ArrayList<>();
+        for (Activity a : activities
+        ) {
+            activityDTOS.add(convertToActivityDTOfromActivity(a));
+        }
+        return activityDTOS;
+    }
+
     public Response updateActivity(ActivityDTO activityDTO) {
         Response response = new Response();
         if (!(activityDTO == null)) {

@@ -19,7 +19,7 @@ export class ActivityCardsComponent implements OnInit, OnDestroy {
   activities: Activity[];
   attendedActivities: Activity[];
   subscription: Subscription;
-  declinedActivityIDs: number[];
+  declinedActivities: Activity[];
   user: Usersocu;
 
   constructor(private activityService: ActivityService,
@@ -39,8 +39,7 @@ export class ActivityCardsComponent implements OnInit, OnDestroy {
       });
       this.activities = activityarray;
       this.activities = this.activities.reverse();
-      this.getDeclinedActivityIDs();
-      this.sortAwayDeclinedActivities();
+      this.getDeclinedActivities();
       this.activities = this.expiredPipe.transform(this.activities);
     });
     this.getAttendedActivities();
@@ -53,14 +52,6 @@ export class ActivityCardsComponent implements OnInit, OnDestroy {
   }
 
   declineEvent(activity: Activity) {
-    // let declinedAs: number[] = JSON.parse(localStorage.getItem('declinedActivityIDs' + this.user.id));
-    // if (localStorage.getItem('declinedActivityIDs' + this.user.id) == null) {
-    //   declinedAs = [activity.id];
-    // } else {
-    //   if (!declinedAs.includes(activity.id)) {
-    //     declinedAs.push(activity.id);
-    //   }
-    // }
     if (this.isUserAttending(this.user.id, activity.id)) {
       this.subscription = this.activityService.declineAttendedActivity(this.user.id, activity.id).subscribe((data) => {
         console.log(data);
@@ -70,19 +61,22 @@ export class ActivityCardsComponent implements OnInit, OnDestroy {
         console.log(data);
       });
     }
-    // location.reload();
-    // localStorage.setItem('declinedActivityIDs' + this.user.id, JSON.stringify(declinedAs));
+    location.reload();
   }
 
-  public getDeclinedActivityIDs() {
-    this.declinedActivityIDs = JSON.parse(localStorage.getItem('declinedActivityIDs' + this.user.id));
+  public getDeclinedActivities() {
+    this.subscription = this.activityService.getDeclinedActivities(this.user.id).subscribe((data) => {
+      let data2 = JSON.stringify(data);
+      this.declinedActivities = JSON.parse(data2);
+      this.sortAwayDeclinedActivities();
+    });
   }
 
   sortAwayDeclinedActivities() {
-    if (!(this.declinedActivityIDs == null)) {
-      this.declinedActivityIDs.forEach(id => {
+    if (this.declinedActivities) {
+      this.declinedActivities.forEach(declinedActivity  => {
         this.activities.forEach(activity => {
-          if (activity.id == id) {
+          if (activity.id == declinedActivity.id) {
             let index = this.activities.indexOf(activity);
             if (index > -1 && !(activity.createdbyid == this.user.id)) {
               this.activities.splice(index, 1);
@@ -119,10 +113,10 @@ export class ActivityCardsComponent implements OnInit, OnDestroy {
 
   isUserNotAttendingButHaveCreatedEvent(activityid: number): boolean {
     let bool = false;
-    if (!(this.declinedActivityIDs == null)) {
-      this.declinedActivityIDs.forEach(id => {
+    if (!(this.declinedActivities == null)) {
+      this.declinedActivities.forEach(declinedActivity => {
         this.activities.forEach(activity => {
-          if (activity.id == id) {
+          if (activity.id == declinedActivity.id) {
             if (activity.id == activityid) {
               bool = true;
               return;
@@ -167,7 +161,7 @@ export class ActivityCardsComponent implements OnInit, OnDestroy {
 
   isDeclineButtonDisabled(activity: Activity) {
     let isDisabled = false;
-    if (this.declinedActivityIDs) {
+    if (this.declinedActivities) {
       if (this.isUserNotAttendingButHaveCreatedEvent(activity.id)) {
         isDisabled = true;
       }

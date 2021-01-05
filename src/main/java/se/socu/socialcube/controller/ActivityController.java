@@ -50,6 +50,11 @@ public class ActivityController {
         return activityService.getAllAttendedActivities(id);
     }
 
+    @GetMapping(path = "/api/activity/declinedactivities/{id}")
+    public ArrayList<ActivityDTO> getDeclinedActivities(@PathVariable long id) {
+        return activityService.getAllDeclinedActivities(id);
+    }
+
     @GetMapping(path = "api/activity/attendees/{id}")
     public ArrayList<UserDTO> getAttendees(@PathVariable long id) {
         return userService.getAttendees(id);
