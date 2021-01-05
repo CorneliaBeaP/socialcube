@@ -127,7 +127,7 @@ public class ActivityService {
         if (activity.isPresent()) {
             if (userSocu.isPresent()) {
                 //Todo: nedan ser fel ut
-                List<UserSocu> attendees = userRepository.findAllAttendeesByActivityId(userSocu.get().getId());
+                List<UserSocu> attendees = userRepository.findAllAttendeesByActivityId(activity.get().getId());
                 attendees.remove(userSocu.get());
                 activity.get().setAttendees(attendees);
                 response.setStatus("OK");
