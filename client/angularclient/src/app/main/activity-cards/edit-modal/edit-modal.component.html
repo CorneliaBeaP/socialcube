@@ -17,9 +17,9 @@
           <label class="m-1">Datum för aktivitet</label>
         </div>
         <div class="col">
-          <input type="text" class="dateinput m-1" formControlName="activitydateyear" id="activitydateyear"> -
-          <input type="text" class="dateinput m-1" formControlName="activitydatemonth" id="activitydatemonth"> -
-          <input type="text" class="dateinput m-1" formControlName="activitydatedate" id="activitydatedate">
+          <input type="number" class="dateinput m-1" formControlName="activitydateyear" id="activitydateyear"> -
+          <input type="number" class="dateinput m-1" formControlName="activitydatemonth" id="activitydatemonth"> -
+          <input type="number" class="dateinput m-1" formControlName="activitydatedate" id="activitydatedate">
         </div>
       </div>
       <div class="row">
@@ -27,8 +27,8 @@
           <label for="activitytimehour" class="m-1">Tid för aktivitet</label>
         </div>
         <div class="col">
-          <input type="text" class="dateinput m-1" formControlName="activitytimehour" id="activitytimehour"> :
-          <input type="text" class="dateinput m-1" formControlName="activitytimeminute" id="activitytimeminute">
+          <input type="number" class="dateinput m-1" formControlName="activitytimehour" id="activitytimehour"> :
+          <input type="number" class="dateinput m-1" formControlName="activitytimeminute" id="activitytimeminute">
         </div>
       </div>
       <div class="row">
@@ -36,9 +36,9 @@
           <label for="rsvpdateyear" class="m-1">Datum O.S.A senast</label>
         </div>
         <div class="col">
-          <input type="text" class="dateinput m-1" formControlName="rsvpdateyear" id="rsvpdateyear"> -
-          <input type="text" class="dateinput m-1" formControlName="rsvpdatemonth" id="rsvpdatemonth"> -
-          <input type="text" class="dateinput m-1" formControlName="rsvpdatedate" id="rsvpdatedate">
+          <input type="number" class="dateinput m-1" formControlName="rsvpdateyear" id="rsvpdateyear"> -
+          <input type="number" class="dateinput m-1" formControlName="rsvpdatemonth" id="rsvpdatemonth"> -
+          <input type="number" class="dateinput m-1" formControlName="rsvpdatedate" id="rsvpdatedate">
         </div>
       </div>
       <div class="row">
@@ -69,7 +69,7 @@
   </form>
 </div>
 <div class="modal-footer">
-  <button type="button" class="btn btn-light" (click)="activeModal.close('Save click')">Spara</button>
+  <button type="button" class="btn btn-light" (click)="onSave()">Spara</button>
   <button type="button" class="btn btn-danger" (click)="activeModal.close('Save click')">Avbryt</button>
 </div>
 
