@@ -27,14 +27,12 @@ public class UserController {
 
     @GetMapping("/api/users/{id}")
     public List<UserDTO> getUsersForCompany(@PathVariable Long id) {
-        System.out.println("Skickar användare...");
         return userService.getAllUserDTOsForCompany(id);
     }
 
     @PostMapping(path = "/api/login", produces = MediaType.APPLICATION_JSON_VALUE)
     public UserDTO getAuthenticationStatus(@RequestBody String[] usercredentials) {
         UserDTO userDTO = userService.checkIfLoginCredentialsAreCorrectAndGetUser(usercredentials[0], usercredentials[1]);
-        System.out.println(userDTO.getEmail() + " email");
         if (!(userDTO.getEmail() == null)) {
             return userDTO;
         } else {
@@ -71,7 +69,6 @@ public class UserController {
 
     @GetMapping("/api/users/delete/image/{id}")
     public Response deleteProfilePicture(@PathVariable Long id) {
-        System.out.println("Mottagit anrop om att ta bort bild");
         userService.deleteProfilePicture(id, false);
         return new Response("OK", "Anrop mottaget");
     }

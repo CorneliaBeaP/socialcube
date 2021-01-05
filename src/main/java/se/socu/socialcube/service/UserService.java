@@ -99,7 +99,6 @@ public class UserService {
         UserSocu userSocu = convertToUserSocuFromUserDTO(userDTO);
         userSocu.setEmail(userSocu.getEmail().toLowerCase());
         userSocu.setPassword(generatePassword(11));
-        System.out.println(userSocu.getPassword());
         userRepository.save(userSocu);
         Optional<UserSocu> userSocu1 = userRepository.findByEmail(userDTO.getEmail());
         userSocu1.ifPresent(socu -> copyDefaultPictureForNewUser(socu.getId()));
@@ -149,8 +148,6 @@ public class UserService {
             e.printStackTrace();
         }
     }
-
-
 
     public String generatePassword(int length) {
         String characters = "0123456789ABCDEFGHIJKLMNOPQRSTUVWXabcdefghijklmnopqrstuvwxyz";
@@ -223,10 +220,7 @@ public class UserService {
         for (UserSocu u : usersocus
         ) {
             userDTOS.add(convertToUserDTOfromUserSocu(u));
-            System.out.println(u.toString());
         }
-
-
         return userDTOS;
     }
 }
