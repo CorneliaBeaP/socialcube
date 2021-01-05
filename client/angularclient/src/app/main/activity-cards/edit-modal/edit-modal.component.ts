@@ -34,7 +34,9 @@ export class EditModalComponent implements OnInit {
       activitydatedate: [this.activity.activitydate[2]],
       activitytimehour: [this.activity.activitydate[3], Validators.required],
       activitytimeminute: [`${extraZero}${this.activity.activitydate[4]}`, Validators.required],
-      rsvpdate: [this.activity.rsvpdate],
+      rsvpdateyear: [this.activity.rsvpdate[0]],
+      rsvpdatemonth: [this.activity.rsvpdate[1]],
+      rsvpdatedate: [this.activity.rsvpdate[2]],
       descriptionsocu: [this.activity.descriptionsocu, Validators.required],
       locationname: [this.activity.locationname, Validators.required],
       locationaddress: [this.activity.locationaddress, Validators.required]
