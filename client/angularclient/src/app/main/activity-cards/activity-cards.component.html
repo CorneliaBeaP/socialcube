@@ -1,10 +1,10 @@
 <div class="m-5" *ngFor="let activity of activities">
-  <div class="row">
+  <div class="row" *ngIf="!activity.cancelled">
     <div class="col">
-      <img class="ml-3" [src]="getProfilePicture(activity.createdBy.id)" alt="Skapad av {{activity.createdBy.name}}"
+      <img class="ml-3"  [src]="getProfilePicture(activity.createdBy.id)" alt="Skapad av {{activity.createdBy.name}}"
            [matTooltip]="activity.createdBy.name">
     </div>
-    <div class="col text-right mr-2">
+    <div class="col text-right mr-2" >
     <span *ngFor="let attendee of activity.attendees">
       <img [src]="getProfilePicture(attendee.id)" alt="{{attendee.name}}" [matTooltip]="attendee.name">
     </span>
