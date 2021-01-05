@@ -57,11 +57,11 @@ export class EditModalComponent implements OnInit {
       console.log('invalid');
       return;
     } else {
-      this.copyValuesFromForm();
+      this.copyValuesFromFormAndSaveActivity();
     }
   }
 
-  copyValuesFromForm() {
+  copyValuesFromFormAndSaveActivity() {
     this.updatedActivity.activitytype = this.form.get('activitytype').value;
     this.updatedActivity.activitydate[0] = this.form.get('activitydateyear').value;
     this.updatedActivity.activitydate[1] = this.form.get('activitydatemonth').value;
@@ -75,6 +75,8 @@ export class EditModalComponent implements OnInit {
     this.updatedActivity.locationname = this.form.get('locationname').value;
     this.updatedActivity.locationaddress = this.form.get('locationaddress').value;
     this.activityService.updateActivity(this.updatedActivity);
+    this.activeModal.close();
+    location.reload();
   }
 
   isFormOk(): boolean {

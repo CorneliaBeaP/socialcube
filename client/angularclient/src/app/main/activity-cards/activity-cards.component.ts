@@ -172,6 +172,7 @@ export class ActivityCardsComponent implements OnInit, OnDestroy {
     let modalRef = this.modalService.open(EditModalComponent);
     modalRef.componentInstance.activity = activity;
     // modalRef['activity'] = activity;
+
   }
 
   ngOnDestroy(): void {
