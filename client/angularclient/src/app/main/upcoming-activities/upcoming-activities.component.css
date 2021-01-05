@@ -1,3 +1,7 @@
 .upcomingbox{
   border-top: 1px solid #686b6e;
 }
+
+.cancelled{
+  color: #802b24;
+}

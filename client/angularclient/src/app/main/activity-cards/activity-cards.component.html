@@ -14,7 +14,7 @@
     <div class="card-body">
       <div class="row">
         <div class="col">
-          <h5>{{activity.activitytype}}</h5>
+          <h5>{{activity.activitytype}}<span *ngIf="activity.cancelled"> - INSTÄLLT</span></h5>
         </div>
         <div class="col">
           <h5 class="text-right"><i class="far fa-calendar-alt"></i> {{activity.activitydate[0]}}-<span
