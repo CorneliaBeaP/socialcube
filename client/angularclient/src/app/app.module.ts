@@ -5,7 +5,7 @@ import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
 import {UserListComponent} from "./administration/userlist/user-list/user-list.component";
 import { UserService } from "./services/user.service";
-import {HttpClientModule} from "@angular/common/http";
+import {HTTP_INTERCEPTORS, HttpClientModule} from "@angular/common/http";
 import { HeaderComponent } from './navigation/header/header.component';
 import { NoopAnimationsModule } from '@angular/platform-browser/animations';
 import { LoginComponent } from './login/login.component';
@@ -31,6 +31,8 @@ import {MatExpansionModule} from "@angular/material/expansion";
 import { ExpiredPipe } from './helpers/expired.pipe';
 import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
 import { EditModalComponent } from './main/activity-cards/edit-modal/edit-modal.component';
+import {JwtInterceptor} from "./helpers/interceptors/jwt.interceptor";
+import {ErrorInterceptor} from "./helpers/interceptors/error.interceptor";
 
 @NgModule({
   declarations: [
@@ -67,7 +69,10 @@ import { EditModalComponent } from './main/activity-cards/edit-modal/edit-modal.
     MatExpansionModule,
     NgbModule
   ],
-  providers: [UserService, AuthService, ExpiredPipe],
+  providers: [UserService, AuthService, ExpiredPipe,
+    {provide: HTTP_INTERCEPTORS, useClass: JwtInterceptor, multi: true},
+    {provide: HTTP_INTERCEPTORS, useClass: ErrorInterceptor, multi: true}
+    ],
   bootstrap: [AppComponent]
 })
 export class AppModule { }
