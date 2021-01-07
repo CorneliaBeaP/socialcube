@@ -20,6 +20,7 @@ export class LoginComponent implements OnInit, OnDestroy {
   subscription: Subscription;
   background: string;
   isWrongCredentials: boolean;
+  error = '';
   backgrounds = [
     "../../assets/images/1BG.jpg",
     "../../assets/images/2BG.jpg",
@@ -42,7 +43,6 @@ export class LoginComponent implements OnInit, OnDestroy {
               private router: Router,
               private formBuilder: FormBuilder) {
   }
-
 
 
   ngOnInit(): void {
@@ -74,12 +74,14 @@ export class LoginComponent implements OnInit, OnDestroy {
     this.subscription = this.authService.authenticate(this.loginForm.get('username').value, this.loginForm.get('password').value)
       .pipe(first())
       .subscribe(data => {
-          if (data == null) {
-            this.isWrongCredentials = true;
-            this.loginForm.get('password').reset();
-          }
-          this.router.navigate([this.returnUrl]);
-        });
+        if (data == null) {
+          this.isWrongCredentials = true;
+          this.loginForm.get('password').reset();
+        }
+        this.router.navigate([this.returnUrl]);
+      }, error => {
+        this.error = error;
+      });
   }
 
   ngOnDestroy(): void {
@@ -94,7 +96,7 @@ export class LoginComponent implements OnInit, OnDestroy {
     this.background = shuffled[0];
   }
 
-  resetLocalStorage(){
+  resetLocalStorage() {
     this.authService.logout();
   }
 }
