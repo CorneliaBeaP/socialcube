@@ -1,11 +1,9 @@
 import {Component, OnDestroy, OnInit} from '@angular/core';
 import {LoginService} from "../services/login.service";
 import {ActivatedRoute, Router} from "@angular/router";
-import {FormBuilder, FormControl, FormGroup, Validators} from "@angular/forms";
-import {Observable, of, Subscription} from "rxjs";
-import {valueReferenceToExpression} from "@angular/compiler-cli/src/ngtsc/annotations/src/util";
+import {FormBuilder, FormGroup, Validators} from "@angular/forms";
+import {Subscription} from "rxjs";
 import {first} from "rxjs/operators";
-import {AuthGuard} from "../auth/auth.guard";
 
 @Component({
   selector: 'app-login',

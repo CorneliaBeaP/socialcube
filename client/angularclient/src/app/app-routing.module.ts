@@ -2,11 +2,11 @@ import {NgModule} from '@angular/core';
 import {Routes, RouterModule} from '@angular/router';
 import {LoginComponent} from "./login/login.component";
 import {MainComponent} from "./main/main.component";
-import {AuthGuard} from "./auth/auth.guard";
+import {AuthGuard} from "./helpers/auth/auth.guard";
 import {ProfileComponent} from "./profile/profile.component";
 import {AdministrationComponent} from "./administration/administration.component";
 import {ErrorpageComponent} from "./error/errorpage/errorpage.component";
-import {AdminGuard} from "./auth/admin.guard";
+import {AdminGuard} from "./helpers/auth/admin.guard";
 import {Page404Component} from "./error/page404/page404.component";
 import {StartredirecterComponent} from "./startredirecter/startredirecter.component";
 
