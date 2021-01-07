@@ -3,7 +3,7 @@ import {FormBuilder, FormGroup, Validators} from "@angular/forms";
 import {ActivatedRoute, Router} from "@angular/router";
 import {Activity} from "../../classes/activity";
 import {ActivityService} from "../../services/activity.service";
-import {LoginService} from "../../services/login.service";
+import {AuthService} from "../../services/auth.service";
 import {DateAdapter, MAT_DATE_FORMATS} from "@angular/material/core";
 import {APP_DATE_FORMATS, AppDateAdapter} from "../../helpers/app-date-adapter";
 import {Subscription} from "rxjs";
@@ -32,7 +32,7 @@ export class CreateActivityComponent implements OnInit, OnDestroy {
               private router: Router,
               private formBuilder: FormBuilder,
               private activityService: ActivityService,
-              private loginService: LoginService) {
+              private authService: AuthService) {
   }
 
   ngOnInit(): void {
@@ -69,8 +69,8 @@ export class CreateActivityComponent implements OnInit, OnDestroy {
     activity.activitytype = this.form.get('activitytype').value;
     activity.locationname = this.form.get('locationname').value;
     activity.locationaddress = this.form.get('locationaddress').value;
-    activity.createdbyid = this.loginService.getUserValue().id;
-    activity.companyorganizationnumber = this.loginService.getUserValue().companyorganizationnumber;
+    activity.createdbyid = this.authService.getUserValue().id;
+    activity.companyorganizationnumber = this.authService.getUserValue().companyorganizationnumber;
     activity.activitydate = concatDate;
     activity.rsvpdate = this.form.get('rsvpdate').value;
     activity.cancelled = false;

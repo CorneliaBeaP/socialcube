@@ -1,7 +1,7 @@
 import {Component, OnDestroy, OnInit} from '@angular/core';
 import {Activity} from "../../classes/activity";
 import {ActivityService} from "../../services/activity.service";
-import {LoginService} from "../../services/login.service";
+import {AuthService} from "../../services/auth.service";
 import {Subscription} from "rxjs";
 import {Usersocu} from "../../classes/usersocu";
 import {ExpiredPipe} from "../../helpers/expired.pipe";
@@ -23,14 +23,14 @@ export class ActivityCardsComponent implements OnInit, OnDestroy {
   user: Usersocu;
 
   constructor(private activityService: ActivityService,
-              private loginService: LoginService,
+              private authService: AuthService,
               private expiredPipe: ExpiredPipe,
               private modalService: NgbModal) {
   }
 
   ngOnInit(): void {
-    this.user = this.loginService.getUserValue();
-    this.subscription = this.activityService.getActivities(this.loginService.getUserValue().companyorganizationnumber).subscribe(activityarray => {
+    this.user = this.authService.getUserValue();
+    this.subscription = this.activityService.getActivities(this.authService.getUserValue().companyorganizationnumber).subscribe(activityarray => {
       activityarray.forEach((activity) => {
         this.subscription = this.activityService.getAttendees(activity.id).subscribe((data) => {
           let data2 = JSON.stringify(data);
@@ -47,7 +47,7 @@ export class ActivityCardsComponent implements OnInit, OnDestroy {
   }
 
   attendEvent(activityid: number) {
-    this.activityService.attendActivity(this.loginService.getUserValue().id, activityid);
+    this.activityService.attendActivity(this.authService.getUserValue().id, activityid);
     location.reload();
   }
 
@@ -92,7 +92,7 @@ export class ActivityCardsComponent implements OnInit, OnDestroy {
   }
 
   getAttendedActivities() {
-    this.activityService.getattendedActivities(this.loginService.getUserValue().id).subscribe(data => {
+    this.activityService.getattendedActivities(this.authService.getUserValue().id).subscribe(data => {
       this.attendedActivities = this.expiredPipe.transform(data);
     });
   }

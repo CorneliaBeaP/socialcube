@@ -1,7 +1,7 @@
 import {Component, OnDestroy, OnInit} from '@angular/core';
 import {ActivityService} from "../../services/activity.service";
 import {UserService} from "../../services/user.service";
-import {LoginService} from "../../services/login.service";
+import {AuthService} from "../../services/auth.service";
 import {Usersocu} from "../../classes/usersocu";
 import {Activity} from "../../classes/activity";
 import {Subscription} from "rxjs";
@@ -21,12 +21,12 @@ export class CurrentActivitiesComponent implements OnInit, OnDestroy {
 
   constructor(private activityService: ActivityService,
               private userService: UserService,
-              private loginService: LoginService,
+              private authService: AuthService,
               private expiredPipe: ExpiredPipe) {
   }
 
   ngOnInit(): void {
-    this.user = this.loginService.getUserValue();
+    this.user = this.authService.getUserValue();
     this.getActivities();
   }
 

@@ -1,7 +1,7 @@
 import {Component, OnInit} from '@angular/core';
 import {ActivityService} from "../../services/activity.service";
 import {Activity} from "../../classes/activity";
-import {LoginService} from "../../services/login.service";
+import {AuthService} from "../../services/auth.service";
 import {ExpiredPipe} from "../../helpers/expired.pipe";
 
 @Component({
@@ -13,7 +13,7 @@ export class UpcomingActivitiesComponent implements OnInit {
   activities: Activity[];
 
   constructor(private activityService: ActivityService,
-              private loginService: LoginService,
+              private authService: AuthService,
               private expiredPipe: ExpiredPipe) {
   }
 
@@ -22,7 +22,7 @@ export class UpcomingActivitiesComponent implements OnInit {
   }
 
   getActivities() {
-    this.activityService.getattendedActivities(this.loginService.getUserValue().id).subscribe(data => {
+    this.activityService.getattendedActivities(this.authService.getUserValue().id).subscribe(data => {
       this.activities =this.expiredPipe.transform(data);
     });
   }

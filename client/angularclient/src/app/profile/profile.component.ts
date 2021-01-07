@@ -1,6 +1,6 @@
 import {Component, OnInit} from '@angular/core';
 import {UserService} from "../services/user.service";
-import {LoginService} from "../services/login.service";
+import {AuthService} from "../services/auth.service";
 import {Subscription} from "rxjs";
 import {first} from "rxjs/operators";
 import {HttpClient} from "@angular/common/http";
@@ -32,18 +32,18 @@ export class ProfileComponent implements OnInit {
 
 
   constructor(private userService: UserService,
-              private loginService: LoginService,
+              private authService: AuthService,
               private http: HttpClient,
               private formBuilder: FormBuilder) {
   }
 
   ngOnInit(): void {
     this.getLoggedInUser();
-    this.getProfilePicture(this.loginService.getUserValue().id);
+    this.getProfilePicture(this.authService.getUserValue().id);
   }
 
   getLoggedInUser() {
-    this.subscription = this.userService.getUser(this.loginService.getUserValue().id).subscribe((data) => {
+    this.subscription = this.userService.getUser(this.authService.getUserValue().id).subscribe((data) => {
       let data2 = JSON.stringify(data);
       this.user = JSON.parse(data2);
       this.createPassform();
@@ -67,7 +67,7 @@ export class ProfileComponent implements OnInit {
     if (!(file.size > 1048576)) {
       if (file.type.match('image.jpg') || file.type.match('image.jpeg') || file.type.match('image.png')) {
         formData.append('name', file);
-        this.userService.uploadProfilePicture(formData, this.loginService.getUserValue().id);
+        this.userService.uploadProfilePicture(formData, this.authService.getUserValue().id);
       } else {
         this.profilepicErrorMessage = `Vänligen välj en bild av typen .png eller .jpg`;
       }
@@ -132,7 +132,7 @@ export class ProfileComponent implements OnInit {
       this.isPassSaveButtonClicked = true;
       return;
     }
-    this.subscription = this.loginService.authenticate(this.user.email, this.passform.get('oldpassword').value)
+    this.subscription = this.authService.authenticate(this.user.email, this.passform.get('oldpassword').value)
       .pipe(first())
       .subscribe(data => {
         if (data == null) {

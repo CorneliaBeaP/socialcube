@@ -1,6 +1,6 @@
 import {Component, OnInit} from '@angular/core';
 import {Usersocu} from "../classes/usersocu";
-import {LoginService} from "../services/login.service";
+import {AuthService} from "../services/auth.service";
 
 @Component({
   selector: 'app-main',
@@ -12,8 +12,8 @@ export class MainComponent implements OnInit {
   user: Usersocu;
 
 
-  constructor(private loginService: LoginService) {
-    this.user = this.loginService.getUserValue();
+  constructor(private authService: AuthService) {
+    this.user = this.authService.getUserValue();
   }
 
   ngOnInit(): void {

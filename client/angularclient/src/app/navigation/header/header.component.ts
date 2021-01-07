@@ -1,5 +1,5 @@
 import {Component, OnInit} from '@angular/core';
-import {LoginService} from "../../services/login.service";
+import {AuthService} from "../../services/auth.service";
 import {Usersocu} from "../../classes/usersocu";
 import {HttpClient} from "@angular/common/http";
 import {Router} from "@angular/router";
@@ -15,7 +15,7 @@ export class HeaderComponent implements OnInit {
   user: Usersocu;
 
   constructor(private http: HttpClient,
-              private loginService: LoginService,
+              private authService: AuthService,
               private router: Router) {
     this.getAdmin();
   }
@@ -26,18 +26,18 @@ export class HeaderComponent implements OnInit {
   }
 
   logout() {
-    this.loginService.logout();
+    this.authService.logout();
   }
 
   getAdmin() {
-    let user = this.loginService.getUserValue();
+    let user = this.authService.getUserValue();
     if (user.usertype.toString() == 'ADMIN') {
       this.isAdmin = true;
     }
   }
 
   getLoggedInUser() {
-    this.user = this.loginService.getUserValue();
+    this.user = this.authService.getUserValue();
   }
 
   getProfilePicture(id: number): string {

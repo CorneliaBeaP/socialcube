@@ -17,7 +17,7 @@ import { CalendarComponent } from './main/calendar/calendar.component';
 import { UpcomingActivitiesComponent } from './main/upcoming-activities/upcoming-activities.component';
 import { ProfileComponent } from './profile/profile.component';
 import { AdministrationComponent } from './administration/administration.component';
-import { LoginService } from "./services/login.service";
+import { AuthService } from "./services/auth.service";
 import {MatFormFieldModule} from "@angular/material/form-field";
 import {MatDatepickerModule} from "@angular/material/datepicker";
 import {MatNativeDateModule} from "@angular/material/core";
@@ -67,7 +67,7 @@ import { EditModalComponent } from './main/activity-cards/edit-modal/edit-modal.
     MatExpansionModule,
     NgbModule
   ],
-  providers: [UserService, LoginService, ExpiredPipe],
+  providers: [UserService, AuthService, ExpiredPipe],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

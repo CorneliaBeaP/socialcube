@@ -1,7 +1,7 @@
 import {Component, OnDestroy, OnInit} from '@angular/core';
 import {FormBuilder, FormGroup, Validators} from "@angular/forms";
 import {Usersocu} from "../classes/usersocu";
-import {LoginService} from "../services/login.service";
+import {AuthService} from "../services/auth.service";
 import {UserService} from "../services/user.service";
 import {Observable, Subscription} from "rxjs";
 import {Response} from "../classes/response";
@@ -20,7 +20,7 @@ export class AdministrationComponent implements OnInit, OnDestroy {
   isSubmitButtonClicked = false;
 
   constructor(private formBuilder: FormBuilder,
-              private loginService: LoginService,
+              private authService: AuthService,
               private userService: UserService) {
   }
 
@@ -52,7 +52,7 @@ export class AdministrationComponent implements OnInit, OnDestroy {
     usersocu.department = this.addForm.get('department').value;
     usersocu.employmentnumber = this.addForm.get('employeenumber').value;
     usersocu.usertype = 0;
-    usersocu.companyorganizationnumber = this.loginService.getUserValue().companyorganizationnumber;
+    usersocu.companyorganizationnumber = this.authService.getUserValue().companyorganizationnumber;
     this.subscription = this.userService.sendUser(usersocu).subscribe((data) => {
       this.response = data;
       this.mailto(usersocu.email.toString());
@@ -65,6 +65,6 @@ export class AdministrationComponent implements OnInit, OnDestroy {
   }
 
   mailto(emailaddress: string) {
-    window.location.assign(`mailto:${emailaddress}?subject=Lösenord för SocialCube&body=Hej! Du har precis blivit tillagd som användare på SocialCube av ${this.loginService.getUserValue().name}.%0D%0ADitt användarnamn: ${emailaddress}%0D%0ADitt lösenord: ${this.response.message}%0D%0ANär du loggat in för första gången bör du byta ditt lösenord. Detta gör du i din profil.`);
+    window.location.assign(`mailto:${emailaddress}?subject=Lösenord för SocialCube&body=Hej! Du har precis blivit tillagd som användare på SocialCube av ${this.authService.getUserValue().name}.%0D%0ADitt användarnamn: ${emailaddress}%0D%0ADitt lösenord: ${this.response.message}%0D%0ANär du loggat in för första gången bör du byta ditt lösenord. Detta gör du i din profil.`);
   }
 }

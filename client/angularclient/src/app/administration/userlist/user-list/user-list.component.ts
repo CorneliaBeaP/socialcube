@@ -1,7 +1,7 @@
 import {Component, OnDestroy, OnInit} from '@angular/core';
 import {UserService} from "../../../services/user.service";
 import {Usersocu} from "../../../classes/usersocu";
-import {LoginService} from "../../../services/login.service";
+import {AuthService} from "../../../services/auth.service";
 import {Subscription} from "rxjs";
 
 @Component({
@@ -16,12 +16,12 @@ export class UserListComponent implements OnInit, OnDestroy {
   deletesub: Subscription;
 
   constructor(private userService: UserService,
-              private loginService: LoginService) {
+              private authService: AuthService) {
   }
 
 
   ngOnInit(): void {
-    this.subscription = this.userService.findAll(this.loginService.getUserValue().companyorganizationnumber).subscribe(data => {
+    this.subscription = this.userService.findAll(this.authService.getUserValue().companyorganizationnumber).subscribe(data => {
       this.users = data;
     });
   }

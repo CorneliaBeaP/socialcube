@@ -1,5 +1,5 @@
 import {Component, OnDestroy, OnInit} from '@angular/core';
-import {LoginService} from "../services/login.service";
+import {AuthService} from "../services/auth.service";
 import {ActivatedRoute, Router} from "@angular/router";
 import {FormBuilder, FormGroup, Validators} from "@angular/forms";
 import {Subscription} from "rxjs";
@@ -37,7 +37,7 @@ export class LoginComponent implements OnInit, OnDestroy {
   ];
 
 
-  constructor(private loginService: LoginService,
+  constructor(private authService: AuthService,
               private route: ActivatedRoute,
               private router: Router,
               private formBuilder: FormBuilder) {
@@ -71,7 +71,7 @@ export class LoginComponent implements OnInit, OnDestroy {
       return;
     }
 
-    this.subscription = this.loginService.authenticate(this.loginForm.get('username').value, this.loginForm.get('password').value)
+    this.subscription = this.authService.authenticate(this.loginForm.get('username').value, this.loginForm.get('password').value)
       .pipe(first())
       .subscribe(data => {
           if (data == null) {
@@ -95,6 +95,6 @@ export class LoginComponent implements OnInit, OnDestroy {
   }
 
   resetLocalStorage(){
-    this.loginService.logout();
+    this.authService.logout();
   }
 }

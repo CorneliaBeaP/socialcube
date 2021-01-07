@@ -1,5 +1,5 @@
 import {Component, OnInit} from '@angular/core';
-import {LoginService} from "../services/login.service";
+import {AuthService} from "../services/auth.service";
 import {Router} from "@angular/router";
 
 @Component({
@@ -9,7 +9,7 @@ import {Router} from "@angular/router";
 })
 export class StartredirecterComponent implements OnInit {
 
-  constructor(private loginService: LoginService,
+  constructor(private authService: AuthService,
               private router: Router) {
   }
 
@@ -18,7 +18,7 @@ export class StartredirecterComponent implements OnInit {
   }
 
   checkIfLoggedInUser() {
-    if (this.loginService.getUserValue()) {
+    if (this.authService.getUserValue()) {
       this.router.navigate(['/home']);
     } else {
       this.router.navigate(['/login']);

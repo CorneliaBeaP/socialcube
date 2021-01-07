@@ -10,7 +10,7 @@ import {map} from "rxjs/operators";
 @Injectable({
   providedIn: 'root'
 })
-export class LoginService {
+export class AuthService {
 
   loginUrl: string;
   private usercredentials: string[];
