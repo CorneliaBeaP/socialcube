@@ -10,15 +10,15 @@ import {AuthService} from "./services/auth.service";
 })
 export class AppComponent {
   title = 'SocialCube';
-  currentUser: Usersocu;
+  // currentUser: Usersocu;
 
   constructor(private router: Router,
               private authService: AuthService) {
-    this.authService.user.subscribe(x => this.currentUser = x);
+    // this.authService.user.subscribe(x => this.currentUser = x);
   }
 
   logout(){
-    this.authService.logout();
-    this.router.navigate(['/login']);
+    // this.authService.logout();
+    // this.router.navigate(['/login']);
   }
 }

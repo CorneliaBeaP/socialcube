@@ -1,11 +1,13 @@
 package se.socu.socialcube.service;
 
+import io.jsonwebtoken.Claims;
 import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
 import se.socu.socialcube.DTO.UserDTO;
 import se.socu.socialcube.entities.Company;
 import se.socu.socialcube.entities.Response;
 import se.socu.socialcube.entities.UserSocu;
+import se.socu.socialcube.jwt.JwtUtil;
 import se.socu.socialcube.repository.CompanyRepository;
 import se.socu.socialcube.repository.UserRepository;
 
@@ -23,14 +25,17 @@ import java.util.Random;
 public class UserService {
 
     private Path path;
+    private JwtUtil jwtUtil;
 
-    public UserService(UserRepository userRepository, CompanyRepository companyRepository) {
+    public UserService(UserRepository userRepository, CompanyRepository companyRepository) throws IOException {
         this.userRepository = userRepository;
         this.companyRepository = companyRepository;
+        this.jwtUtil = new JwtUtil();
     }
 
     private UserRepository userRepository;
     private CompanyRepository companyRepository;
+
 
     public UserDTO convertToUserDTOfromUserSocu(UserSocu userSocu) {
         UserDTO userDTO = new UserDTO();
@@ -70,18 +75,18 @@ public class UserService {
         return allUsersDTO;
     }
 
-    public UserDTO checkIfLoginCredentialsAreCorrectAndGetUser(String username, String password) {
-        UserDTO userDTO = new UserDTO();
-        if (!(username == null)) {
-            Optional<UserSocu> userSocu = userRepository.findByEmail(username.toLowerCase());
-            if (userSocu.isPresent()) {
-                if (!(userSocu.get().getEmail().length() < 1) && userSocu.get().getPassword().equals(password)) {
-                    userDTO = convertToUserDTOfromUserSocu(userSocu.get());
-                }
-            }
-        }
-        return userDTO;
-    }
+//    public UserDTO checkIfLoginCredentialsAreCorrectAndGetUser(String username, String password) {
+//        UserDTO userDTO = new UserDTO();
+//        if (!(username == null)) {
+//            Optional<UserSocu> userSocu = userRepository.findByEmail(username.toLowerCase());
+//            if (userSocu.isPresent()) {
+//                if (!(userSocu.get().getEmail().length() < 1) && userSocu.get().getPassword().equals(password)) {
+//                    userDTO = convertToUserDTOfromUserSocu(userSocu.get());
+//                }
+//            }
+//        }
+//        return userDTO;
+//    }
 
     public List<UserDTO> getAllUserDTOsForCompany(Long id) {
         List<UserSocu> allUsers = (List<UserSocu>) userRepository.findAllByCompany_organizationnumber(id);
@@ -141,7 +146,7 @@ public class UserService {
         Path path = Paths.get(folder + fileName);
         try {
             Files.deleteIfExists(path);
-            if(!isUserRemoved){
+            if (!isUserRemoved) {
                 copyDefaultPictureForNewUser(id);
             }
         } catch (IOException e) {
@@ -222,5 +227,34 @@ public class UserService {
             userDTOS.add(convertToUserDTOfromUserSocu(u));
         }
         return userDTOS;
+    }
+
+    public UserDTO getUserFromJWT(String token) throws IOException {
+        JwtUtil.decodeJWT(token);
+        Claims claims = JwtUtil.decodeJWT(token);
+        System.out.println(claims);
+        UserDTO dto = new UserDTO();
+        if (!claims.getId().isEmpty()) {
+            Optional<UserSocu> userSocu = userRepository.findById(Long.parseLong(claims.getId()));
+            if (userSocu.isPresent()) {
+                dto = convertToUserDTOfromUserSocu(userSocu.get());
+            }
+        }
+
+        return dto;
+    }
+
+    public UserDTO checkIfLoginCredentialsAreCorrectAndGetUser(String username, String password) throws IOException {
+        UserDTO userDTO = new UserDTO();
+        if (!(username == null)) {
+            Optional<UserSocu> userSocu = userRepository.findByEmail(username.toLowerCase());
+            if (userSocu.isPresent()) {
+                if (!(userSocu.get().getEmail().length() < 1) && userSocu.get().getPassword().equals(password)) {
+                    userDTO = convertToUserDTOfromUserSocu(userSocu.get());
+                    userDTO.setToken(JwtUtil.createJWT(String.valueOf(userSocu.get().getId()), String.valueOf(userSocu.get().getId()), userSocu.get().getName()));
+                }
+            }
+        }
+        return userDTO;
     }
 }

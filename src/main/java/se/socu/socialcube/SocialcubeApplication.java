@@ -6,6 +6,7 @@ import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.context.annotation.Bean;
 import org.springframework.web.servlet.config.annotation.CorsRegistry;
 import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
+import se.socu.socialcube.jwt.JwtUtil;
 import se.socu.socialcube.repository.ActivityRepository;
 import se.socu.socialcube.repository.CompanyRepository;
 import se.socu.socialcube.repository.UserRepository;
@@ -26,7 +27,6 @@ public class SocialcubeApplication {
     public CommandLineRunner setUp(UserRepository userRepository, CompanyRepository companyRepository, ActivityRepository activityRepository) {
         return (args -> {
             System.out.println("Applikationen startar");
-            System.out.println("OK");
 ////            Skapa testföretag
 //            Company company = new Company(929292929292L, "TestCompany");
 //            companyRepository.save(company);

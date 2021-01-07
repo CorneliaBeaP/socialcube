@@ -70,8 +70,8 @@ import {ErrorInterceptor} from "./helpers/interceptors/error.interceptor";
     NgbModule
   ],
   providers: [UserService, AuthService, ExpiredPipe,
-    {provide: HTTP_INTERCEPTORS, useClass: JwtInterceptor, multi: true},
-    {provide: HTTP_INTERCEPTORS, useClass: ErrorInterceptor, multi: true}
+    // {provide: HTTP_INTERCEPTORS, useClass: JwtInterceptor, multi: true},
+    // {provide: HTTP_INTERCEPTORS, useClass: ErrorInterceptor, multi: true}
     ],
   bootstrap: [AppComponent]
 })

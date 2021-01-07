@@ -7,6 +7,7 @@ import se.socu.socialcube.entities.UserSocu;
 import se.socu.socialcube.repository.CompanyRepository;
 import se.socu.socialcube.repository.UserRepository;
 
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Optional;
 
@@ -149,6 +150,9 @@ class UserServiceTest {
        }
    };
    private UserService us = new UserService(userRepository, companyRepository);
+
+    UserServiceTest() throws IOException {
+    }
 
     @Test
     void generatePassword() {

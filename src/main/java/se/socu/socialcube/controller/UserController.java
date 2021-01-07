@@ -8,6 +8,7 @@ import se.socu.socialcube.entities.Response;
 import se.socu.socialcube.entities.UserSocu;
 import se.socu.socialcube.service.UserService;
 
+import java.io.IOException;
 import java.util.List;
 
 @CrossOrigin(origins = "http://localhost:4200", allowedHeaders = "*")
@@ -30,15 +31,15 @@ public class UserController {
         return userService.getAllUserDTOsForCompany(id);
     }
 
-    @PostMapping(path = "/api/login", produces = MediaType.APPLICATION_JSON_VALUE)
-    public UserDTO getAuthenticationStatus(@RequestBody String[] usercredentials) {
-        UserDTO userDTO = userService.checkIfLoginCredentialsAreCorrectAndGetUser(usercredentials[0], usercredentials[1]);
-        if (!(userDTO.getEmail() == null)) {
-            return userDTO;
-        } else {
-            return null;
-        }
-    }
+//    @PostMapping(path = "/api/login", produces = MediaType.APPLICATION_JSON_VALUE)
+//    public UserDTO getAuthenticationStatus(@RequestBody String[] usercredentials) {
+//        UserDTO userDTO = userService.checkIfLoginCredentialsAreCorrectAndGetUser(usercredentials[0], usercredentials[1]);
+//        if (!(userDTO.getEmail() == null)) {
+//            return userDTO;
+//        } else {
+//            return null;
+//        }
+//    }
 
     @PostMapping(path = "/api/users/add", produces = MediaType.APPLICATION_JSON_VALUE, consumes = MediaType.APPLICATION_JSON_VALUE)
     public Response saveNewUser(@RequestBody UserDTO userDTO) {
@@ -86,5 +87,17 @@ public class UserController {
     @GetMapping(value = "/api/user/{id}")
     public UserDTO getUser(@PathVariable long id) {
         return userService.getUserDTOById(id);
+    }
+
+    @PostMapping(path = "/api/login", produces = MediaType.APPLICATION_JSON_VALUE)
+    public UserDTO verifyCredentialsAndSendToken(@RequestBody String[] usercredentials) throws IOException {
+        System.out.println(userService.checkIfLoginCredentialsAreCorrectAndGetUser(usercredentials[0], usercredentials[1]));
+        return userService.checkIfLoginCredentialsAreCorrectAndGetUser(usercredentials[0], usercredentials[1]);
+    }
+
+    @GetMapping(value = "/api/getuser/{token}")
+    public UserDTO getUserFromJWT(@PathVariable String token) throws IOException {
+        System.out.println(userService.getUserFromJWT(token));
+        return userService.getUserFromJWT(token);
     }
 }

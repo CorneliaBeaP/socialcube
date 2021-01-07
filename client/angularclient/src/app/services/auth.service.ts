@@ -22,24 +22,37 @@ export class AuthService {
     this.loginUrl = 'http://localhost:8080/api/login';
     this.userBehaviorSubject = new BehaviorSubject<Usersocu>(JSON.parse(sessionStorage.getItem('user')));
     this.user = this.userBehaviorSubject.asObservable();
+    this.authenticateAndGetUser(JSON.parse(sessionStorage.getItem('token')));
   }
 
   public getUserValue(): Usersocu {
     return this.userBehaviorSubject.value;
   }
 
-  authenticate(username: string, password: string) {
+  login(username: string, password: string) {
     this.usercredentials = [username, password];
     return this.http.post<Usersocu>(this.loginUrl, this.usercredentials)
       .pipe(map(data => {
         sessionStorage.setItem('user', JSON.stringify(data));
+        sessionStorage.setItem('token', JSON.stringify(data.token));
         this.userBehaviorSubject.next(data);
         return data;
       }));
   }
 
+  authenticateAndGetUser(token: string){
+    return this.http.get<Usersocu>(`http://localhost:8080/api/getuser/${token}`).subscribe(data => {
+      let data2 = JSON.stringify(data);
+      let data3 = JSON.parse(data2);
+      console.log(data3);
+      // this.userBehaviorSubject = new BehaviorSubject<Usersocu>(data3);
+      // this.user = this.userBehaviorSubject.asObservable();
+    });
+  }
+
   logout() {
     sessionStorage.removeItem('user');
+    sessionStorage.removeItem('token');
     this.userBehaviorSubject.next(null);
     this.router.navigate(['/login']);
   }

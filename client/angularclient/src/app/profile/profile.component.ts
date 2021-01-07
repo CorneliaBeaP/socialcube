@@ -132,7 +132,7 @@ export class ProfileComponent implements OnInit {
       this.isPassSaveButtonClicked = true;
       return;
     }
-    this.subscription = this.authService.authenticate(this.user.email, this.passform.get('oldpassword').value)
+    this.subscription = this.authService.login(this.user.email, this.passform.get('oldpassword').value)
       .pipe(first())
       .subscribe(data => {
         if (data == null) {

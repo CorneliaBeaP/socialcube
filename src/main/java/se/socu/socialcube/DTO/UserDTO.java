@@ -14,6 +14,7 @@ public class UserDTO {
     private String employmentnumber;
     private String department;
     private long companyorganizationnumber;
+    private String token;
 
 
     @Override
@@ -26,6 +27,7 @@ public class UserDTO {
                 ", employmentnumber='" + employmentnumber + '\'' +
                 ", department='" + department + '\'' +
                 ", companyorganizationnumber=" + companyorganizationnumber +
+                ", token='" + token + '\'' +
                 '}';
     }
 }
