@@ -79,9 +79,9 @@ public class UserController {
         return userService.changePassword(passwordinfo[0], passwordinfo[1], id);
     }
 
-    @PutMapping(value = "/api/users/update/{id}")
-    public Response updateUserInformation(@PathVariable long id, @RequestBody String[] userinfo) {
-        return userService.updateUserInformation(id, userinfo[0], userinfo[1], userinfo[2]);
+    @PutMapping(value = "/api/users/update/{token}")
+    public Response updateUserInformation(@PathVariable String token, @RequestBody String[] userinfo) {
+        return userService.updateUserInformation(userService.getUserIDFromJWT(token), userinfo[0], userinfo[1], userinfo[2]);
     }
 
 //    @GetMapping(value = "/api/user/{id}")

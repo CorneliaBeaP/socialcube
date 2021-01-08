@@ -85,9 +85,9 @@ export class UserService {
     }));
   }
 
-  public updateUserInformation(id: number, name: string, email: string, department: string) {
+  public updateUserInformation(token: string, name: string, email: string, department: string) {
     let information = [name, email, department];
-    return this.http.put(`http://localhost:8080/api/users/update/${id}`, information).pipe(map(data => {
+    return this.http.put(`http://localhost:8080/api/users/update/${token}`, information).pipe(map(data => {
       let data2 = JSON.stringify(data);
       return JSON.parse(data2);
     }));
