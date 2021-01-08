@@ -74,13 +74,16 @@ export class LoginComponent implements OnInit, OnDestroy {
     this.subscription = this.authService.login(this.loginForm.get('username').value, this.loginForm.get('password').value)
       .pipe(first())
       .subscribe(data => {
-        if (data.token == null) {
+        console.log(data);
+        if (data == null) {
           this.isWrongCredentials = true;
           this.loginForm.get('password').reset();
         }
         this.router.navigate([this.returnUrl]);
       }, error => {
-        this.error = error;
+        this.isWrongCredentials = true;
+        this.error = 'Felaktigt användarenamn eller lösenord';
+        this.loginForm.get('password').reset();
       });
   }
 
