@@ -17,11 +17,14 @@ export class AdministrationComponent implements OnInit, OnDestroy {
   addForm: FormGroup;
   response: Response;
   subscription: Subscription;
+  subscrip: Subscription;
   isSubmitButtonClicked = false;
+  currentUser: Usersocu;
 
   constructor(private formBuilder: FormBuilder,
               private authService: AuthService,
               private userService: UserService) {
+    this.getLoggedInUser();
   }
 
   ngOnInit(): void {
@@ -40,6 +43,13 @@ export class AdministrationComponent implements OnInit, OnDestroy {
     });
   }
 
+  getLoggedInUser() {
+    this.subscrip = this.userService.getUser(this.authService.getToken()).subscribe((data) => {
+      let data2= JSON.stringify(data);
+      this.currentUser = JSON.parse(data2);
+    })
+  }
+
   onSubmit() {
     if (this.addForm.invalid) {
       this.isSubmitButtonClicked = true;
@@ -52,7 +62,7 @@ export class AdministrationComponent implements OnInit, OnDestroy {
     usersocu.department = this.addForm.get('department').value;
     usersocu.employmentnumber = this.addForm.get('employeenumber').value;
     usersocu.usertype = 0;
-    usersocu.companyorganizationnumber = this.authService.getUserValue().companyorganizationnumber;
+    usersocu.companyorganizationnumber = this.currentUser.companyorganizationnumber;
     this.subscription = this.userService.sendUser(usersocu).subscribe((data) => {
       this.response = data;
       this.mailto(usersocu.email.toString());
@@ -62,6 +72,7 @@ export class AdministrationComponent implements OnInit, OnDestroy {
   }
 
   ngOnDestroy(): void {
+    this.subscrip.unsubscribe();
   }
 
   mailto(emailaddress: string) {
