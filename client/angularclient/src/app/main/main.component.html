@@ -1,16 +1,16 @@
-<div class="main">
+<div class="main"*ngIf="user">
   <div class="main2">
-    <app-header></app-header>
+    <app-header [user]="user"></app-header>
     <div class="row">
       <div class="col">
-        <app-create-activity></app-create-activity>
+        <app-create-activity [user]="user"></app-create-activity>
       </div>
       <div class="col-6">
-        <app-activity-cards></app-activity-cards>
+        <app-activity-cards [user]="user"></app-activity-cards>
       </div>
       <div class="col">
         <app-calendar></app-calendar>
-        <app-upcoming-activities></app-upcoming-activities>
+        <app-upcoming-activities [user]="user"></app-upcoming-activities>
       </div>
     </div>
   </div>

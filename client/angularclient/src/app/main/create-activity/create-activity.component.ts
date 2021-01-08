@@ -1,4 +1,4 @@
-import {Component, OnDestroy, OnInit} from '@angular/core';
+import {Component, Input, OnDestroy, OnInit} from '@angular/core';
 import {FormBuilder, FormGroup, Validators} from "@angular/forms";
 import {ActivatedRoute, Router} from "@angular/router";
 import {Activity} from "../../classes/activity";
@@ -7,6 +7,7 @@ import {AuthService} from "../../services/auth.service";
 import {DateAdapter, MAT_DATE_FORMATS} from "@angular/material/core";
 import {APP_DATE_FORMATS, AppDateAdapter} from "../../helpers/app-date-adapter";
 import {Subscription} from "rxjs";
+import {Usersocu} from "../../classes/usersocu";
 
 
 @Component({
@@ -25,6 +26,7 @@ export class CreateActivityComponent implements OnInit, OnDestroy {
   form: FormGroup;
   subscription: Subscription;
   submitbuttonclicked = false;
+  @Input('user') user: Usersocu;
 
   tooltiprsvp = "Här fyller du i datumet man senast behöver tacka ja till eventet. Om detta inte är aktuellt kan du lämna fältet tomt.";
 
@@ -69,8 +71,8 @@ export class CreateActivityComponent implements OnInit, OnDestroy {
     activity.activitytype = this.form.get('activitytype').value;
     activity.locationname = this.form.get('locationname').value;
     activity.locationaddress = this.form.get('locationaddress').value;
-    activity.createdbyid = this.authService.getUserValue().id;
-    activity.companyorganizationnumber = this.authService.getUserValue().companyorganizationnumber;
+    activity.createdbyid = this.user.id;
+    activity.companyorganizationnumber = this.user.companyorganizationnumber;
     activity.activitydate = concatDate;
     activity.rsvpdate = this.form.get('rsvpdate').value;
     activity.cancelled = false;

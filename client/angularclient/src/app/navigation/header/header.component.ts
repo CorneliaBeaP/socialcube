@@ -1,10 +1,12 @@
-import {Component, OnInit} from '@angular/core';
+import {Component, Input, OnInit} from '@angular/core';
 import {AuthService} from "../../services/auth.service";
 import {Usersocu} from "../../classes/usersocu";
 import {HttpClient} from "@angular/common/http";
 import {Router} from "@angular/router";
 import {Subscription} from "rxjs";
 import {UserService} from "../../services/user.service";
+import set = Reflect.set;
+import {timeout} from "rxjs/operators";
 
 
 @Component({
@@ -14,7 +16,7 @@ import {UserService} from "../../services/user.service";
 })
 export class HeaderComponent implements OnInit {
   isAdmin = false;
-  user: Usersocu;
+  @Input('user') user: Usersocu;
   subscription: Subscription;
 
   constructor(private http: HttpClient,
@@ -24,7 +26,10 @@ export class HeaderComponent implements OnInit {
   }
 
   ngOnInit(): void {
-    this.getLoggedInUser();
+    if(this.user){
+      this.getProfilePicture(this.user.id);
+      this.getAdmin();
+    }
   }
 
   logout() {
@@ -37,20 +42,11 @@ export class HeaderComponent implements OnInit {
     }
   }
 
-  getLoggedInUser() {
-    this.subscription = this.userService.getUser(this.authService.getToken()).subscribe((data) => {
-      let data2 = JSON.stringify(data);
-      this.user = JSON.parse(data2);
-      this.getProfilePicture(this.user.id);
-      this.getAdmin();
-    });
-  }
-
   getProfilePicture(id: number): string {
     return `../../../../assets/ProfilePictures/${id}.png`;
   }
 
-  goToProfile(){
+  goToProfile() {
     this.router.navigate(['/profile']);
   }
 }

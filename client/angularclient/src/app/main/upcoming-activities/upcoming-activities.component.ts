@@ -1,8 +1,9 @@
-import {Component, OnInit} from '@angular/core';
+import {Component, Input, OnInit} from '@angular/core';
 import {ActivityService} from "../../services/activity.service";
 import {Activity} from "../../classes/activity";
 import {AuthService} from "../../services/auth.service";
 import {ExpiredPipe} from "../../helpers/expired.pipe";
+import {Usersocu} from "../../classes/usersocu";
 
 @Component({
   selector: 'app-upcoming-activities',
@@ -11,6 +12,7 @@ import {ExpiredPipe} from "../../helpers/expired.pipe";
 })
 export class UpcomingActivitiesComponent implements OnInit {
   activities: Activity[];
+  @Input('user') user: Usersocu;
 
   constructor(private activityService: ActivityService,
               private authService: AuthService,
@@ -22,7 +24,7 @@ export class UpcomingActivitiesComponent implements OnInit {
   }
 
   getActivities() {
-    this.activityService.getattendedActivities(this.authService.getToken()).subscribe(data => {
+    this.activityService.getattendedActivities(this.user.token).subscribe(data => {
       this.activities =this.expiredPipe.transform(data);
     });
   }

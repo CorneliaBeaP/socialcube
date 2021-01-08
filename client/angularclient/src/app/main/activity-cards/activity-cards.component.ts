@@ -1,4 +1,4 @@
-import {Component, OnDestroy, OnInit} from '@angular/core';
+import {Component, Input, OnDestroy, OnInit} from '@angular/core';
 import {Activity} from "../../classes/activity";
 import {ActivityService} from "../../services/activity.service";
 import {AuthService} from "../../services/auth.service";
@@ -20,9 +20,8 @@ export class ActivityCardsComponent implements OnInit, OnDestroy {
   activities: Activity[];
   attendedActivities: Activity[];
   subscription: Subscription;
-  subscrip: Subscription;
   declinedActivities: Activity[];
-  user: Usersocu;
+  @Input('user') user: Usersocu;
 
   constructor(private activityService: ActivityService,
               private authService: AuthService,
@@ -36,10 +35,7 @@ export class ActivityCardsComponent implements OnInit, OnDestroy {
   }
 
   setUp() {
-    this.subscription = this.userService.getUser(this.authService.getToken()).subscribe((data) => {
-      let data2 = JSON.stringify(data);
-      this.user = JSON.parse(data2);
-      this.subscription = this.activityService.getActivities(this.user.token).subscribe(activityarray => {
+     this.subscription = this.activityService.getActivities(this.user.token).subscribe(activityarray => {
         activityarray.forEach((activity) => {
           this.subscription = this.activityService.getAttendees(activity.id).subscribe((data) => {
             let data2 = JSON.stringify(data);
@@ -53,7 +49,6 @@ export class ActivityCardsComponent implements OnInit, OnDestroy {
       });
       this.getAttendedActivities();
       this.getProfilePicture(this.user.id);
-    })
   }
 
   attendEvent(activityid: number) {

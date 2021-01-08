@@ -1,4 +1,4 @@
-import {Component, OnDestroy, OnInit} from '@angular/core';
+import {Component, Input, OnDestroy, OnInit} from '@angular/core';
 import {ActivityService} from "../../services/activity.service";
 import {UserService} from "../../services/user.service";
 import {AuthService} from "../../services/auth.service";
@@ -16,12 +16,11 @@ export class CurrentActivitiesComponent implements OnInit, OnDestroy {
 
   showCurrentActivities = false;
   currentActivities: Activity[];
-  user: Usersocu;
+  @Input('user') user: Usersocu;
   subscription: Subscription;
 
   constructor(private activityService: ActivityService,
               private userService: UserService,
-              private authService: AuthService,
               private expiredPipe: ExpiredPipe) {
   }
 
@@ -30,20 +29,18 @@ export class CurrentActivitiesComponent implements OnInit, OnDestroy {
   }
 
   setUp() {
-  this.subscription = this.userService.getUser(this.authService.getToken()).subscribe((data) =>{
-    let data2 = JSON.stringify(data);
-    this.user = JSON.parse(data2);
     this.getActivities();
-  });
   }
 
+
   getActivities() {
-    this.subscription = this.activityService.getActivities(this.user.token).subscribe(next => {
-      this.currentActivities = this.expiredPipe.transform(next);
-    });
+    if(this.user) {
+      this.subscription = this.activityService.getActivities(this.user.token).subscribe(next => {
+        this.currentActivities = this.expiredPipe.transform(next);
+      });
+    }
   }
 
   ngOnDestroy(): void {
-    this.subscription.unsubscribe();
   }
 }
