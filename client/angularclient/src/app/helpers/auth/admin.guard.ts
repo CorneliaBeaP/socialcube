@@ -17,7 +17,7 @@ export class AdminGuard implements CanActivate {
     route: ActivatedRouteSnapshot,
     state: RouterStateSnapshot) {
     const user = this.authService.getUserValue();
-    if (user.usertype.toString() == 'ADMIN') {
+    if (user.usertype === 900) {
       return true;
     }
     this.router.navigate(['/error'], {queryParams: {returnUrl: state.url}});

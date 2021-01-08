@@ -31,8 +31,7 @@ import {MatExpansionModule} from "@angular/material/expansion";
 import { ExpiredPipe } from './helpers/expired.pipe';
 import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
 import { EditModalComponent } from './main/activity-cards/edit-modal/edit-modal.component';
-import {JwtInterceptor} from "./helpers/interceptors/jwt.interceptor";
-import {ErrorInterceptor} from "./helpers/interceptors/error.interceptor";
+
 
 @NgModule({
   declarations: [

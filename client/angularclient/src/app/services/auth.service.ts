@@ -40,6 +40,11 @@ export class AuthService {
     this.usercredentials = [username, password];
     return this.http.post<Usersocu>(this.loginUrl, this.usercredentials)
       .pipe(map(data => {
+        if(data.usertype.toString() === 'ADMIN'){
+          data.usertype = 900;
+        }else{
+          data.usertype = 300;
+        }
         localStorage.setItem('user', JSON.stringify(data));
         localStorage.setItem('token', JSON.stringify(data.token));
         this.userBehaviorSubject.next(data);
