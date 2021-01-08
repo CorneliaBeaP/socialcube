@@ -19,8 +19,8 @@ export class ActivityService {
     this.activityUrl = 'http://localhost:8080/api/home';
   }
 
-  public getActivities(organizationnumber: number) {
-    return this.http.get<Activity[]>(this.activityUrl + '/' + organizationnumber).pipe(map(data => {
+  public getActivities(token: string) {
+    return this.http.get<Activity[]>(this.activityUrl + '/' + token).pipe(map(data => {
       return data;
     }));
   }

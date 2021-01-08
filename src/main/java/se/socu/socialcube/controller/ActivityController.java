@@ -8,6 +8,7 @@ import se.socu.socialcube.entities.Response;
 import se.socu.socialcube.service.ActivityService;
 import se.socu.socialcube.service.UserService;
 
+import java.io.IOException;
 import java.util.ArrayList;
 
 @CrossOrigin(origins = "http://localhost:4200", allowedHeaders = "*")
@@ -23,9 +24,9 @@ public class ActivityController {
     private final ActivityService activityService;
     private final UserService userService;
 
-    @GetMapping(path = "/api/home/{id}", produces = MediaType.APPLICATION_JSON_VALUE)
-    public ArrayList<ActivityDTO> getAllActivitiesForCompany(@PathVariable long id) {
-        return activityService.findAllActivitiesByCompany_organizationnumber(id);
+    @GetMapping(path = "/api/home/{token}", produces = MediaType.APPLICATION_JSON_VALUE)
+    public ArrayList<ActivityDTO> getAllActivitiesForCompany(@PathVariable String token) throws IOException {
+        return activityService.findAllActivitiesByCompany_organizationnumber(userService.getUserFromJWT(token).getCompanyorganizationnumber());
     }
 
     @PostMapping(path = "/api/activity/add", produces = MediaType.APPLICATION_JSON_VALUE)

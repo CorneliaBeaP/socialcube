@@ -7,6 +7,7 @@ import {Usersocu} from "../../classes/usersocu";
 import {ExpiredPipe} from "../../helpers/expired.pipe";
 import {NgbModal} from "@ng-bootstrap/ng-bootstrap";
 import {EditModalComponent} from "./edit-modal/edit-modal.component";
+import {UserService} from "../../services/user.service";
 
 
 @Component({
@@ -19,31 +20,40 @@ export class ActivityCardsComponent implements OnInit, OnDestroy {
   activities: Activity[];
   attendedActivities: Activity[];
   subscription: Subscription;
+  subscrip: Subscription;
   declinedActivities: Activity[];
   user: Usersocu;
 
   constructor(private activityService: ActivityService,
               private authService: AuthService,
+              private userService: UserService,
               private expiredPipe: ExpiredPipe,
               private modalService: NgbModal) {
   }
 
   ngOnInit(): void {
-    this.user = this.authService.getUserValue();
-    this.subscription = this.activityService.getActivities(this.authService.getUserValue().companyorganizationnumber).subscribe(activityarray => {
-      activityarray.forEach((activity) => {
-        this.subscription = this.activityService.getAttendees(activity.id).subscribe((data) => {
-          let data2 = JSON.stringify(data);
-          activity.attendees = JSON.parse(data2);
+    this.setUp();
+  }
+
+  setUp() {
+    this.subscription = this.userService.getUser(this.authService.getToken()).subscribe((data) => {
+      let data2 = JSON.stringify(data);
+      this.user = JSON.parse(data2);
+      this.subscription = this.activityService.getActivities(this.user.token).subscribe(activityarray => {
+        activityarray.forEach((activity) => {
+          this.subscription = this.activityService.getAttendees(activity.id).subscribe((data) => {
+            let data2 = JSON.stringify(data);
+            activity.attendees = JSON.parse(data2);
+          });
         });
+        this.activities = activityarray;
+        this.activities = this.activities.reverse();
+        this.getDeclinedActivities();
+        this.activities = this.expiredPipe.transform(this.activities);
       });
-      this.activities = activityarray;
-      this.activities = this.activities.reverse();
-      this.getDeclinedActivities();
-      this.activities = this.expiredPipe.transform(this.activities);
-    });
-    this.getAttendedActivities();
-    this.getProfilePicture(4);
+      this.getAttendedActivities();
+      this.getProfilePicture(this.user.id);
+    })
   }
 
   attendEvent(activityid: number) {
@@ -74,7 +84,7 @@ export class ActivityCardsComponent implements OnInit, OnDestroy {
 
   sortAwayDeclinedActivities() {
     if (this.declinedActivities) {
-      this.declinedActivities.forEach(declinedActivity  => {
+      this.declinedActivities.forEach(declinedActivity => {
         this.activities.forEach(activity => {
           if (activity.id == declinedActivity.id) {
             let index = this.activities.indexOf(activity);
