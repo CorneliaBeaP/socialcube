@@ -74,7 +74,7 @@ export class LoginComponent implements OnInit, OnDestroy {
     this.subscription = this.authService.login(this.loginForm.get('username').value, this.loginForm.get('password').value)
       .pipe(first())
       .subscribe(data => {
-        if (data == null) {
+        if (data.token == null) {
           this.isWrongCredentials = true;
           this.loginForm.get('password').reset();
         }
