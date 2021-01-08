@@ -22,7 +22,7 @@ export class UserListComponent implements OnInit, OnDestroy {
 
 
   ngOnInit(): void {
-    this.subscription = this.userService.findAll(this.authService.getUserValue().companyorganizationnumber).subscribe(data => {
+    this.subscription = this.userService.findAll(this.user.companyorganizationnumber).subscribe(data => {
       this.users = data;
     });
   }
