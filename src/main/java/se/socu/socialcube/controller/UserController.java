@@ -84,18 +84,13 @@ public class UserController {
         return userService.updateUserInformation(userService.getUserIDFromJWT(token), userinfo[0], userinfo[1], userinfo[2]);
     }
 
-//    @GetMapping(value = "/api/user/{id}")
-//    public UserDTO getUser(@PathVariable long id) {
-//        return userService.getUserDTOById(id);
-//    }
-
     @PostMapping(path = "/api/login", produces = MediaType.APPLICATION_JSON_VALUE)
     public UserDTO verifyCredentialsAndSendToken(@RequestBody String[] usercredentials) throws IOException {
         System.out.println(userService.checkIfLoginCredentialsAreCorrectAndGetUser(usercredentials[0], usercredentials[1]));
         return userService.checkIfLoginCredentialsAreCorrectAndGetUser(usercredentials[0], usercredentials[1]);
     }
 
-    @GetMapping(value = "/api/getuser/{token}")
+    @GetMapping(value = "/api/user/{token}")
     public UserDTO getUserDTOFromJWT(@PathVariable String token) throws IOException {
         System.out.println(userService.getUserFromJWT(token));
         return userService.getUserFromJWT(token);
