@@ -22,7 +22,9 @@ export class AuthService {
     this.loginUrl = 'http://localhost:8080/api/login';
     this.userBehaviorSubject = new BehaviorSubject<Usersocu>(JSON.parse(localStorage.getItem('user')));
     this.user = this.userBehaviorSubject.asObservable();
-    this.authenticateAndGetUser(JSON.parse(localStorage.getItem('token')));
+    if(this.getToken()){
+      this.authenticateAndGetUser(JSON.parse(localStorage.getItem('token')));
+    }
   }
 
   public getUserValue(): Usersocu {
