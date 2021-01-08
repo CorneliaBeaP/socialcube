@@ -28,8 +28,12 @@ export class AuthService {
     return this.userBehaviorSubject.value;
   }
 
-  public getToken(){
-    return JSON.parse(localStorage.getItem('token'));
+  public getToken() {
+    let token = '';
+    if (localStorage.getItem('token')) {
+      token = JSON.parse(localStorage.getItem('token'));
+    }
+    return token;
   }
 
   login(username: string, password: string) {

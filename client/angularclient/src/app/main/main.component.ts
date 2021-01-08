@@ -27,6 +27,8 @@ export class MainComponent implements OnInit, OnDestroy {
     this.subscription = this.userService.getUser(this.authService.getToken()).subscribe((data) => {
       let data2 = JSON.stringify(data);
       this.user = JSON.parse(data2);
+    }, error => {
+      this.authService.logout();
     });
   }
 

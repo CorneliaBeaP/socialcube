@@ -48,6 +48,8 @@ export class ProfileComponent implements OnInit {
       this.getProfilePicture(this.user.id);
       this.createPassform();
       this.createInfoform();
+    }, error => {
+      this.authService.logout();
     });
   }
 

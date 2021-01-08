@@ -47,7 +47,9 @@ export class AdministrationComponent implements OnInit, OnDestroy {
     this.subscrip = this.userService.getUser(this.authService.getToken()).subscribe((data) => {
       let data2= JSON.stringify(data);
       this.currentUser = JSON.parse(data2);
-    })
+    }, error => {
+      this.authService.logout();
+    });
   }
 
   onSubmit() {
