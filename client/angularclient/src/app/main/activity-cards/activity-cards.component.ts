@@ -92,7 +92,7 @@ export class ActivityCardsComponent implements OnInit, OnDestroy {
   }
 
   getAttendedActivities() {
-    this.activityService.getattendedActivities(this.authService.getUserValue().id).subscribe(data => {
+    this.activityService.getattendedActivities(this.authService.getToken()).subscribe(data => {
       this.attendedActivities = this.expiredPipe.transform(data);
     });
   }

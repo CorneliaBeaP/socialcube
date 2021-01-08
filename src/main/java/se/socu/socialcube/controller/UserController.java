@@ -84,10 +84,10 @@ public class UserController {
         return userService.updateUserInformation(id, userinfo[0], userinfo[1], userinfo[2]);
     }
 
-    @GetMapping(value = "/api/user/{id}")
-    public UserDTO getUser(@PathVariable long id) {
-        return userService.getUserDTOById(id);
-    }
+//    @GetMapping(value = "/api/user/{id}")
+//    public UserDTO getUser(@PathVariable long id) {
+//        return userService.getUserDTOById(id);
+//    }
 
     @PostMapping(path = "/api/login", produces = MediaType.APPLICATION_JSON_VALUE)
     public UserDTO verifyCredentialsAndSendToken(@RequestBody String[] usercredentials) throws IOException {

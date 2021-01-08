@@ -45,9 +45,9 @@ public class ActivityController {
         return activityService.attendActivity(userid, activityid);
     }
 
-    @GetMapping(path = "/api/activity/attendedactivities/{id}")
-    public ArrayList<ActivityDTO> getAttendedActivities(@PathVariable long id) {
-        return activityService.getAllAttendedActivities(id);
+    @GetMapping(path = "/api/activity/attendedactivities/{token}")
+    public ArrayList<ActivityDTO> getAttendedActivities(@PathVariable String token) {
+        return activityService.getAllAttendedActivities(userService.getUserIDFromJWT(token));
     }
 
     @GetMapping(path = "/api/activity/declinedactivities/{id}")

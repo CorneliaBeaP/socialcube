@@ -53,8 +53,8 @@ export class ActivityService {
     });
   }
 
-  public getattendedActivities(userid: number) {
-    return this.http.get(`http://localhost:8080/api/activity/attendedactivities/` + userid).pipe(map(data => {
+  public getattendedActivities(token: string) {
+    return this.http.get(`http://localhost:8080/api/activity/attendedactivities/${token}`).pipe(map(data => {
       let data2 = JSON.stringify(data);
       return JSON.parse(data2);
     }));

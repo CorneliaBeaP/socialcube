@@ -22,7 +22,7 @@ export class UpcomingActivitiesComponent implements OnInit {
   }
 
   getActivities() {
-    this.activityService.getattendedActivities(this.authService.getUserValue().id).subscribe(data => {
+    this.activityService.getattendedActivities(this.authService.getToken()).subscribe(data => {
       this.activities =this.expiredPipe.transform(data);
     });
   }

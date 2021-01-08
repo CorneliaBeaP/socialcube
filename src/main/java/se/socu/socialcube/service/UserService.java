@@ -241,8 +241,12 @@ public class UserService {
                 dto.setToken(token);
             }
         }
-
         return dto;
+    }
+
+    public long getUserIDFromJWT(String token) {
+        Claims claims = JwtUtil.decodeJWT(token);
+        return Long.parseLong(claims.getId());
     }
 
     public UserDTO checkIfLoginCredentialsAreCorrectAndGetUser(String username, String password) throws IOException {
