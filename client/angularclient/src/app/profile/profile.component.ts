@@ -67,7 +67,7 @@ export class ProfileComponent implements OnInit {
     if (!(file.size > 1048576)) {
       if (file.type.match('image.jpg') || file.type.match('image.jpeg') || file.type.match('image.png')) {
         formData.append('name', file);
-        this.userService.uploadProfilePicture(formData, this.authService.getUserValue().id);
+        this.userService.uploadProfilePicture(formData, this.user.id);
       } else {
         this.profilepicErrorMessage = `Vänligen välj en bild av typen .png eller .jpg`;
       }

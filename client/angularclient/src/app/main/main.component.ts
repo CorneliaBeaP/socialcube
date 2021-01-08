@@ -17,11 +17,10 @@ export class MainComponent implements OnInit, OnDestroy {
 
   constructor(private authService: AuthService,
               private userService: UserService) {
-    this.user = this.authService.getUserValue();
+    this.getLoggedInUser();
   }
 
   ngOnInit(): void {
-    this.getLoggedInUser();
   }
 
   getLoggedInUser(){
