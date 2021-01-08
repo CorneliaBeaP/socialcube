@@ -26,12 +26,19 @@ export class CurrentActivitiesComponent implements OnInit, OnDestroy {
   }
 
   ngOnInit(): void {
-    this.user = this.authService.getUserValue();
+    this.setUp();
+  }
+
+  setUp() {
+  this.subscription = this.userService.getUser(this.authService.getToken()).subscribe((data) =>{
+    let data2 = JSON.stringify(data);
+    this.user = JSON.parse(data2);
     this.getActivities();
+  });
   }
 
   getActivities() {
-    this.subscription = this.activityService.getActivities(this.user.companyorganizationnumber).subscribe(next => {
+    this.subscription = this.activityService.getActivities(this.user.token).subscribe(next => {
       this.currentActivities = this.expiredPipe.transform(next);
     });
   }
