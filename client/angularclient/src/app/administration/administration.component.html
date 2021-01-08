@@ -1,4 +1,4 @@
-<div class="background">
+<div class="background" *ngIf="currentUser">
   <div class="backgroundblur">
     <app-header [user]="currentUser"></app-header>
     <h3 class="d-flex justify-content-center m-5">Hantera användare</h3>
