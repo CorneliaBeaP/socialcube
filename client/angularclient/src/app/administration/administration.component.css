@@ -21,3 +21,7 @@
 .backgroundblur{
   backdrop-filter: blur(50px);
 }
+
+.errormessage{
+  color: red;
+}

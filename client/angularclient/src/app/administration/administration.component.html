@@ -10,8 +10,10 @@
               <h5 class="mb-4">Lägg till användare</h5>
               <input [ngClass]="{'invalid-input': this.addForm.get('name').invalid && this.isSubmitButtonClicked}"
                      formControlName="name" type="text" class="form-control mt-3" placeholder="Namn">
+              <div *ngIf="isSubmitButtonClicked && this.addForm.get('name').invalid" class="errormessage ml-1">Obligatoriskt fält</div>
               <input [ngClass]="{'invalid-input': this.addForm.get('email').invalid && this.isSubmitButtonClicked}"
                      formControlName="email" type="text" class="form-control mt-3" placeholder="Mailadress">
+              <div *ngIf="isSubmitButtonClicked && this.addForm.get('email').invalid" class="errormessage ml-1">Ogiltig mailadress</div>
               <input formControlName="department" type="text" class="form-control mt-3"
                      placeholder="Avdelning (valfritt)">
               <input formControlName="employeenumber" type="text" class="form-control mt-3"
