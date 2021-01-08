@@ -3,6 +3,7 @@ import {CanActivate, ActivatedRouteSnapshot, RouterStateSnapshot, UrlTree, Route
 import {BehaviorSubject, Observable} from 'rxjs';
 import {AuthService} from "../../services/auth.service";
 import {Usersocu} from "../../classes/usersocu";
+import {UserService} from "../../services/user.service";
 
 @Injectable({
   providedIn: 'root'
@@ -17,9 +18,12 @@ export class AuthGuard implements CanActivate {
     route: ActivatedRouteSnapshot,
     state: RouterStateSnapshot) {
     const currentuser = this.authService.getUserValue();
-    if (currentuser.token) {
-      return true;
+    if(currentuser){
+      if (currentuser.token) {
+        return true;
+      }
     }
+
 
     this.router.navigate(['/login'], {queryParams: {returnUrl: state.url}});
     return false;

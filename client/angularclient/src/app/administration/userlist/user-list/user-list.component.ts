@@ -1,4 +1,4 @@
-import {Component, OnDestroy, OnInit} from '@angular/core';
+import {Component, Input, OnDestroy, OnInit} from '@angular/core';
 import {UserService} from "../../../services/user.service";
 import {Usersocu} from "../../../classes/usersocu";
 import {AuthService} from "../../../services/auth.service";
@@ -14,6 +14,7 @@ export class UserListComponent implements OnInit, OnDestroy {
   users: Usersocu[];
   subscription: Subscription;
   deletesub: Subscription;
+  @Input('user') user: Usersocu;
 
   constructor(private userService: UserService,
               private authService: AuthService) {
