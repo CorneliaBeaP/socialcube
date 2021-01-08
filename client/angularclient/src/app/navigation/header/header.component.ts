@@ -3,6 +3,8 @@ import {AuthService} from "../../services/auth.service";
 import {Usersocu} from "../../classes/usersocu";
 import {HttpClient} from "@angular/common/http";
 import {Router} from "@angular/router";
+import {Subscription} from "rxjs";
+import {UserService} from "../../services/user.service";
 
 
 @Component({
@@ -13,16 +15,16 @@ import {Router} from "@angular/router";
 export class HeaderComponent implements OnInit {
   isAdmin = false;
   user: Usersocu;
+  subscription: Subscription;
 
   constructor(private http: HttpClient,
               private authService: AuthService,
+              private userService: UserService,
               private router: Router) {
-    this.getAdmin();
   }
 
   ngOnInit(): void {
     this.getLoggedInUser();
-    this.getProfilePicture(this.user.id);
   }
 
   logout() {
@@ -30,14 +32,18 @@ export class HeaderComponent implements OnInit {
   }
 
   getAdmin() {
-    let user = this.authService.getUserValue();
-    if (user.usertype.toString() == 'ADMIN') {
+    if (this.user.usertype.toString() == 'ADMIN') {
       this.isAdmin = true;
     }
   }
 
   getLoggedInUser() {
-    this.user = this.authService.getUserValue();
+    this.subscription = this.userService.getUser(this.authService.getToken()).subscribe((data) => {
+      let data2 = JSON.stringify(data);
+      this.user = JSON.parse(data2);
+      this.getProfilePicture(this.user.id);
+      this.getAdmin();
+    });
   }
 
   getProfilePicture(id: number): string {

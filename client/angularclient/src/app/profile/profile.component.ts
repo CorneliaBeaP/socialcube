@@ -39,13 +39,13 @@ export class ProfileComponent implements OnInit {
 
   ngOnInit(): void {
     this.getLoggedInUser();
-    this.getProfilePicture(this.authService.getUserValue().id);
   }
 
   getLoggedInUser() {
     this.subscription = this.userService.getUser(this.authService.getToken()).subscribe((data) => {
       let data2 = JSON.stringify(data);
       this.user = JSON.parse(data2);
+      this.getProfilePicture(this.user.id);
       this.createPassform();
       this.createInfoform();
     });
