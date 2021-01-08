@@ -238,6 +238,7 @@ public class UserService {
             Optional<UserSocu> userSocu = userRepository.findById(Long.parseLong(claims.getId()));
             if (userSocu.isPresent()) {
                 dto = convertToUserDTOfromUserSocu(userSocu.get());
+                dto.setToken(token);
             }
         }
 
