@@ -20,7 +20,7 @@ export class AuthService {
   constructor(private http: HttpClient,
               private router: Router) {
     this.loginUrl = 'http://localhost:8080/api/login';
-    this.userBehaviorSubject = new BehaviorSubject<Usersocu>(JSON.parse(sessionStorage.getItem('user')));
+    this.userBehaviorSubject = new BehaviorSubject<Usersocu>(JSON.parse(localStorage.getItem('user')));
     this.user = this.userBehaviorSubject.asObservable();
     this.authenticateAndGetUser(JSON.parse(sessionStorage.getItem('token')));
   }
@@ -33,8 +33,8 @@ export class AuthService {
     this.usercredentials = [username, password];
     return this.http.post<Usersocu>(this.loginUrl, this.usercredentials)
       .pipe(map(data => {
-        sessionStorage.setItem('user', JSON.stringify(data));
-        sessionStorage.setItem('token', JSON.stringify(data.token));
+        localStorage.setItem('user', JSON.stringify(data));
+        localStorage.setItem('token', JSON.stringify(data.token));
         this.userBehaviorSubject.next(data);
         return data;
       }));
@@ -51,8 +51,8 @@ export class AuthService {
   }
 
   logout() {
-    sessionStorage.removeItem('user');
-    sessionStorage.removeItem('token');
+    localStorage.removeItem('user');
+    localStorage.removeItem('token');
     this.userBehaviorSubject.next(null);
     this.router.navigate(['/login']);
   }
