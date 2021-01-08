@@ -60,8 +60,8 @@ export class ActivityService {
     }));
   }
 
-  public getDeclinedActivities(userid: number) {
-    return this.http.get(`http://localhost:8080/api/activity/declinedactivities/${userid}`).pipe(map(data => {
+  public getDeclinedActivities(token: string) {
+    return this.http.get(`http://localhost:8080/api/activity/declinedactivities/${token}`).pipe(map(data => {
       let data2 = JSON.stringify(data);
       return JSON.parse(data2);
     }));

@@ -65,7 +65,7 @@ export class ActivityCardsComponent implements OnInit, OnDestroy {
   }
 
   public getDeclinedActivities() {
-    this.subscription = this.activityService.getDeclinedActivities(this.user.id).subscribe((data) => {
+    this.subscription = this.activityService.getDeclinedActivities(this.authService.getToken()).subscribe((data) => {
       let data2 = JSON.stringify(data);
       this.declinedActivities = JSON.parse(data2);
       this.sortAwayDeclinedActivities();
