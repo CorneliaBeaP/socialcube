@@ -68,7 +68,7 @@ export class UserService {
     });
   }
 
-  public changePassword(oldPassword: string, newPassword: string, userid: number) {
+  public changePassword(oldPassword: string, newPassword: string, token: string) {
     let passw = [oldPassword, newPassword];
     const headerDict = {
       'Content-Type': 'application/json',
@@ -79,7 +79,7 @@ export class UserService {
     const requestOptions = {
       headers: new HttpHeaders(headerDict),
     };
-    return this.http.put(`http://localhost:8080/api/users/password/${userid}`, passw, requestOptions).pipe(map(data => {
+    return this.http.put(`http://localhost:8080/api/users/password/${token}`, passw, requestOptions).pipe(map(data => {
       let data2 = JSON.stringify(data);
       return JSON.parse(data2);
     }));

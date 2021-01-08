@@ -74,9 +74,9 @@ public class UserController {
         return new Response("OK", "Anrop mottaget");
     }
 
-    @PutMapping(value = "/api/users/password/{id}", consumes = MediaType.APPLICATION_JSON_VALUE)
-    public Response changePassword(@PathVariable Long id, @RequestBody String[] passwordinfo) {
-        return userService.changePassword(passwordinfo[0], passwordinfo[1], id);
+    @PutMapping(value = "/api/users/password/{token}", consumes = MediaType.APPLICATION_JSON_VALUE)
+    public Response changePassword(@PathVariable String token, @RequestBody String[] passwordinfo) {
+        return userService.changePassword(passwordinfo[0], passwordinfo[1], userService.getUserIDFromJWT(token));
     }
 
     @PutMapping(value = "/api/users/update/{token}")
