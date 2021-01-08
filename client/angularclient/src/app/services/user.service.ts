@@ -99,4 +99,11 @@ export class UserService {
       return JSON.parse(data2);
     }));
   }
+
+  public getUserIDfromJWT(token: string){
+    return this.http.get<Response>(`http://localhost:8080/api/getuserid/${token}`).pipe(map(data => {
+      let data2 = JSON.stringify(data);
+      return JSON.parse(data2);
+    }));
+  }
 }

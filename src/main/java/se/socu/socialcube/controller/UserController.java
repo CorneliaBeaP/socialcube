@@ -96,8 +96,21 @@ public class UserController {
     }
 
     @GetMapping(value = "/api/getuser/{token}")
-    public UserDTO getUserFromJWT(@PathVariable String token) throws IOException {
+    public UserDTO getUserDTOFromJWT(@PathVariable String token) throws IOException {
         System.out.println(userService.getUserFromJWT(token));
         return userService.getUserFromJWT(token);
+    }
+
+    @GetMapping(value = "/api/getuserid/{token}")
+    public Response getUserIDfromJWT(@PathVariable String token){
+        Response response = new Response();
+        long id = userService.getUserIDFromJWT(token);
+        response.setMessage(Long.toString(id));
+        if(id>0){
+            response.setStatus("OK");
+        }else {
+            response.setStatus("ERROR");
+        }
+        return response;
     }
 }
