@@ -43,7 +43,7 @@ export class ProfileComponent implements OnInit {
   }
 
   getLoggedInUser() {
-    this.subscription = this.userService.getUser(this.authService.getUserValue().id).subscribe((data) => {
+    this.subscription = this.userService.getUser(this.authService.getToken()).subscribe((data) => {
       let data2 = JSON.stringify(data);
       this.user = JSON.parse(data2);
       this.createPassform();
@@ -113,7 +113,7 @@ export class ProfileComponent implements OnInit {
       return;
     }
     this.subscription = this.userService.updateUserInformation(this.user.id, this.infoform.get('name').value, this.infoform.get('email').value, this.infoform.get('department').value).subscribe((data) => {
-      this.subscrip = this.userService.getUser(this.user.id).subscribe((data) => {
+      this.subscrip = this.userService.getUser(this.authService.getToken()).subscribe((data) => {
         let data2 = JSON.stringify(data);
         this.user = JSON.parse(data2);
       });
