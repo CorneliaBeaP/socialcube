@@ -1,13 +1,3 @@
-// import { Injectable } from '@angular/core';
-//
-// @Injectable({
-//   providedIn: 'root'
-// })
-// export class UserService {
-//
-//   constructor() { }
-// }
-
 import {Injectable} from '@angular/core';
 import {HttpClient, HttpHeaders, HttpParams} from '@angular/common/http';
 import {Usersocu} from '../classes/usersocu';
@@ -30,7 +20,6 @@ export class UserService {
   }
 
   public sendUser(usersocu: Usersocu) {
-    let response: Response;
     const headerDict = {
       'Content-Type': 'application/json',
       'Accept': 'application/json',
@@ -40,7 +29,6 @@ export class UserService {
     const requestOptions = {
       headers: new HttpHeaders(headerDict),
     };
-    console.log('SendUser()');
     let user2 = JSON.stringify(usersocu);
 
     return this.http.post('http://localhost:8080/api/users/add', user2, requestOptions).pipe(map(data => {
