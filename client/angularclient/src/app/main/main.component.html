@@ -3,7 +3,9 @@
     <app-header [user]="user"></app-header>
     <div class="row">
       <div class="col">
-        <app-create-activity [user]="user"></app-create-activity>
+        <div class="glassbox glassbox m-4 mt-5 p-4">
+          <app-create-activity [user]="user"></app-create-activity>
+          <app-current-activities [user]="user"></app-current-activities></div>
       </div>
       <div class="col-6">
         <app-activity-cards [user]="user"></app-activity-cards>
