@@ -14,8 +14,10 @@
   background-color: rgba(255, 255, 255, 0.9);
   border-style: none;
   outline: none;
-  color: #686b6e;
+  color: rgba(104, 107, 110, 0.9);
 }
+
+
 
 .accept {
   border-bottom-left-radius: 15px;
@@ -81,3 +83,14 @@ img {
   background: rgba(240, 182, 177, 0.5) !important;
   color: grey !important;
 }
+
+.disabled {
+  background-color: rgba(255, 255, 255, 0.3);
+  color: rgba(104, 107, 110, 0.3);
+}
+.disabled:hover {
+  background-color: rgba(255, 255, 255, 0.3);
+  color: rgba(104, 107, 110, 0.3);
+}
+
+

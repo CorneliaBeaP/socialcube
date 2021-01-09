@@ -37,7 +37,7 @@
   </div>
   <div class="float-right">
     <button [attr.disabled]="isAttendButtonDisabled(activity)? true : null"
-            [ngClass]="{'accepted' : isAttendButtonDisabled(activity), 'cancelled' : activity.cancelled}" type="button" class="accept choicebutton"
+            [ngClass]="{'disabled' : isAttendButtonDisabled(activity), 'accepted' : isUserAttending(user.id, activity.id), 'cancelled' : activity.cancelled}" type="button" class="accept choicebutton"
             (click)="attendEvent(activity.id)"><i class="fas fa-check"></i>
     </button>
     <button [attr.disabled]="isEditButtonDisabled(activity)? true : null"
