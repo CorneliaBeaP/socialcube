@@ -146,8 +146,15 @@ export class ProfileComponent implements OnInit {
           this.subscrip = this.userService.changePassword(this.passform.get('oldpassword').value, this.passform.get('newpassword').value, this.user.token).subscribe((data) => {
             let data2 = JSON.stringify(data);
             this.response = JSON.parse(data2);
+            this.passform.reset();
+            setTimeout(() => {
+              this.response.message = ''
+            }, 3000);
+
           });
         }
+      }, error => {
+        this.isOldPasswordWrong = true;
       });
   }
 
