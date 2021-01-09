@@ -35,18 +35,25 @@
       <div class="text-right rsvp" *ngIf="activity.rsvpdate">Senaste OSA-datum: {{activity.rsvpdate[0]}}-<span *ngIf="activity.rsvpdate[1]<10">0</span>{{activity.rsvpdate[1]}}-<span *ngIf="activity.rsvpdate[2]<10">0</span>{{activity.rsvpdate[2]}}</div>
     </div>
   </div>
-  <div class="float-right">
-    <button [attr.disabled]="isAttendButtonDisabled(activity)? true : null"
-            [ngClass]="{'disabled' : isAttendButtonDisabled(activity), 'accepted' : isUserAttending(user.id, activity.id), 'cancelled' : activity.cancelled}" type="button" class="accept choicebutton"
-            (click)="attendEvent(activity.id)"><i class="fas fa-check"></i>
+  <div class="float-right" >
+    <span matTooltip="Du har redan tackat ja till detta event" [matTooltipDisabled]="!isUserAttending(user.id, activity.id) || activity.cancelled" matTooltipShowDelay="1000">
+          <button [attr.disabled]="isAttendButtonDisabled(activity)? true : null"
+                  [ngClass]="{'disabled' : isAttendButtonDisabled(activity), 'accepted' : isUserAttending(user.id, activity.id), 'cancelled' : activity.cancelled}" type="button" class="accept choicebutton"
+                  (click)="attendEvent(activity.id)"><i class="fas fa-check"></i>
     </button>
+    </span>
+
     <button [attr.disabled]="isEditButtonDisabled(activity)? true : null"
       *ngIf="activity.createdbyid==user.id" type="button" class="choicebutton edit"
             [ngClass]="{'cancelled' : activity.cancelled}" (click)="openEditModal(activity)"><i class="fas fa-pen"></i></button>
-    <button [attr.disabled]="isDeclineButtonDisabled(activity)? true : null"
-      [ngClass]="{'declined' : isDeclineButtonDisabled(activity), 'cancelled' : activity.cancelled}"
-      type="button" class="decline choicebutton" (click)="declineEvent(activity)"><i class="fas fa-times"></i>
+
+    <span matTooltip="Du har redan tackat nej till detta event" [matTooltipDisabled]="!isDeclineButtonDisabled(activity) || activity.cancelled" matTooltipShowDelay="1000">
+          <button [attr.disabled]="isDeclineButtonDisabled(activity)? true : null"
+                  [ngClass]="{'declined' : isDeclineButtonDisabled(activity), 'cancelled' : activity.cancelled}"
+                  type="button" class="decline choicebutton" (click)="declineEvent(activity)"><i class="fas fa-times"></i>
     </button>
+    </span>
+
   </div>
   <ng-template let-modal>
     <app-edit-modal></app-edit-modal>
