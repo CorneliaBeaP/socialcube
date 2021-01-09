@@ -23,7 +23,7 @@
             <input type='file' accept="image/*"
                    (change)="onSelectFile($event)" id="fileupload">
             <button class="btn btn-light minw-100 m-4" (click)="triggerFileUpload()">Byt Bild</button>
-                    <button class="btn btn-light minw-100 m-4" (click)="removeProfilePicture()">Ta bort bild</button>
+            <button class="btn btn-light minw-100 m-4" (click)="removeProfilePicture()">Ta bort bild</button>
           </div>
         </div>
       </div>
@@ -44,21 +44,43 @@
 
           <form *ngIf="passform" (ngSubmit)="onSubmitPassform()" [formGroup]="passform" novalidate>
             <div class="form-group mt-3">
-              <input
-                [ngClass]="{'invalid-input': this.passform.get('oldpassword').invalid && this.isPassSaveButtonClicked || this.isOldPasswordWrong}"
-                formControlName="oldpassword" autocomplete="off" type="password" class="form-control mt-3"
-                placeholder="Gammalt lösenord" id="changePassword">
+              <div class="input-group">
+                <input
+                  [ngClass]="{'invalid-input': this.passform.get('oldpassword').invalid && this.isPassSaveButtonClicked || this.isOldPasswordWrong}"
+                  formControlName="oldpassword" autocomplete="off" [type]="fieldTextType1 ? 'text' : 'password'"
+                  class="form-control mt-3"
+                  placeholder="Gammalt lösenord" id="changePassword">
+                <span class="input-group-append mt-3">
+                   <span class="input-group-text">
+                     <i class="fa" [ngClass]="{'fa-eye-slash': !fieldTextType1, 'fa-eye': fieldTextType1}" (click)="toggleFieldTextType(1)"></i>
+                  </span>
+                </span>
+              </div>
               <div *ngIf="isOldPasswordWrong">
                 Felaktigt lösenord.
               </div>
-              <input
-                [ngClass]="{'invalid-input': this.passform.get('newpassword').invalid && this.isPassSaveButtonClicked}"
-                formControlName="newpassword" autocomplete="off" type="password" class="form-control mt-3"
-                placeholder="Nytt lösenord">
-              <input
-                [ngClass]="{'invalid-input': this.passform.get('newpasswordrepeat').invalid && this.isPassSaveButtonClicked || this.isPasswordsNotMatching}"
-                formControlName="newpasswordrepeat" autocomplete="off" type="password" class="form-control mt-3"
-                placeholder="Upprepa lösenord">
+              <div class="input-group">
+                <input
+                  [ngClass]="{'invalid-input': this.passform.get('newpassword').invalid && this.isPassSaveButtonClicked}"
+                  formControlName="newpassword" autocomplete="off" [type]="fieldTextType2 ? 'text' : 'password'" class="form-control mt-3"
+                  placeholder="Nytt lösenord">
+                <span class="input-group-append mt-3">
+                   <span class="input-group-text">
+                     <i class="fa" [ngClass]="{'fa-eye-slash': !fieldTextType2, 'fa-eye': fieldTextType2}" (click)="toggleFieldTextType(2)"></i>
+                  </span>
+                </span>
+              </div>
+              <div class="input-group">
+                <input
+                  [ngClass]="{'invalid-input': this.passform.get('newpasswordrepeat').invalid && this.isPassSaveButtonClicked || this.isPasswordsNotMatching}"
+                  formControlName="newpasswordrepeat" autocomplete="off" [type]="fieldTextType3 ? 'text' : 'password'" class="form-control mt-3"
+                  placeholder="Upprepa lösenord">
+                <span class="input-group-append mt-3">
+                   <span class="input-group-text">
+                     <i class="fa" [ngClass]="{'fa-eye-slash': !fieldTextType3, 'fa-eye': fieldTextType3}" (click)="toggleFieldTextType(3)"></i>
+                  </span>
+                </span>
+              </div>
               <div *ngIf="isPasswordsNotMatching">
                 Lösenordet matchar inte.
               </div>

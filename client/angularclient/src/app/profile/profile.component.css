@@ -23,20 +23,28 @@ img {
   border: 1px solid #ff5e5e;
 }
 
-.successgreen{
+.successgreen {
   color: #2dcf00;
 }
 
-.errorred{
- color: #ff5e5e;
+.errorred {
+  color: #ff5e5e;
 }
 
-.background{
+.background {
   background-image: url("src/assets/images/M5.jpg") !important;
   background-repeat: repeat;
   background-color: #ffffff;
 }
 
-.backgroundblur{
+.backgroundblur {
   backdrop-filter: blur(50px);
+}
+
+.input-group-append {
+  height: 38px;
+}
+
+i {
+  width: 20px;
 }

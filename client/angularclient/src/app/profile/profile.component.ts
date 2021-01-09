@@ -29,6 +29,9 @@ export class ProfileComponent implements OnInit {
   subscrip: Subscription;
   response: Response;
   profilepicErrorMessage = "";
+  fieldTextType1: boolean;
+  fieldTextType2: boolean;
+  fieldTextType3: boolean;
 
 
   constructor(private userService: UserService,
@@ -146,5 +149,15 @@ export class ProfileComponent implements OnInit {
           });
         }
       });
+  }
+
+  toggleFieldTextType(id: number) {
+    if (id == 1) {
+      this.fieldTextType1 = !this.fieldTextType1;
+    } else if (id == 2) {
+      this.fieldTextType2 = !this.fieldTextType2;
+    } else {
+      this.fieldTextType3 = !this.fieldTextType3;
+    }
   }
 }
