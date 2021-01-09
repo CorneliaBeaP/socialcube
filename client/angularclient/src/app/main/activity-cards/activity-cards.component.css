@@ -21,6 +21,11 @@
   border-bottom-left-radius: 15px;
 }
 
+.accept:hover {
+  color: green;
+  background-color: #f5f7f5;
+}
+
 .edit:hover {
   color: #1f8fff;
 }
@@ -28,11 +33,6 @@
 .decline {
   margin-right: 0;
   border-bottom-right-radius: 15px;
-}
-
-.accept:hover {
-  color: green;
-  background-color: #f5f7f5;
 }
 
 .decline:hover {
@@ -70,11 +70,6 @@ img {
 .declined:hover {
   background-color: rgba(181, 5, 5, 0.4) !important;
   color: rgba(122, 24, 2, 0.4) !important;
-}
-
-.createdByAndDeclined {
-  color: yellow !important;
-  background: yellow !important;
 }
 
 .cancelled {
