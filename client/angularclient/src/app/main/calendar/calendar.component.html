@@ -1,1 +1,35 @@
-<p>calendar works!</p>
+<div class="glassbox m-4 mt-5 p-4">
+  Hej {{user.name}}!
+  <div *ngIf="activitiesThisMonth">
+    <div *ngIf="activitiesThisMonth.length>0">
+      Här är dina aktiviteter för {{getNameOfMonth()}}:
+      <div *ngFor="let activity of activitiesThisMonth">
+        <div class="activitycard mb-4 m-1 mt-5 pt-2">
+          <div class="row">
+            <div class="col">
+              <h5>{{activity.activitytype}}</h5>
+            </div>
+            <div class="col">
+              <h5 class="text-right"><i class="far fa-calendar-alt"></i> {{activity.activitydate[0]}}-<span
+                *ngIf="activity.activitydate[1]<10">0</span>{{activity.activitydate[1]}}-<span
+                *ngIf="activity.activitydate[2]<10">0</span>{{activity.activitydate[2]}}</h5>
+            </div>
+          </div>
+          <div class="row">
+            <div class="col">
+              <h6>{{activity.locationname}} - {{activity.locationaddress}}</h6>
+            </div>
+            <div class="col">
+              <h6 class="text-right"><i class="far fa-clock"></i> {{activity.activitydate[3]}}:<span
+                *ngIf="activity.activitydate[4]<10">0</span>{{activity.activitydate[4]}}</h6>
+            </div>
+          </div>
+          <div class="card-text">{{activity.descriptionsocu}}</div>
+        </div>
+      </div>
+    </div>
+    <div *ngIf="activitiesThisMonth.length<1">Det finns inga aktiviteter för {{getNameOfMonth()}} just nu som du tackat
+      ja till.
+    </div>
+  </div>
+</div>

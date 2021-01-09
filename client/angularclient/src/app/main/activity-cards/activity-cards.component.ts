@@ -4,7 +4,7 @@ import {ActivityService} from "../../services/activity.service";
 import {AuthService} from "../../services/auth.service";
 import {Subscription} from "rxjs";
 import {Usersocu} from "../../classes/usersocu";
-import {ExpiredPipe} from "../../helpers/expired.pipe";
+import {ExpiredPipe} from "../../helpers/pipes/expired.pipe";
 import {NgbModal} from "@ng-bootstrap/ng-bootstrap";
 import {EditModalComponent} from "./edit-modal/edit-modal.component";
 import {UserService} from "../../services/user.service";

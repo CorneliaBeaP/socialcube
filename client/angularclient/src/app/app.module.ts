@@ -28,10 +28,12 @@ import { StartredirecterComponent } from './startredirecter/startredirecter.comp
 import {MatTooltipModule} from "@angular/material/tooltip";
 import { CurrentActivitiesComponent } from './main/current-activities/current-activities.component';
 import {MatExpansionModule} from "@angular/material/expansion";
-import { ExpiredPipe } from './helpers/expired.pipe';
+import { ExpiredPipe } from './helpers/pipes/expired.pipe';
 import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
 import { EditModalComponent } from './main/activity-cards/edit-modal/edit-modal.component';
 import { CurrentActivityComponent } from './main/current-activities/current-activity/current-activity.component';
+import { CurrentmonthPipe } from './helpers/pipes/currentmonth.pipe';
+import { CancelledPipe } from './helpers/pipes/cancelled.pipe';
 
 
 @NgModule({
@@ -53,7 +55,9 @@ import { CurrentActivityComponent } from './main/current-activities/current-acti
     CurrentActivitiesComponent,
     ExpiredPipe,
     EditModalComponent,
-    CurrentActivityComponent
+    CurrentActivityComponent,
+    CurrentmonthPipe,
+    CancelledPipe
   ],
   imports: [
     BrowserModule,
@@ -70,10 +74,7 @@ import { CurrentActivityComponent } from './main/current-activities/current-acti
     MatExpansionModule,
     NgbModule
   ],
-  providers: [UserService, AuthService, ExpiredPipe,
-    // {provide: HTTP_INTERCEPTORS, useClass: JwtInterceptor, multi: true},
-    // {provide: HTTP_INTERCEPTORS, useClass: ErrorInterceptor, multi: true}
-    ],
+  providers: [UserService, AuthService, ExpiredPipe, CurrentmonthPipe, CancelledPipe],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

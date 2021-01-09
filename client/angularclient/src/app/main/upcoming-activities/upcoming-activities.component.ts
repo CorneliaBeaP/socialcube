@@ -2,7 +2,7 @@ import {Component, Input, OnInit} from '@angular/core';
 import {ActivityService} from "../../services/activity.service";
 import {Activity} from "../../classes/activity";
 import {AuthService} from "../../services/auth.service";
-import {ExpiredPipe} from "../../helpers/expired.pipe";
+import {ExpiredPipe} from "../../helpers/pipes/expired.pipe";
 import {Usersocu} from "../../classes/usersocu";
 
 @Component({

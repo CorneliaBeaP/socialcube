@@ -5,7 +5,7 @@ import {Subscription} from "rxjs";
 import {UserService} from "../services/user.service";
 import {Activity} from "../classes/activity";
 import {ActivityService} from "../services/activity.service";
-import {ExpiredPipe} from "../helpers/expired.pipe";
+import {ExpiredPipe} from "../helpers/pipes/expired.pipe";
 
 @Component({
   selector: 'app-main',

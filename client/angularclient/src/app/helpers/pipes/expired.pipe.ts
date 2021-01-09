@@ -1,5 +1,5 @@
 import { Pipe, PipeTransform } from '@angular/core';
-import {Activity} from "../classes/activity";
+import {Activity} from "../../classes/activity";
 
 @Pipe({
   name: 'expired'

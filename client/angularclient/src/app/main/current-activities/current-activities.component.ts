@@ -5,7 +5,7 @@ import {AuthService} from "../../services/auth.service";
 import {Usersocu} from "../../classes/usersocu";
 import {Activity} from "../../classes/activity";
 import {Subscription} from "rxjs";
-import {ExpiredPipe} from "../../helpers/expired.pipe";
+import {ExpiredPipe} from "../../helpers/pipes/expired.pipe";
 
 @Component({
   selector: 'app-current-activities',
@@ -14,7 +14,7 @@ import {ExpiredPipe} from "../../helpers/expired.pipe";
 })
 export class CurrentActivitiesComponent implements OnInit, OnDestroy {
 
-  showCurrentActivities = true;
+  showCurrentActivities = false;
   currentActivities: Activity[];
   @Input('user') user: Usersocu;
   subscription: Subscription;
