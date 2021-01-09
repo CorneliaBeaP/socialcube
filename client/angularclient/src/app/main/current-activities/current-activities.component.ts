@@ -14,10 +14,11 @@ import {ExpiredPipe} from "../../helpers/expired.pipe";
 })
 export class CurrentActivitiesComponent implements OnInit, OnDestroy {
 
-  showCurrentActivities = false;
+  showCurrentActivities = true;
   currentActivities: Activity[];
   @Input('user') user: Usersocu;
   subscription: Subscription;
+
 
   constructor(private activityService: ActivityService,
               private userService: UserService,

@@ -31,6 +31,7 @@ import {MatExpansionModule} from "@angular/material/expansion";
 import { ExpiredPipe } from './helpers/expired.pipe';
 import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
 import { EditModalComponent } from './main/activity-cards/edit-modal/edit-modal.component';
+import { CurrentActivityComponent } from './main/current-activities/current-activity/current-activity.component';
 
 
 @NgModule({
@@ -51,7 +52,8 @@ import { EditModalComponent } from './main/activity-cards/edit-modal/edit-modal.
     StartredirecterComponent,
     CurrentActivitiesComponent,
     ExpiredPipe,
-    EditModalComponent
+    EditModalComponent,
+    CurrentActivityComponent
   ],
   imports: [
     BrowserModule,

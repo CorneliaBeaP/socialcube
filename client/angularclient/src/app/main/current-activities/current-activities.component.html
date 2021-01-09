@@ -2,27 +2,9 @@
   *ngIf="!showCurrentActivities" class="fas fa-angle-right"></i><i *ngIf="showCurrentActivities"
                                                                    class="fas fa-angle-down"></i></h4>
 <div *ngIf="showCurrentActivities">
+  <div class="m-3">Här hittar du samtliga skapade aktiviteter som ännu ej varit. Har du tackat nej till event kan du om du ångrar dig därför tacka ja till en aktivitet här.</div>
   <div class="m-1" *ngFor="let activity of currentActivities">
-    <mat-accordion>
-      <mat-expansion-panel>
-        <mat-expansion-panel-header>
-          <mat-panel-title>
-            {{activity.activitytype}}
-          </mat-panel-title>
-          <mat-panel-description class="right-aligned">
-            <i class="far fa-calendar-alt mr-2 mt-1"></i>
-            <div> {{activity.activitydate[0]}}-<span *ngIf="activity.activitydate[1]<10">0</span>{{activity.activitydate[1]}}-<span *ngIf="activity.activitydate[2]<10">0</span>{{activity.activitydate[2]}}
-            </div>
-          </mat-panel-description>
-        </mat-expansion-panel-header>
-        <div class="text-right">
-          <i class="far fa-clock ml-2 mr-2 mt-1"></i> {{activity.activitydate[3]}}:<span
-          *ngIf="activity.activitydate[4]<10">0</span>{{activity.activitydate[4]}}
-        </div>
-        <div>{{activity.locationname}} - {{activity.locationaddress}}</div>
-        <div>{{activity.descriptionsocu}}</div>
-      </mat-expansion-panel>
-    </mat-accordion>
+    <app-current-activity [activity]="activity"></app-current-activity>
   </div>
   <div *ngIf="!currentActivities">
     Här kommer roliga aktiviteter att visas!

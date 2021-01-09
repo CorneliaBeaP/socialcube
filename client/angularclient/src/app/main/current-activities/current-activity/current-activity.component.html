@@ -1,0 +1,29 @@
+<mat-accordion>
+  <mat-expansion-panel>
+    <mat-expansion-panel-header>
+      <mat-panel-title>
+        {{activity.activitytype}}
+      </mat-panel-title>
+      <mat-panel-description class="right-aligned">
+        <i class="far fa-calendar-alt mr-2 mt-1"></i>
+        <div> {{activity.activitydate[0]}}-<span
+          *ngIf="activity.activitydate[1]<10">0</span>{{activity.activitydate[1]}}-<span
+          *ngIf="activity.activitydate[2]<10">0</span>{{activity.activitydate[2]}}
+        </div>
+      </mat-panel-description>
+    </mat-expansion-panel-header>
+    <div class="text-right">
+      <i class="far fa-clock ml-2 mr-2 mt-1"></i> {{activity.activitydate[3]}}:<span
+      *ngIf="activity.activitydate[4]<10">0</span>{{activity.activitydate[4]}}
+    </div>
+    <div>{{activity.locationname}} - {{activity.locationaddress}}</div>
+    <div>{{activity.descriptionsocu}}</div>
+    <div class="mt-2">
+      <div *ngIf="isAttended">Du har tackat ja till detta event.</div>
+      <div *ngIf="!isAttended">
+        <button type="button" class="mt-2 btn btn-light float-right" (click)="attendActivity()">Tacka ja</button>
+      </div>
+    </div>
+
+  </mat-expansion-panel>
+</mat-accordion>

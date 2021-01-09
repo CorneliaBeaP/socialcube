@@ -3,6 +3,9 @@ import {Usersocu} from "../classes/usersocu";
 import {AuthService} from "../services/auth.service";
 import {Subscription} from "rxjs";
 import {UserService} from "../services/user.service";
+import {Activity} from "../classes/activity";
+import {ActivityService} from "../services/activity.service";
+import {ExpiredPipe} from "../helpers/expired.pipe";
 
 @Component({
   selector: 'app-main',
@@ -13,10 +16,13 @@ export class MainComponent implements OnInit, OnDestroy {
 
   user: Usersocu;
   subscription: Subscription;
+  attendedActivities: Activity[];
 
 
   constructor(private authService: AuthService,
-              private userService: UserService) {
+              private userService: UserService,
+              private activityService: ActivityService,
+              private expiredPipe: ExpiredPipe) {
     this.getLoggedInUser();
   }
 
@@ -27,8 +33,16 @@ export class MainComponent implements OnInit, OnDestroy {
     this.subscription = this.userService.getUser(this.authService.getToken()).subscribe((data) => {
       let data2 = JSON.stringify(data);
       this.user = JSON.parse(data2);
+      this.getAttendedActivities();
     }, error => {
       this.authService.logout();
+    });
+  }
+
+  getAttendedActivities() {
+   this.subscription = this.activityService.getattendedActivities(this.user.token).subscribe(data => {
+      this.attendedActivities =this.expiredPipe.transform(data);
+     console.log(data);
     });
   }
 
