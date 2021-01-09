@@ -119,7 +119,7 @@ public class UserService {
     }
 
     public void saveImage(MultipartFile imagefile, Long userid) throws Exception {
-        String folder = "C:\\Users\\corne\\OneDrive\\Dokument\\SocialCube\\Kod\\IntelliJ\\client\\angularclient\\src\\assets\\ProfilePictures\\";
+        String folder = "client/angularclient/src/assets/ProfilePictures/";
         byte[] bytes = imagefile.getBytes();
         String fileName = userid.toString();
         Path path = Paths.get(folder + fileName + ".png");
@@ -131,8 +131,8 @@ public class UserService {
     }
 
     public void copyDefaultPictureForNewUser(long id) {
-        File source = new File("C:\\Users\\corne\\OneDrive\\Dokument\\SocialCube\\Kod\\IntelliJ\\client\\angularclient\\src\\assets\\ProfilePictures\\default.png");
-        File newFile = new File("C:\\Users\\corne\\OneDrive\\Dokument\\SocialCube\\Kod\\IntelliJ\\client\\angularclient\\src\\assets\\ProfilePictures\\" + id + ".png");
+        File source = new File("client/angularclient/src/assets/ProfilePictures/default.png");
+        File newFile = new File("client/angularclient/src/assets/ProfilePictures/" + id + ".png");
         try {
             Files.copy(source.toPath(), newFile.toPath());
         } catch (Exception e) {
@@ -141,7 +141,7 @@ public class UserService {
     }
 
     public void deleteProfilePicture(Long id, Boolean isUserRemoved) {
-        String folder = "C:\\Users\\corne\\OneDrive\\Dokument\\SocialCube\\Kod\\IntelliJ\\client\\angularclient\\src\\assets\\ProfilePictures\\";
+        String folder = "client/angularclient/src/assets/ProfilePictures/";
         String fileName = id.toString() + ".png";
         Path path = Paths.get(folder + fileName);
         try {
