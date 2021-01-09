@@ -39,16 +39,15 @@ export class ActivityService {
     }));
   }
 
-  public cancelActivity(id: number){
+  public cancelActivity(id: number) {
     return this.http.get(`http://localhost:8080/api/activity/cancel/${id}`).pipe(map(data => {
       let data2 = JSON.stringify(data);
       return JSON.parse(data2);
     }));
   }
 
-  public attendActivity(userid: number, activityid: number) {
-    let info = [userid, activityid];
-    return this.http.post('http://localhost:8080/api/activity/attendactivity', info).subscribe(data => {
+  public attendActivity(token: string, activityid: number) {
+    return this.http.get(`http://localhost:8080/api/activity/attendactivity/${token}/${activityid}`).subscribe(data => {
       console.log(data);
     });
   }
@@ -79,6 +78,12 @@ export class ActivityService {
       let data2 = JSON.stringify(data);
       return JSON.parse(data2);
     }));
+  }
+
+  public attendDeclinedActivity(token: string, activityid: number) {
+    return this.http.get(`http://localhost:8080/api/activity/attenddeclined/${token}/${activityid}`).subscribe(data => {
+      console.log(data);
+    });
   }
 
   public declineActivity(userid: number, activityid: number) {

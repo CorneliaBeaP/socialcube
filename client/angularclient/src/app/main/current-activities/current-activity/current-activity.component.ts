@@ -17,6 +17,7 @@ export class CurrentActivityComponent implements OnInit, OnDestroy {
   attendedActivities: Activity[];
   declinedActivities: Activity[];
   isAttended = false;
+  isDeclined = false;
 
   constructor(private activityService: ActivityService,
               private authService: AuthService) {
@@ -43,18 +44,25 @@ export class CurrentActivityComponent implements OnInit, OnDestroy {
   }
 
   isActivityDeclined() {
+
     this.subscription = this.activityService.getDeclinedActivities(this.authService.getToken()).subscribe((data) => {
       let data2 = JSON.stringify(data);
       this.declinedActivities = JSON.parse(data2);
       this.declinedActivities.forEach(a => {
         if (a.id == this.activity.id) {
+          this.isDeclined = true;
         }
       });
     });
   }
 
-  attendActivity(){
-    console.log('attending');
+  attendActivity() {
+    if(this.isDeclined){
+      this.subscription = this.activityService.attendDeclinedActivity(this.authService.getToken(), this.activity.id);
+    }else {
+      this.subscription = this.activityService.attendActivity(this.authService.getToken(), this.activity.id);
+    }
+    location.reload();
   }
 
   ngOnDestroy(): void {

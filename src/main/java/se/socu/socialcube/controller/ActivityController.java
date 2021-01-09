@@ -8,6 +8,7 @@ import se.socu.socialcube.entities.Response;
 import se.socu.socialcube.service.ActivityService;
 import se.socu.socialcube.service.UserService;
 
+import javax.websocket.server.PathParam;
 import java.io.IOException;
 import java.util.ArrayList;
 
@@ -39,11 +40,14 @@ public class ActivityController {
         return activityService.updateActivity(activityDTO);
     }
 
-    @PostMapping(path = "/api/activity/attendactivity")
-    public Response attendActivity(@RequestBody String[] info) {
-        long userid = Long.parseLong(info[0]);
-        long activityid = Long.parseLong(info[1]);
-        return activityService.attendActivity(userid, activityid);
+    @GetMapping(path = "/api/activity/attendactivity/{token}/{activityid}")
+    public Response attendActivity(@PathVariable String token, @PathVariable long activityid) {
+        return activityService.attendActivity(userService.getUserIDFromJWT(token), activityid);
+    }
+
+    @GetMapping(path = "api/activity/attenddeclined/{token}/{activityid}")
+    public Response attendDeclinedActivity(@PathVariable String token, @PathVariable long activityid){
+        return activityService.attendDeclinedActivity(userService.getUserIDFromJWT(token), activityid);
     }
 
     @GetMapping(path = "/api/activity/attendedactivities/{token}")

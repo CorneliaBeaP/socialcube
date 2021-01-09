@@ -100,11 +100,11 @@ public class ActivityService {
                 List<UserSocu> decliners = userRepository.findAllDeclinersByActivityId(activity.get().getId());
                 decliners.add(userSocu.get());
                 activity.get().setDecliners(decliners);
-                try{
+                try {
                     activityRepository.save(activity.get());
                     response.setStatus("OK");
                     response.setMessage("Databasen uppdaterad för aktivitetsid " + activityID);
-                }catch (Exception e){
+                } catch (Exception e) {
                     e.printStackTrace();
                     response.setStatus("ERROR");
                     response.setMessage("Ett fel har uppstått");
@@ -138,6 +138,28 @@ public class ActivityService {
             response.setStatus("ERROR");
             response.setMessage("Kunde inte hitta aktiviteten.");
         }
+        return response;
+    }
+
+    public Response attendDeclinedActivity(long userid, long activityid) {
+        Response response = new Response();
+        Optional<Activity> activity = activityRepository.findById(activityid);
+        Optional<UserSocu> userSocu = userRepository.findById(userid);
+        if (activity.isPresent()) {
+            if (userSocu.isPresent()) {
+                List<UserSocu> decliners = userRepository.findAllDeclinersByActivityId(activityid);
+                response = attendActivity(userid, activityid);
+                decliners.remove(userSocu.get());
+                activity.get().setDecliners(decliners);
+            } else {
+                response.setStatus("ERROR");
+                response.setMessage("Kunde inte hitta användaren.");
+            }
+        } else {
+            response.setStatus("ERROR");
+            response.setMessage("Kunde inte hitta aktiviteten.");
+        }
+
         return response;
     }
 
