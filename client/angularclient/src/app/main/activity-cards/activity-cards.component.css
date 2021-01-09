@@ -1,13 +1,17 @@
 .card {
   border-radius: 20px 20px 0 20px;
-  background-color: rgba(255, 255, 255, 0.7);
+  background-color: rgba(255, 255, 255, 0.9);
   border: none;
+}
+
+.cardsocu {
+  margin-top: 100px !important;
 }
 
 .choicebutton {
   margin: 4px 2px 2px;
   width: 50px;
-  background-color: rgba(255, 255, 255, 0.7);
+  background-color: rgba(255, 255, 255, 0.9);
   border-style: none;
   outline: none;
   color: #686b6e;
@@ -48,31 +52,37 @@ img {
   width: 30px;
 }
 
-.choiceMade {
-  background-color: rgba(247, 242, 255, 0.4) !important;
-  color: #93a1ad!important;
+.accepted {
+  background-color: rgba(33, 221, 255, 0.4) !important;
+  color: rgba(0, 125, 148, 0.4) !important;
 }
 
-.choiceMade:hover {
-  background-color: rgba(247, 242, 255, 0.4) !important;
-  color: #93a1ad!important;
+.accepted:hover {
+  background-color: rgba(33, 221, 255, 0.4) !important;
+  color: rgba(0, 125, 148, 0.4) !important;
 }
 
-.attendingcard {
-  background: rgba(247, 242, 255, 0.7) !important;
+.declined {
+  background-color: rgba(181, 5, 5, 0.4) !important;
+  color: rgba(122, 24, 2, 0.4) !important;
 }
 
-.createdByAndDeclined{
-color: yellow !important;
+.declined:hover {
+  background-color: rgba(181, 5, 5, 0.4) !important;
+  color: rgba(122, 24, 2, 0.4) !important;
+}
+
+.createdByAndDeclined {
+  color: yellow !important;
   background: yellow !important;
 }
 
-.cancelled{
+.cancelled {
   background: rgba(240, 182, 177, 0.5) !important;
   color: grey !important;
 }
 
-.cancelled:hover{
+.cancelled:hover {
   background: rgba(240, 182, 177, 0.5) !important;
   color: grey !important;
 }

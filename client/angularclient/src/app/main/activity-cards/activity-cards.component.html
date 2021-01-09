@@ -1,16 +1,16 @@
-<div class="m-5" *ngFor="let activity of activities">
+<div class="m-5 cardsocu" *ngFor="let activity of activities">
   <div class="row" *ngIf="!activity.cancelled">
     <div class="col">
       <img class="ml-3"  [src]="getProfilePicture(activity.createdBy.id)" alt="Skapad av {{activity.createdBy.name}}"
            [matTooltip]="activity.createdBy.name">
     </div>
-    <div class="col text-right mr-2" >
-    <span *ngFor="let attendee of activity.attendees">
+    <div class="col text-right mr-1">
+    <span *ngFor="let attendee of activity.attendees" class="mr-1">
       <img [src]="getProfilePicture(attendee.id)" alt="{{attendee.name}}" [matTooltip]="attendee.name">
     </span>
     </div>
   </div>
-  <div class="card" [ngClass]="{'attendingcard' : isUserAttending(user.id, activity.id), 'cancelled': activity.cancelled}">
+  <div class="card" [ngClass]="{'cancelled': activity.cancelled}">
     <div class="card-body">
       <div class="row">
         <div class="col">
@@ -37,14 +37,14 @@
   </div>
   <div class="float-right">
     <button [attr.disabled]="isAttendButtonDisabled(activity)? true : null"
-            [ngClass]="{'choiceMade' : isAttendButtonDisabled(activity), 'cancelled' : activity.cancelled}" type="button" class="accept choicebutton"
+            [ngClass]="{'accepted' : isAttendButtonDisabled(activity), 'cancelled' : activity.cancelled}" type="button" class="accept choicebutton"
             (click)="attendEvent(activity.id)"><i class="fas fa-check"></i>
     </button>
     <button [attr.disabled]="isEditButtonDisabled(activity)? true : null"
       *ngIf="activity.createdbyid==user.id" type="button" class="choicebutton edit"
-            [ngClass]="{'attendingcard' : isUserAttending(user.id, activity.id), 'cancelled' : activity.cancelled}" (click)="openEditModal(activity)"><i class="fas fa-pen"></i></button>
+            [ngClass]="{'cancelled' : activity.cancelled}" (click)="openEditModal(activity)"><i class="fas fa-pen"></i></button>
     <button [attr.disabled]="isDeclineButtonDisabled(activity)? true : null"
-      [ngClass]="{'attendingcard' : isUserAttending(user.id, activity.id), 'choiceMade' : isDeclineButtonDisabled(activity), 'cancelled' : activity.cancelled}"
+      [ngClass]="{'declined' : isDeclineButtonDisabled(activity), 'cancelled' : activity.cancelled}"
       type="button" class="decline choicebutton" (click)="declineEvent(activity)"><i class="fas fa-times"></i>
     </button>
   </div>
