@@ -11,7 +11,6 @@ export class ErrorpageComponent implements OnInit, OnDestroy {
   queryparam: string;
   subscription: Subscription;
   errormessage = 'Ojdå! Något gick fel.';
-  errorundermessage = '';
 
   constructor(private route: ActivatedRoute) {
   }
@@ -26,7 +25,6 @@ export class ErrorpageComponent implements OnInit, OnDestroy {
   getErrorMessage() {
     if (this.queryparam == '/admin') {
       this.errormessage = 'Du har inte behörighet att komma åt denna sida.';
-      this.errorundermessage = 'Tycker du ändå att du har det?';
     }
   }
 
