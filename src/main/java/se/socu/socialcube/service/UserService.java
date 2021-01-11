@@ -47,6 +47,7 @@ public class UserService {
         userDTO.setDepartment(userSocu.getDepartment());
         userDTO.setEmploymentnumber(userSocu.getEmploymentnumber());
         userDTO.setCompanyorganizationnumber(userSocu.getCompany().getOrganizationnumber());
+        userDTO.setCompanyname(userSocu.getCompany().getName());
         return userDTO;
     }
 

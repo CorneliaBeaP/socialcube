@@ -15,6 +15,7 @@ public class UserDTO {
     private String department;
     private long companyorganizationnumber;
     private String token;
+    private String companyname;
 
 
     @Override
