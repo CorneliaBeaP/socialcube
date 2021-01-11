@@ -4,10 +4,14 @@
   background-color: #d5dbe3;
   /*background-attachment: fixed;*/
   /*background-size: cover;*/
+  height: 100%;
+  width: 100%;
 }
 
 .main2 {
   backdrop-filter: blur(50px);
+  height: 100%;
+  width: 100%;
 }
 
 
