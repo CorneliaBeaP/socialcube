@@ -31,16 +31,6 @@ public class UserController {
         return userService.getAllUserDTOsForCompany(id);
     }
 
-//    @PostMapping(path = "/api/login", produces = MediaType.APPLICATION_JSON_VALUE)
-//    public UserDTO getAuthenticationStatus(@RequestBody String[] usercredentials) {
-//        UserDTO userDTO = userService.checkIfLoginCredentialsAreCorrectAndGetUser(usercredentials[0], usercredentials[1]);
-//        if (!(userDTO.getEmail() == null)) {
-//            return userDTO;
-//        } else {
-//            return null;
-//        }
-//    }
-
     @PostMapping(path = "/api/users/add", produces = MediaType.APPLICATION_JSON_VALUE, consumes = MediaType.APPLICATION_JSON_VALUE)
     public Response saveNewUser(@RequestBody UserDTO userDTO) {
         System.out.println("Mottagit ny användare");
@@ -49,25 +39,18 @@ public class UserController {
 
     @DeleteMapping("/api/users/delete/{id}")
     public Response deleteUser(@PathVariable Long id) {
-        userService.deleteUser(id);
-        System.out.println("Användare borttagen");
-        return new Response("OK", "Anrop mottaget");
+        System.out.println("Användare med id " + id + " är borttagen.");
+        return userService.deleteUser(id);
     }
 
     @PostMapping(value = "/api/users/add/image/{id}")
-    public Response addProfilePicture(@RequestParam("name") MultipartFile multipartFile, @PathVariable Long id) {
-        try {
-            userService.saveImage(multipartFile, id);
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
-        return new Response("OK", "Anrop mottaget");
+    public Response addProfilePicture(@RequestParam("name") MultipartFile multipartFile, @PathVariable Long id) throws Exception {
+        return userService.saveImage(multipartFile, id);
     }
 
     @GetMapping("/api/users/delete/image/{id}")
     public Response deleteProfilePicture(@PathVariable Long id) {
-        userService.deleteProfilePicture(id, false);
-        return new Response("OK", "Anrop mottaget");
+       return userService.deleteProfilePicture(id, false);
     }
 
     @PutMapping(value = "/api/users/password/{token}", consumes = MediaType.APPLICATION_JSON_VALUE)
@@ -82,24 +65,24 @@ public class UserController {
 
     @PostMapping(path = "/api/login", produces = MediaType.APPLICATION_JSON_VALUE)
     public UserDTO verifyCredentialsAndSendToken(@RequestBody String[] usercredentials) throws IOException {
-        System.out.println(userService.checkIfLoginCredentialsAreCorrectAndGetUser(usercredentials[0], usercredentials[1]));
+        System.out.println(userService.checkIfLoginCredentialsAreCorrectAndGetUser(usercredentials[0], usercredentials[1]).getName() + " har loggat in");
         return userService.checkIfLoginCredentialsAreCorrectAndGetUser(usercredentials[0], usercredentials[1]);
     }
 
     @GetMapping(value = "/api/user/{token}")
     public UserDTO getUserDTOFromJWT(@PathVariable String token) throws IOException {
-        System.out.println(userService.getUserFromJWT(token));
+        System.out.println("Info om " + userService.getUserFromJWT(token).getName() + " har skickats");
         return userService.getUserFromJWT(token);
     }
 
     @GetMapping(value = "/api/getuserid/{token}")
-    public Response getUserIDfromJWT(@PathVariable String token){
+    public Response getUserIDfromJWT(@PathVariable String token) {
         Response response = new Response();
         long id = userService.getUserIDFromJWT(token);
         response.setMessage(Long.toString(id));
-        if(id>0){
+        if (id > 0) {
             response.setStatus("OK");
-        }else {
+        } else {
             response.setStatus("ERROR");
         }
         return response;

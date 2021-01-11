@@ -108,11 +108,12 @@ public class UserService {
         userSocu.setEmail(userSocu.getEmail().toLowerCase());
         String password = generatePassword(11);
         userSocu.setPassword(passwordEncoder.encode(password));
-        try{
+        try {
             userRepository.save(userSocu);
             response.setStatus("OK");
-            response.setMessage(password);;
-        }catch (Exception e){
+            response.setMessage(password);
+            ;
+        } catch (Exception e) {
             e.printStackTrace();
             response.setStatus("ERROR");
             response.setMessage("Kunde inte lägga till användare");
@@ -122,24 +123,43 @@ public class UserService {
         return response;
     }
 
-    public void deleteUser(Long id) {
+    public Response deleteUser(Long id) {
+        Response response = new Response();
         Optional<UserSocu> userSocu = userRepository.findById(id);
         if (userSocu.isPresent()) {
-            userRepository.delete(userSocu.get());
-            deleteProfilePicture(id, true);
+            try {
+                userRepository.delete(userSocu.get());
+                deleteProfilePicture(id, true);
+                response.setStatus("OK");
+                response.setMessage("Användare borttagen");
+            } catch (Exception e) {
+                e.printStackTrace();
+                response.setStatus("ERROR");
+                response.setMessage("Användare kunde inte raderas");
+            }
+        } else {
+            response.setStatus("ERROR");
+            response.setMessage("Kunde int hitta användare");
         }
+        return response;
     }
 
-    public void saveImage(MultipartFile imagefile, Long userid) throws Exception {
-        String folder = "client/angularclient/src/assets/ProfilePictures/";
-        byte[] bytes = imagefile.getBytes();
-        String fileName = userid.toString();
-        Path path = Paths.get(folder + fileName + ".png");
+    public Response saveImage(MultipartFile imagefile, Long userid) throws Exception {
+        Response response = new Response();
         try {
+            String folder = "client/angularclient/src/assets/ProfilePictures/";
+            byte[] bytes = imagefile.getBytes();
+            String fileName = userid.toString();
+            Path path = Paths.get(folder + fileName + ".png");
             Files.write(path, bytes);
+            response.setStatus("OK");
+            response.setMessage("Bild sparad");
         } catch (Exception e) {
             e.printStackTrace();
+            response.setStatus("ERROR");
+            response.setMessage("Kunde inte spara bild");
         }
+        return response;
     }
 
     public void copyDefaultPictureForNewUser(long id) {
@@ -152,18 +172,24 @@ public class UserService {
         }
     }
 
-    public void deleteProfilePicture(Long id, Boolean isUserRemoved) {
+    public Response deleteProfilePicture(Long id, Boolean isUserRemoved) {
+        Response response = new Response();
         String folder = "client/angularclient/src/assets/ProfilePictures/";
         String fileName = id.toString() + ".png";
         Path path = Paths.get(folder + fileName);
         try {
             Files.deleteIfExists(path);
+            response.setStatus("OK");
+            response.setMessage("Bild borttagen");
             if (!isUserRemoved) {
                 copyDefaultPictureForNewUser(id);
             }
         } catch (IOException e) {
             e.printStackTrace();
+            response.setStatus("ERROR");
+            response.setMessage("Kunde inte ta bort bild");
         }
+        return response;
     }
 
     public String generatePassword(int length) {
@@ -244,7 +270,6 @@ public class UserService {
     public UserDTO getUserFromJWT(String token) throws IOException {
         JwtUtil.decodeJWT(token);
         Claims claims = JwtUtil.decodeJWT(token);
-        System.out.println(claims);
         UserDTO dto = new UserDTO();
         if (!claims.getId().isEmpty()) {
             Optional<UserSocu> userSocu = userRepository.findById(Long.parseLong(claims.getId()));

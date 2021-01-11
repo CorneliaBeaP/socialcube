@@ -13,7 +13,6 @@ export class UserListComponent implements OnInit, OnDestroy {
 
   users: Usersocu[];
   subscription: Subscription;
-  deletesub: Subscription;
   @Input('user') user: Usersocu;
 
   constructor(private userService: UserService,
@@ -28,10 +27,8 @@ export class UserListComponent implements OnInit, OnDestroy {
   }
 
   deleteUser(id: number) {
-    console.log('Delete');
-    this.deletesub = this.userService.deleteUser(id).subscribe();
+   this.subscription = this.userService.deleteUser(id).subscribe();
     window.location.reload();
-    this.deletesub.unsubscribe();
   }
 
   ngOnDestroy(): void {

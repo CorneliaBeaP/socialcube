@@ -40,6 +40,7 @@ export class UserService {
   public deleteUser(id: number) {
     return this.http.delete('http://localhost:8080/api/users/delete/' + id).pipe(map(data => {
       let data2 = JSON.stringify(data);
+      console.log(data2);
       return JSON.parse(data2);
     }));
   }
