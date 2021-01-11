@@ -1,5 +1,10 @@
 <div class="glassbox m-4 mt-5 p-4">
   <h4 class="mb-5">Kommande aktiviteter</h4>
+  <div *ngIf="activities">
+    <div *ngIf="!activities.length">
+      Inga aktiviteter just nu.
+    </div>
+  </div>
   <div class="mb-4 m-3 mt-5 pt-2 upcomingbox" *ngFor="let activity of activities">
     <div [ngClass]="{'cancelled' : activity.cancelled}">
       <div class="row">
