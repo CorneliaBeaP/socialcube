@@ -7,7 +7,7 @@ import se.socu.socialcube.DTO.UserDTO;
 import se.socu.socialcube.entities.Company;
 import se.socu.socialcube.entities.Response;
 import se.socu.socialcube.entities.UserSocu;
-import se.socu.socialcube.jwt.JwtUtil;
+import se.socu.socialcube.security.jwt.JwtUtil;
 import se.socu.socialcube.repository.CompanyRepository;
 import se.socu.socialcube.repository.UserRepository;
 

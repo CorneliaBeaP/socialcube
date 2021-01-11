@@ -1,4 +1,4 @@
-package se.socu.socialcube.jwt;
+package se.socu.socialcube.security.jwt;
 
 import java.io.FileInputStream;
 import java.io.IOException;
