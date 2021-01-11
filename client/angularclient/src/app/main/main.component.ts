@@ -42,7 +42,6 @@ export class MainComponent implements OnInit, OnDestroy {
   getAttendedActivities() {
    this.subscription = this.activityService.getattendedActivities(this.user.token).subscribe(data => {
       this.attendedActivities =this.expiredPipe.transform(data);
-     console.log(data);
     });
   }
 
