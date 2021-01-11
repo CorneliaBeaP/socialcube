@@ -69,14 +69,13 @@ export class EditModalComponent implements OnInit, OnDestroy {
     this.errorMessageRSVPDate = '';
     this.errorMessageActivityDate = '';
     if (this.form.invalid || !this.isFormOk()) {
-      console.log(this.form.invalid);
-      console.log(this.isFormOk());
-      console.log(this.errorMessageActivityDate);
-      console.log(this.errorMessageRSVPDate);
-      console.log('invalid');
       return;
     } else {
-      this.copyValuesFromFormAndSaveActivity();
+      if (this.form.dirty) {
+        this.copyValuesFromFormAndSaveActivity()
+      } else {
+        this.activeModal.close();
+      }
     }
   }
 
@@ -128,25 +127,27 @@ export class EditModalComponent implements OnInit, OnDestroy {
     }
 
     //Kontroller för OSA-datum
-    if (this.form.get('rsvpdateyear').value && this.form.get('rsvpdatemonth').value && this.form.get('rsvpdatedate').value) {
-      if (this.form.get('rsvpdateyear').value < today.getFullYear()) {
-        isFormOk = false;
-        this.errorMessageRSVPDate = `OSA-datumet för aktiviteten har redan varit`;
-      } else if (this.form.get('rsvpdateyear').value == today.getFullYear()) {
-        if (this.form.get('rsvpdatemonth').value < (today.getMonth() + 1)) {
+    if (this.form.get('rsvpdateyear').dirty || this.form.get('rsvpdatemonth').dirty || this.form.get('rsvpdatedate').dirty) {
+      if (this.form.get('rsvpdateyear').value && this.form.get('rsvpdatemonth').value && this.form.get('rsvpdatedate').value) {
+        if (this.form.get('rsvpdateyear').value < today.getFullYear()) {
           isFormOk = false;
           this.errorMessageRSVPDate = `OSA-datumet för aktiviteten har redan varit`;
-        } else if (this.form.get('rsvpdatemonth').value == (today.getMonth() + 1)) {
-          if (this.form.get('rsvpdatedate').value < today.getDate()) {
+        } else if (this.form.get('rsvpdateyear').value == today.getFullYear()) {
+          if (this.form.get('rsvpdatemonth').value < (today.getMonth() + 1)) {
             isFormOk = false;
             this.errorMessageRSVPDate = `OSA-datumet för aktiviteten har redan varit`;
+          } else if (this.form.get('rsvpdatemonth').value == (today.getMonth() + 1)) {
+            if (this.form.get('rsvpdatedate').value < today.getDate()) {
+              isFormOk = false;
+              this.errorMessageRSVPDate = `OSA-datumet för aktiviteten har redan varit`;
+            }
           }
         }
-      }
 
-      if ((this.form.get('rsvpdatemonth').value > 12) || (this.form.get('rsvpdatedate').value > 31)) {
-        isFormOk = false;
-        this.errorMessageRSVPDate = 'Felaktigt datum';
+        if ((this.form.get('rsvpdatemonth').value > 12) || (this.form.get('rsvpdatedate').value > 31)) {
+          isFormOk = false;
+          this.errorMessageRSVPDate = 'Felaktigt datum';
+        }
       }
     }
 
