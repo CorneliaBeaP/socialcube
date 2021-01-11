@@ -1,6 +1,7 @@
 package se.socu.socialcube.service;
 
 import io.jsonwebtoken.Claims;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
 import se.socu.socialcube.DTO.UserDTO;
@@ -100,14 +101,25 @@ public class UserService {
         return allUsersDTO;
     }
 
-    public UserSocu saveNewUser(UserDTO userDTO) {
+    public Response saveNewUser(UserDTO userDTO) {
+        Response response = new Response();
+        BCryptPasswordEncoder passwordEncoder = new BCryptPasswordEncoder();
         UserSocu userSocu = convertToUserSocuFromUserDTO(userDTO);
         userSocu.setEmail(userSocu.getEmail().toLowerCase());
-        userSocu.setPassword(generatePassword(11));
-        userRepository.save(userSocu);
+        String password = generatePassword(11);
+        userSocu.setPassword(passwordEncoder.encode(password));
+        try{
+            userRepository.save(userSocu);
+            response.setStatus("OK");
+            response.setMessage(password);;
+        }catch (Exception e){
+            e.printStackTrace();
+            response.setStatus("ERROR");
+            response.setMessage("Kunde inte lägga till användare");
+        }
         Optional<UserSocu> userSocu1 = userRepository.findByEmail(userDTO.getEmail());
         userSocu1.ifPresent(socu -> copyDefaultPictureForNewUser(socu.getId()));
-        return userSocu;
+        return response;
     }
 
     public void deleteUser(Long id) {
@@ -251,10 +263,11 @@ public class UserService {
 
     public UserDTO checkIfLoginCredentialsAreCorrectAndGetUser(String username, String password) throws IOException {
         UserDTO userDTO = new UserDTO();
+        BCryptPasswordEncoder bCryptPasswordEncoder = new BCryptPasswordEncoder();
         if (!(username == null)) {
             Optional<UserSocu> userSocu = userRepository.findByEmail(username.toLowerCase());
             if (userSocu.isPresent()) {
-                if (!(userSocu.get().getEmail().length() < 1) && userSocu.get().getPassword().equals(password)) {
+                if (!(userSocu.get().getEmail().length() < 1) && bCryptPasswordEncoder.matches(password, userSocu.get().getPassword())) {
                     userDTO = convertToUserDTOfromUserSocu(userSocu.get());
                     userDTO.setToken(JwtUtil.createJWT(String.valueOf(userSocu.get().getId()), String.valueOf(userSocu.get().getId()), userSocu.get().getName()));
                 }

@@ -44,11 +44,7 @@ public class UserController {
     @PostMapping(path = "/api/users/add", produces = MediaType.APPLICATION_JSON_VALUE, consumes = MediaType.APPLICATION_JSON_VALUE)
     public Response saveNewUser(@RequestBody UserDTO userDTO) {
         System.out.println("Mottagit ny användare");
-        UserSocu userSocu = userService.saveNewUser(userDTO);
-        Response response = new Response();
-        response.setStatus("OK");
-        response.setMessage(userSocu.getPassword());
-        return response;
+        return userService.saveNewUser(userDTO);
     }
 
     @DeleteMapping("/api/users/delete/{id}")
