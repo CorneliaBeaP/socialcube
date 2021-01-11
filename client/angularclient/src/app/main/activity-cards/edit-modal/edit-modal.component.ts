@@ -108,11 +108,11 @@ export class EditModalComponent implements OnInit, OnDestroy {
     //Kontroller för datum för aktiviteten
     if (this.form.get('activitydateyear').value < today.getFullYear()) {
       isFormOk = false;
-      this.errorMessageActivityDate = `Året för aktiviteten har redan varit`;
+      this.errorMessageActivityDate = `Datumet för aktiviteten har redan varit`;
     } else if (this.form.get('activitydateyear').value == today.getFullYear()) {
       if (this.form.get('activitydatemonth').value < (today.getMonth() + 1)) {
         isFormOk = false;
-        this.errorMessageActivityDate = `Månaden för aktiviteten har redan varit`;
+        this.errorMessageActivityDate = `Datumet för aktiviteten har redan varit`;
       } else if (this.form.get('activitydatemonth').value == (today.getMonth() + 1)) {
         if (this.form.get('activitydatedate').value < today.getDate()) {
           isFormOk = false;
