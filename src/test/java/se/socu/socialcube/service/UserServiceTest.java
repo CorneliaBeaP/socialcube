@@ -9,7 +9,6 @@ import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.web.multipart.MultipartFile;
 import se.socu.socialcube.DTO.UserDTO;
-import se.socu.socialcube.SocialcubeApplication;
 import se.socu.socialcube.entities.Company;
 import se.socu.socialcube.entities.Response;
 import se.socu.socialcube.entities.UserSocu;
@@ -286,22 +285,41 @@ class UserServiceTest {
     }
 
     @Test
-    void getUserDTOById() {
-    }
-
-    @Test
     void getAttendees() {
     }
 
     @Test
-    void getUserFromJWT() {
+    void getUserFromJWT() throws IOException {
+        Optional<UserSocu> userSocu = userRepository.findByEmail("anna.svensson@testcompany.com");
+        String token = JwtUtil.createJWT(String.valueOf(userSocu.get().getId()), String.valueOf(userSocu.get().getId()), userSocu.get().getName());
+        UserDTO userDTO = userService.getUserFromJWT(token);
+        assertEquals("anna.svensson@testcompany.com", userDTO.getEmail());
+        assertEquals(userSocu.get().getId(), userDTO.getId());
+        assertNotNull(userDTO);
     }
 
     @Test
     void getUserIDFromJWT() {
+        Optional<UserSocu> userSocu = userRepository.findByEmail("anna.svensson@testcompany.com");
+        String token = JwtUtil.createJWT(String.valueOf(userSocu.get().getId()), String.valueOf(userSocu.get().getId()), userSocu.get().getName());
+        long id = userService.getUserIDFromJWT(token);
+        assertNotNull(id);
+        assertEquals(userSocu.get().getId(), id);
     }
 
     @Test
-    void checkIfLoginCredentialsAreCorrectAndGetUser() {
+    void checkIfLoginCredentialsAreCorrectAndGetUser() throws IOException {
+        Optional<UserSocu> userSocu = userRepository.findByEmail("anna.svensson@testcompany.com");
+        UserDTO userDTO = userService.checkIfLoginCredentialsAreCorrectAndGetUser("anna.svensson@testcompany.com", "aOpTYjdls");
+        assertNotNull(userDTO);
+        assertEquals(userSocu.get().getName(), "Anna Svensson");
+        assertEquals(userSocu.get().getName(), userDTO.getName());
+
+        UserDTO userDTO1 = userService.checkIfLoginCredentialsAreCorrectAndGetUser("anna.svensson@testcompany.com", "aOpTYj");
+        assertNull(userDTO1.getName());
+        assertNull(userDTO1.getEmail());
+        userDTO1 = userService.checkIfLoginCredentialsAreCorrectAndGetUser("carin@testcompany.com", "aOpTYj");
+        assertNull(userDTO1.getName());
+        assertNull(userDTO1.getEmail());
     }
 }
