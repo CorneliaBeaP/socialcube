@@ -223,21 +223,54 @@ class ActivityServiceTest {
 
     @Test
     void attendActivity() {
-        activityService.attendActivity(userSocuList.get(0).getId(), activityList.get(0).getId());
         Iterable<Activity> activities = repository.findAllAttendedActivitiesByUsersocuId(userSocuList.get(0).getId());
+        assertEquals(0, IterableUtil.sizeOf(activities));
+        activityService.attendActivity(userSocuList.get(0).getId(), activityList.get(0).getId());
+        activities = repository.findAllAttendedActivitiesByUsersocuId(userSocuList.get(0).getId());
         assertEquals(1, IterableUtil.sizeOf(activities));
     }
 
     @Test
     void getAllAttendedActivities() {
+        ArrayList<ActivityDTO> activities = activityService.getAllAttendedActivities(userSocuList.get(0).getId());
+        assertEquals(0, activities.size());
+        activityService.attendActivity(userSocuList.get(0).getId(), activityList.get(0).getId());
+        activities = activityService.getAllAttendedActivities(userSocuList.get(0).getId());
+        assertEquals(1, activities.size());
     }
 
     @Test
     void getAllDeclinedActivities() {
+        ArrayList<ActivityDTO> activities = activityService.getAllDeclinedActivities(userSocuList.get(0).getId());
+        assertEquals(0, activities.size());
+        activityService.declineActivity(activityList.get(0).getId(), userSocuList.get(0).getId());
+        activities = activityService.getAllDeclinedActivities(userSocuList.get(0).getId());
+        assertEquals(1, activities.size());
     }
 
     @Test
     void updateActivity() {
+        Activity activity = activityList.get(0);
+        assertEquals("Fika för att fira av Fia", activity.getDescriptionsocu());
+        ActivityDTO dto = new ActivityDTO();
+        dto.setDescriptionsocu(activity.getDescriptionsocu());
+        dto.setRsvpdate(activity.getRsvpdate());
+        dto.setActivitydate(activity.getActivitydate());
+        dto.setActivitytype(activity.getActivitytype());
+        dto.setCompanyorganizationnumber(activity.getCompany().getOrganizationnumber());
+        dto.setCreatedbyid(activity.getCreatedby().getId());
+        dto.setCreatedBy(userService.convertToUserDTOfromUserSocu(userSocuList.get(0)));
+        dto.setLocationaddress(activity.getLocationaddress());
+        dto.setLocationname(activity.getLocationname());
+        dto.setId(activity.getId());
+        dto.setCreateddate(activity.getCreateddate());
+        dto.setCancelled(activity.isCancelled());
+        assertEquals("Fika för att fira av Fia", dto.getDescriptionsocu());
+
+        dto.setDescriptionsocu("Fika för att fira av fina Fia, jag tar med tårta!");
+        activityService.updateActivity(dto);
+        Optional<Activity> activity1 = repository.findById(activity.getId());
+        assertEquals("Fika för att fira av fina Fia, jag tar med tårta!", activity1.get().getDescriptionsocu());
     }
 
     @Test
