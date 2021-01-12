@@ -178,11 +178,12 @@ public class UserService {
     }
 
     public Response changePassword(String oldpass, String newpass, Long userid) {
+        BCryptPasswordEncoder passwordEncoder = new BCryptPasswordEncoder();
         Response response = new Response();
         Optional<UserSocu> userSocu = userRepository.findById(userid);
         if (userSocu.isPresent()) {
-            if (userSocu.get().getPassword().equals(oldpass)) {
-                userSocu.get().setPassword(newpass);
+            if (passwordEncoder.matches(oldpass, userSocu.get().getPassword())) {
+                userSocu.get().setPassword(passwordEncoder.encode(newpass));
                 userRepository.save(userSocu.get());
                 response.setStatus("OK");
                 response.setMessage("Lösenord ändrat!");
