@@ -55,7 +55,7 @@ class UserServiceTest {
     UserDTO dto;
 
     @BeforeEach
-    void init() throws IOException {
+    void setUp() throws IOException {
         passwordEncoder = new BCryptPasswordEncoder();
         company = new Company(5501010101L, "TestCompany AB");
         socuuser = new UserSocu(Usertype.USER, "Anna Svensson", "anna.svensson@testcompany.com", passwordEncoder.encode("aOpTYjdls"), "A007", "IT-avdelningen", company);
@@ -95,7 +95,7 @@ class UserServiceTest {
     }
 
     @AfterEach
-    void teardown() throws IOException {
+    void tearDown() throws IOException {
         userRepository.deleteAll();
         companyRepository.deleteAll();
         String folder = "client/angularclient/src/assets/ProfilePictures/";
@@ -302,7 +302,7 @@ class UserServiceTest {
     void getUserIDFromJWT() {
         Optional<UserSocu> userSocu = userRepository.findByEmail("anna.svensson@testcompany.com");
         String token = JwtUtil.createJWT(String.valueOf(userSocu.get().getId()), String.valueOf(userSocu.get().getId()), userSocu.get().getName());
-        long id = userService.getUserIDFromJWT(token);
+        Long id = userService.getUserIDFromJWT(token);
         assertNotNull(id);
         assertEquals(userSocu.get().getId(), id);
     }
