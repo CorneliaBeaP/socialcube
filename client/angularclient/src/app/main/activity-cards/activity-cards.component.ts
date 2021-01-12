@@ -52,7 +52,11 @@ export class ActivityCardsComponent implements OnInit, OnDestroy {
   }
 
   attendEvent(activityid: number) {
-    this.activityService.attendActivity(this.authService.getToken(), activityid);
+    if(this.isUserNotAttendingButHaveCreatedEvent(activityid)){
+      this.activityService.attendDeclinedActivity(this.authService.getToken(), activityid);
+    }else{
+      this.activityService.attendActivity(this.authService.getToken(), activityid);
+    }
     location.reload();
   }
 
