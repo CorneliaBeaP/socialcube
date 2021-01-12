@@ -17,7 +17,21 @@
   color: rgba(104, 107, 110, 0.9);
 }
 
+.hidebutton {
+  border-top-left-radius: 15px;
+  border-top-right-radius: 15px;
+  width: 70px;
+  background: rgba(240, 182, 177, 0.5);
+  color: grey;
+  border-style: none;
+  outline: none;
+}
 
+.hidebutton:hover{
+  background: rgba(240, 182, 177, 0.7);
+  color: #5a5b5e;
+
+}
 
 .accept {
   border-bottom-left-radius: 15px;
@@ -79,6 +93,10 @@ img {
   color: grey !important;
 }
 
+.cancelled-card {
+  border-top-right-radius: 0 !important;
+}
+
 .cancelled:hover {
   background: rgba(240, 182, 177, 0.5) !important;
   color: grey !important;
@@ -88,11 +106,12 @@ img {
   background-color: rgba(255, 255, 255, 0.3);
   color: rgba(104, 107, 110, 0.3);
 }
+
 .disabled:hover {
   background-color: rgba(255, 255, 255, 0.3);
   color: rgba(104, 107, 110, 0.3);
 }
 
-body{
+body {
 }
 
