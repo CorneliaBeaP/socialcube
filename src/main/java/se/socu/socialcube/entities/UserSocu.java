@@ -22,7 +22,7 @@ public class UserSocu implements Serializable {
     private String employmentnumber;
     private String department;
 
-    @ManyToOne(fetch = FetchType.LAZY)
+    @ManyToOne(fetch = FetchType.EAGER)
     private Company company;
 
     @OneToMany(cascade = CascadeType.PERSIST, mappedBy = "createdby")
