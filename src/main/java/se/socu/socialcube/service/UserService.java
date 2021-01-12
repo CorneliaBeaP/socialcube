@@ -223,15 +223,6 @@ public class UserService {
         return response;
     }
 
-    public UserDTO getUserDTOById(long id) {
-        UserDTO dto = new UserDTO();
-        Optional<UserSocu> userSocu = userRepository.findById(id);
-        if (userSocu.isPresent()) {
-            dto = convertToUserDTOfromUserSocu(userSocu.get());
-        }
-        return dto;
-    }
-
     public ArrayList<UserDTO> getAttendees(long activityid) {
         ArrayList<UserSocu> usersocus = userRepository.findAllAttendeesByActivityId(activityid);
         ArrayList<UserDTO> userDTOS = new ArrayList<>();
