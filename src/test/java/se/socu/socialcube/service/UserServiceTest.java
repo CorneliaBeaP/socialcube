@@ -37,37 +37,37 @@ class UserServiceTest {
 
     Company company;
     Company company2;
-    UserSocu userSocu1;
-    UserSocu userSocu2;
-    UserSocu userSocu3;
-    UserSocu userSocu4;
-    UserDTO userDTO;
+    UserSocu socuuser;
+    UserSocu socuuser2;
+    UserSocu socuuser3;
+    UserSocu socuuser4;
+    UserDTO dto;
 
     @BeforeEach
     void init() throws IOException {
         company = new Company(5501010101L, "TestCompany AB");
-        userSocu1 = new UserSocu(Usertype.USER, "Anna Svensson", "anna.svensson@testcompany.com", "aOpTYjdls", "A007", "IT-avdelningen", company);
-        userSocu1.setId(1L);
-        userSocu2 = new UserSocu(Usertype.ADMIN, "Erik Eriksson", "erik.eriksson@testcompany.com", "p56GkdoUyyy", "A008", "IT-avdelningen", company);
-        userSocu2.setId(2L);
+        socuuser = new UserSocu(Usertype.USER, "Anna Svensson", "anna.svensson@testcompany.com", "aOpTYjdls", "A007", "IT-avdelningen", company);
+        socuuser.setId(1L);
+        socuuser2 = new UserSocu(Usertype.ADMIN, "Erik Eriksson", "erik.eriksson@testcompany.com", "p56GkdoUyyy", "A008", "IT-avdelningen", company);
+        socuuser2.setId(2L);
 
         company2 = new Company(5502020202L, "TestCompany2 AB");
-        userSocu3 = new UserSocu(Usertype.USER, "Angelina Björk", "angelina@testcompany2.com", "slkdjfSGslri", "", "Lager", company2);
-        userSocu3.setId(3L);
-        userSocu4 = new UserSocu(Usertype.ADMIN, "Hans Ek", "hans@testcompany2.com", "lsgjSJRGlgs1", "", "Service Desk", company2);
-        userSocu4.setId(4L);
+        socuuser3 = new UserSocu(Usertype.USER, "Angelina Björk", "angelina@testcompany2.com", "slkdjfSGslri", "", "Lager", company2);
+        socuuser3.setId(3L);
+        socuuser4 = new UserSocu(Usertype.ADMIN, "Hans Ek", "hans@testcompany2.com", "lsgjSJRGlgs1", "", "Service Desk", company2);
+        socuuser4.setId(4L);
 
-        userDTO = new UserDTO();
-        userDTO.setUsertype(Usertype.USER);
-        userDTO.setName("Caroline Canvas");
-        userDTO.setEmail("caroline.canvas@company.com");
-        userDTO.setEmploymentnumber("U4756");
-        userDTO.setDepartment("Lager");
-        userDTO.setCompanyname(company.getName());
-        userDTO.setCompanyorganizationnumber(company.getOrganizationnumber());
+        dto = new UserDTO();
+        dto.setUsertype(Usertype.USER);
+        dto.setName("Caroline Canvas");
+        dto.setEmail("caroline.canvas@company.com");
+        dto.setEmploymentnumber("U4756");
+        dto.setDepartment("Lager");
+        dto.setCompanyname(company.getName());
+        dto.setCompanyorganizationnumber(company.getOrganizationnumber());
 
         List<Company> companyList = Arrays.asList(company, company2);
-        List<UserSocu> userSocuList = Arrays.asList(userSocu1, userSocu2, userSocu3, userSocu4);
+        List<UserSocu> userSocuList = Arrays.asList(socuuser, socuuser2, socuuser3, socuuser4);
         companyRepository.saveAll(companyList);
         userRepository.saveAll(userSocuList);
     }
@@ -86,18 +86,18 @@ class UserServiceTest {
 
     @Test
     void convertToUserDTOfromUserSocu() {
-        UserDTO userDTOconvert = userService.convertToUserDTOfromUserSocu(userSocu1);
+        UserDTO userDTOconvert = userService.convertToUserDTOfromUserSocu(socuuser);
         assertNotNull(userDTOconvert);
-        assertEquals(userSocu1.getEmail(), userDTOconvert.getEmail());
-        assertEquals(userSocu1.getId(), userDTOconvert.getId());
+        assertEquals(socuuser.getEmail(), userDTOconvert.getEmail());
+        assertEquals(socuuser.getId(), userDTOconvert.getId());
     }
 
     @Test
     void convertToUserSocuFromUserDTO() {
-        UserSocu userSocuconvert = userService.convertToUserSocuFromUserDTO(userDTO);
+        UserSocu userSocuconvert = userService.convertToUserSocuFromUserDTO(dto);
         assertNotNull(userSocuconvert);
-        assertEquals(userDTO.getEmail(), userSocuconvert.getEmail());
-        assertEquals(userDTO.getId(), userSocuconvert.getId());
+        assertEquals(dto.getEmail(), userSocuconvert.getEmail());
+        assertEquals(dto.getId(), userSocuconvert.getId());
     }
 
     @Test
@@ -117,7 +117,7 @@ class UserServiceTest {
             list.add(user);
         }
         assertEquals(4, list.size());
-        userService.saveNewUser(userDTO);
+        userService.saveNewUser(dto);
         Iterable<UserSocu> iterable2 = userRepository.findAll();
         List<UserSocu> list2 = new ArrayList<>();
         for (UserSocu user : iterable2
@@ -135,7 +135,7 @@ class UserServiceTest {
             }
         }
 
-        Optional<UserSocu> saveuserSocu = userRepository.findByEmail(userDTO.getEmail());
+        Optional<UserSocu> saveuserSocu = userRepository.findByEmail(dto.getEmail());
         if (saveuserSocu.isEmpty()) {
             fail("Användare har inte sparats korrekt.");
         } else {
