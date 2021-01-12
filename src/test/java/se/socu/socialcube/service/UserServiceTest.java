@@ -89,7 +89,7 @@ class UserServiceTest {
         ) {
             String uid = u.getId() + "";
             logger.log(Level.INFO, uid);
-            if(u.getId()>200){
+            if (u.getId() > 200) {
                 logger.warning("ID överstiger 200");
             }
         }
@@ -230,33 +230,37 @@ class UserServiceTest {
 
         userService.saveImage(multipartFile, 99L);
         Path path = Paths.get("client/angularclient/src/assets/ProfilePictures/99.png");
-        if(!Files.exists(path)){
+        if (!Files.exists(path)) {
             fail();
         }
     }
 
     @Test
     void copyDefaultPictureForNewUser() {
-
+        userService.copyDefaultPictureForNewUser(99);
+        Path path = Paths.get("client/angularclient/src/assets/ProfilePictures/99.png");
+        if (!Files.exists(path)) {
+            fail();
+        }
     }
 
     @Test
     void deleteProfilePicture() {
-      Optional<UserSocu> userSocu = userRepository.findByEmail("erik.eriksson@testcompany.com");
-      userService.deleteProfilePicture(userSocu.get().getId(), false);
+        Optional<UserSocu> userSocu = userRepository.findByEmail("erik.eriksson@testcompany.com");
+        userService.deleteProfilePicture(userSocu.get().getId(), false);
         Path path = Paths.get("client/angularclient/src/assets/ProfilePictures/" + userSocu.get().getId() + ".png");
-      if(!Files.exists(path)){
-          fail();
-      }
-      userService.deleteProfilePicture(userSocu.get().getId(), true);
-      if(Files.exists(path)){
-          fail();
-      }
+        if (!Files.exists(path)) {
+            fail();
+        }
+        userService.deleteProfilePicture(userSocu.get().getId(), true);
+        if (Files.exists(path)) {
+            fail();
+        }
     }
 
     @Test
     void generatePassword() {
-       String password = userService.generatePassword(11);
+        String password = userService.generatePassword(11);
         assertEquals(11, password.length());
         assertNotNull(password);
     }
@@ -273,6 +277,12 @@ class UserServiceTest {
 
     @Test
     void updateUserInformation() {
+        Optional<UserSocu> userSocu = userRepository.findByEmail("angelina@testcompany2.com");
+        assertEquals("Angelina Björk", userSocu.get().getName());
+        userService.updateUserInformation(userSocu.get().getId(), "Angelica Björk", "angelica@testcompany2.com", "");
+        userSocu = userRepository.findById(userSocu.get().getId());
+        assertEquals("Angelica Björk", userSocu.get().getName());
+        assertEquals("angelica@testcompany2.com", userSocu.get().getEmail());
     }
 
     @Test
