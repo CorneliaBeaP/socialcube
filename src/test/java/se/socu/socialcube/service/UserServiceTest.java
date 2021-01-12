@@ -7,6 +7,7 @@ import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
+import org.springframework.web.multipart.MultipartFile;
 import se.socu.socialcube.DTO.UserDTO;
 import se.socu.socialcube.SocialcubeApplication;
 import se.socu.socialcube.entities.Company;
@@ -17,7 +18,9 @@ import se.socu.socialcube.repository.CompanyRepository;
 import se.socu.socialcube.repository.UserRepository;
 import se.socu.socialcube.security.jwt.JwtUtil;
 
+import java.io.File;
 import java.io.IOException;
+import java.io.InputStream;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
@@ -181,19 +184,81 @@ class UserServiceTest {
     }
 
     @Test
-    void saveImage() {
+    void saveImage() throws Exception {
+
+        MultipartFile multipartFile = new MultipartFile() {
+            @Override
+            public String getName() {
+                return null;
+            }
+
+            @Override
+            public String getOriginalFilename() {
+                return null;
+            }
+
+            @Override
+            public String getContentType() {
+                return null;
+            }
+
+            @Override
+            public boolean isEmpty() {
+                return false;
+            }
+
+            @Override
+            public long getSize() {
+                return 0;
+            }
+
+            @Override
+            public byte[] getBytes() throws IOException {
+                return new byte[0];
+            }
+
+            @Override
+            public InputStream getInputStream() throws IOException {
+                return null;
+            }
+
+            @Override
+            public void transferTo(File file) throws IOException, IllegalStateException {
+
+            }
+        };
+
+        userService.saveImage(multipartFile, 99L);
+        Path path = Paths.get("client/angularclient/src/assets/ProfilePictures/99.png");
+        if(!Files.exists(path)){
+            fail();
+        }
     }
 
     @Test
     void copyDefaultPictureForNewUser() {
+
     }
 
     @Test
     void deleteProfilePicture() {
+      Optional<UserSocu> userSocu = userRepository.findByEmail("erik.eriksson@testcompany.com");
+      userService.deleteProfilePicture(userSocu.get().getId(), false);
+        Path path = Paths.get("client/angularclient/src/assets/ProfilePictures/" + userSocu.get().getId() + ".png");
+      if(!Files.exists(path)){
+          fail();
+      }
+      userService.deleteProfilePicture(userSocu.get().getId(), true);
+      if(Files.exists(path)){
+          fail();
+      }
     }
 
     @Test
     void generatePassword() {
+       String password = userService.generatePassword(11);
+        assertEquals(11, password.length());
+        assertNotNull(password);
     }
 
     @Test
