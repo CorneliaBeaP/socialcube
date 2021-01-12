@@ -94,10 +94,6 @@ class UserServiceTest {
     }
 
     @Test
-    void getAllUserDTOs() {
-    }
-
-    @Test
     void getAllUserDTOsForCompany() {
         List<UserDTO> list = userService.getAllUserDTOsForCompany(5502020202L);
         assertEquals(2, list.size());

@@ -25,13 +25,11 @@ import java.util.Random;
 @Service
 public class UserService {
 
-    private Path path;
-    private JwtUtil jwtUtil;
 
     public UserService(UserRepository userRepository, CompanyRepository companyRepository) throws IOException {
         this.userRepository = userRepository;
         this.companyRepository = companyRepository;
-        this.jwtUtil = new JwtUtil();
+        JwtUtil jwtUtil = new JwtUtil();
     }
 
     private UserRepository userRepository;
@@ -64,31 +62,6 @@ public class UserService {
         }
         return userSocu;
     }
-
-    public List<UserDTO> getAllUserDTOs() {
-        List<UserSocu> allUsers = (List<UserSocu>) userRepository.findAll();
-        List<UserDTO> allUsersDTO = new ArrayList<>();
-
-        for (UserSocu user : allUsers
-        ) {
-            UserDTO userDTO = convertToUserDTOfromUserSocu(user);
-            allUsersDTO.add(userDTO);
-        }
-        return allUsersDTO;
-    }
-
-//    public UserDTO checkIfLoginCredentialsAreCorrectAndGetUser(String username, String password) {
-//        UserDTO userDTO = new UserDTO();
-//        if (!(username == null)) {
-//            Optional<UserSocu> userSocu = userRepository.findByEmail(username.toLowerCase());
-//            if (userSocu.isPresent()) {
-//                if (!(userSocu.get().getEmail().length() < 1) && userSocu.get().getPassword().equals(password)) {
-//                    userDTO = convertToUserDTOfromUserSocu(userSocu.get());
-//                }
-//            }
-//        }
-//        return userDTO;
-//    }
 
     public List<UserDTO> getAllUserDTOsForCompany(Long id) {
         List<UserSocu> allUsers = (List<UserSocu>) userRepository.findAllByCompany_organizationnumber(id);

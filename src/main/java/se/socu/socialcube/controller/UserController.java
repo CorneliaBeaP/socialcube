@@ -21,11 +21,6 @@ public class UserController {
 
     private final UserService userService;
 
-    @RequestMapping(value = "/api/users", method = RequestMethod.GET)
-    public List<UserDTO> getUsers() {
-        return userService.getAllUserDTOs();
-    }
-
     @GetMapping("/api/users/{id}")
     public List<UserDTO> getUsersForCompany(@PathVariable Long id) {
         return userService.getAllUserDTOsForCompany(id);
