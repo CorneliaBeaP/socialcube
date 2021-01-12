@@ -86,11 +86,18 @@ class UserServiceTest {
 
     @Test
     void convertToUserDTOfromUserSocu() {
-
+        UserDTO userDTOconvert = userService.convertToUserDTOfromUserSocu(userSocu1);
+        assertNotNull(userDTOconvert);
+        assertEquals(userSocu1.getEmail(), userDTOconvert.getEmail());
+        assertEquals(userSocu1.getId(), userDTOconvert.getId());
     }
 
     @Test
     void convertToUserSocuFromUserDTO() {
+        UserSocu userSocuconvert = userService.convertToUserSocuFromUserDTO(userDTO);
+        assertNotNull(userSocuconvert);
+        assertEquals(userDTO.getEmail(), userSocuconvert.getEmail());
+        assertEquals(userDTO.getId(), userSocuconvert.getId());
     }
 
     @Test
@@ -133,9 +140,9 @@ class UserServiceTest {
             fail("Användare har inte sparats korrekt.");
         } else {
             Path path = Paths.get("client/angularclient/src/assets/ProfilePictures/" + saveuserSocu.get().getId() + ".png");
-           if(!Files.exists(path)) {
-               fail("Ingen sparad profilbild för ny användare");
-           }
+            if (!Files.exists(path)) {
+                fail("Ingen sparad profilbild för ny användare");
+            }
         }
     }
 
