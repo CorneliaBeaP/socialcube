@@ -1,8 +1,10 @@
 package se.socu.socialcube.service;
 
+import org.assertj.core.util.IterableUtil;
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
+import org.junit.jupiter.params.shadow.com.univocity.parsers.common.IterableResult;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import se.socu.socialcube.DTO.UserDTO;
@@ -148,7 +150,17 @@ class UserServiceTest {
 
     @Test
     void deleteUser() {
+        Optional<UserSocu> userSocu = userRepository.findByEmail("anna.svensson@testcompany.com");
+        Iterable<UserSocu> list = userRepository.findAll();
+
+        userService.deleteUser(userSocu.get().getId());
+        assertEquals((IterableUtil.sizeOf(list) - 1), IterableUtil.sizeOf(userRepository.findAll()));
+
+        userSocu = userRepository.findByEmail("anna.svensson@testcompany.com");
+        if (userSocu.isPresent()){
+            fail("Borttagning av användare misslyckades");
     }
+}
 
     @Test
     void saveImage() {
