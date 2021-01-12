@@ -92,4 +92,11 @@ export class ActivityService {
       return JSON.parse(data2);
     }));
   }
+
+  public deleteActivity(activityid: number){
+    return this.http.get(`http://localhost:8080/api/activity/delete/${activityid}`).pipe(map(data => {
+      let data2 = JSON.stringify(data);
+      return JSON.parse(data2);
+    }));
+  }
 }

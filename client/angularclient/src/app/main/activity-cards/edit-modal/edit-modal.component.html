@@ -20,7 +20,7 @@
           <input type="number" class="dateinput m-1" formControlName="activitydateyear" id="activitydateyear"> -
           <input type="number" class="dateinput m-1" formControlName="activitydatemonth" id="activitydatemonth"> -
           <input type="number" class="dateinput m-1" formControlName="activitydatedate" id="activitydatedate">
-        <div class="errormessage">{{this.errorMessageActivityDate}}</div>
+          <div class="errormessage">{{this.errorMessageActivityDate}}</div>
         </div>
       </div>
       <div class="row">
@@ -40,7 +40,7 @@
           <input type="number" class="dateinput m-1" formControlName="rsvpdateyear" id="rsvpdateyear"> -
           <input type="number" class="dateinput m-1" formControlName="rsvpdatemonth" id="rsvpdatemonth"> -
           <input type="number" class="dateinput m-1" formControlName="rsvpdatedate" id="rsvpdatedate">
-        <div class="errormessage">{{errorMessageRSVPDate}}</div>
+          <div class="errormessage">{{errorMessageRSVPDate}}</div>
         </div>
       </div>
       <div class="row">
@@ -73,6 +73,9 @@
 <div class="modal-footer">
   <button type="button" class="btn btn-light" (click)="onSave()">Spara</button>
   <button type="button" class="btn btn-light" (click)="cancelActivity(activity)">Ställ in</button>
+  <span *ngIf="activity.attendees.length<=1">  <button type="button" class="btn btn-danger"
+                                                       (click)="deleteActivity()">Radera</button>
+</span>
   <button type="button" class="btn btn-danger" (click)="activeModal.close('Save click')">Avbryt</button>
 </div>
 

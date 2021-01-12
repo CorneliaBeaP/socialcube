@@ -266,4 +266,24 @@ public class ActivityService {
         }
         return response;
     }
+
+    public Response deleteActivity(long id) {
+        Response response = new Response();
+        Optional<Activity> activity = activityRepository.findById(id);
+        if (activity.isPresent()) {
+            try {
+                activityRepository.deleteById(id);
+                response.setStatus("OK");
+                response.setMessage("Aktivitet raderad");
+            } catch (Exception e) {
+                e.printStackTrace();
+                response.setStatus("ERROR");
+                response.setMessage("Kunde inte radera aktivitet.");
+            }
+        } else {
+            response.setStatus("ERROR");
+            response.setMessage("Kunde inte hitta aktivitet.");
+        }
+        return response;
+    }
 }

@@ -79,4 +79,9 @@ public class ActivityController {
     public Response cancelActivity(@PathVariable long id){
         return activityService.cancelActivity(id);
     }
+
+    @GetMapping(path = "/api/activity/delete/{id}")
+    public Response deleteActivity(@PathVariable long id){
+        return activityService.deleteActivity(id);
+    }
 }

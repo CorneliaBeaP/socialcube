@@ -162,6 +162,12 @@ export class EditModalComponent implements OnInit, OnDestroy {
     location.reload();
   }
 
+  deleteActivity() {
+    this.subscription = this.activityService.deleteActivity(this.activity.id).subscribe();
+    this.activeModal.close();
+    location.reload();
+  }
+
   ngOnDestroy(): void {
     if (this.subscription) {
       this.subscription.unsubscribe();
