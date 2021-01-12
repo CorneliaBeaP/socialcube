@@ -1,161 +1,124 @@
 package se.socu.socialcube.service;
 
+import org.junit.jupiter.api.AfterEach;
+import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.boot.test.context.SpringBootTest;
+import se.socu.socialcube.DTO.UserDTO;
 import se.socu.socialcube.entities.Company;
 import se.socu.socialcube.entities.UserSocu;
+import se.socu.socialcube.entities.Usertype;
 import se.socu.socialcube.repository.CompanyRepository;
 import se.socu.socialcube.repository.UserRepository;
 
-import java.io.IOException;
-import java.util.ArrayList;
-import java.util.Optional;
+import java.util.Arrays;
+import java.util.List;
 
 import static org.junit.jupiter.api.Assertions.*;
 
+@SpringBootTest
 class UserServiceTest {
 
-   private UserRepository userRepository = new UserRepository() {
+    @Autowired
+    private UserService userService;
 
+    @Autowired
+    private UserRepository userRepository;
 
-       @Override
-       public Optional<UserSocu> findByEmail(String email) {
-           return Optional.empty();
-       }
+    @Autowired
+    private CompanyRepository companyRepository;
 
-       @Override
-       public Iterable<UserSocu> findAllByCompany_organizationnumber(Long company_organizationnumber) {
-           return null;
-       }
+    @BeforeEach
+    void init() {
+        Company company = new Company(5501010101L, "TestCompany AB");
+        UserSocu userSocu1 = new UserSocu(Usertype.USER, "Anna Svensson", "anna.svensson@testcompany.com", "aOpTYjdls", "A007", "IT-avdelningen", company);
+        UserSocu userSocu2 = new UserSocu(Usertype.ADMIN, "Erik Eriksson", "erik.eriksson@testcompany.com", "p56GkdoUyyy", "A008", "IT-avdelningen", company);
 
-       @Override
-       public ArrayList<UserSocu> findAllAttendeesByActivityId(long activityid) {
-           return null;
-       }
+        Company company2 = new Company(5502020202L, "TestCompany2 AB");
+        UserSocu userSocu3 = new UserSocu(Usertype.USER, "Angelina Björk", "angelina@testcompany2.com", "slkdjfSGslri", "", "Lager", company2);
+        UserSocu userSocu4 = new UserSocu(Usertype.ADMIN, "Hans Ek", "hans@testcompany2.com", "lsgjSJRGlgs1", "", "Service Desk", company2);
 
-       @Override
-       public ArrayList<UserSocu> findAllDeclinersByActivityId(long activityid) {
-           return null;
-       }
+        List<Company> companyList = Arrays.asList(company, company2);
+        List<UserSocu> userSocuList = Arrays.asList(userSocu1, userSocu2, userSocu3, userSocu4);
+        companyRepository.saveAll(companyList);
+        userRepository.saveAll(userSocuList);
+    }
 
-       @Override
-       public <S extends UserSocu> S save(S s) {
-           return null;
-       }
+    @AfterEach
+    void teardown() {
+        userRepository.deleteAll();
+        companyRepository.deleteAll();
+    }
 
-       @Override
-       public <S extends UserSocu> Iterable<S> saveAll(Iterable<S> iterable) {
-           return null;
-       }
+    @Test
+    void convertToUserDTOfromUserSocu() {
 
-       @Override
-       public Optional<UserSocu> findById(Long aLong) {
-           return Optional.empty();
-       }
+    }
 
-       @Override
-       public boolean existsById(Long aLong) {
-           return false;
-       }
+    @Test
+    void convertToUserSocuFromUserDTO() {
+    }
 
-       @Override
-       public Iterable<UserSocu> findAll() {
-           return null;
-       }
+    @Test
+    void getAllUserDTOs() {
+    }
 
-       @Override
-       public Iterable<UserSocu> findAllById(Iterable<Long> iterable) {
-           return null;
-       }
+    @Test
+    void getAllUserDTOsForCompany() {
+//        List<UserDTO> list = userService.getAllUserDTOsForCompany(5502020202L);
+////        assertEquals(2, list.size());
+    }
 
-       @Override
-       public long count() {
-           return 0;
-       }
+    @Test
+    void saveNewUser() {
+    }
 
-       @Override
-       public void deleteById(Long aLong) {
+    @Test
+    void deleteUser() {
+    }
 
-       }
+    @Test
+    void saveImage() {
+    }
 
-       @Override
-       public void delete(UserSocu userSocu) {
+    @Test
+    void copyDefaultPictureForNewUser() {
+    }
 
-       }
-
-       @Override
-       public void deleteAll(Iterable<? extends UserSocu> iterable) {
-
-       }
-
-       @Override
-       public void deleteAll() {
-
-       }
-   };
-   private CompanyRepository companyRepository = new CompanyRepository() {
-       @Override
-       public Optional<Company> findById(Long aLong) {
-           return Optional.empty();
-       }
-
-       @Override
-       public <S extends Company> S save(S s) {
-           return null;
-       }
-
-       @Override
-       public <S extends Company> Iterable<S> saveAll(Iterable<S> iterable) {
-           return null;
-       }
-
-       @Override
-       public boolean existsById(Long aLong) {
-           return false;
-       }
-
-       @Override
-       public Iterable<Company> findAll() {
-           return null;
-       }
-
-       @Override
-       public Iterable<Company> findAllById(Iterable<Long> iterable) {
-           return null;
-       }
-
-       @Override
-       public long count() {
-           return 0;
-       }
-
-       @Override
-       public void deleteById(Long aLong) {
-
-       }
-
-       @Override
-       public void delete(Company company) {
-
-       }
-
-       @Override
-       public void deleteAll(Iterable<? extends Company> iterable) {
-
-       }
-
-       @Override
-       public void deleteAll() {
-
-       }
-   };
-   private UserService us = new UserService(userRepository, companyRepository);
-
-    UserServiceTest() throws IOException {
+    @Test
+    void deleteProfilePicture() {
     }
 
     @Test
     void generatePassword() {
-        assertEquals(11, us.generatePassword(11).length());
+    }
+
+    @Test
+    void changePassword() {
+    }
+
+    @Test
+    void updateUserInformation() {
+    }
+
+    @Test
+    void getUserDTOById() {
+    }
+
+    @Test
+    void getAttendees() {
+    }
+
+    @Test
+    void getUserFromJWT() {
+    }
+
+    @Test
+    void getUserIDFromJWT() {
+    }
+
+    @Test
+    void checkIfLoginCredentialsAreCorrectAndGetUser() {
     }
 }
