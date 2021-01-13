@@ -1,8 +1,8 @@
 import {Component, OnInit} from '@angular/core';
 import {UserService} from "../services/user.service";
 import {AuthService} from "../services/auth.service";
-import {Subscription} from "rxjs";
-import {first} from "rxjs/operators";
+import {Observable, of, Subscription} from "rxjs";
+import {catchError, first, map} from "rxjs/operators";
 import {HttpClient} from "@angular/common/http";
 import {Usersocu} from "../classes/usersocu";
 import {FormBuilder, FormGroup, Validators} from "@angular/forms";
@@ -17,7 +17,7 @@ import {Response} from "../classes/response";
 export class ProfileComponent implements OnInit {
 
   url: string | ArrayBuffer;
-  url2: string;
+  profilepictureurl = '../../../../assets/ProfilePictures/default.png';
   user: Usersocu;
   infoform: FormGroup;
   passform: FormGroup;
@@ -48,7 +48,11 @@ export class ProfileComponent implements OnInit {
     this.subscription = this.userService.getUser(this.authService.getToken()).subscribe((data) => {
       let data2 = JSON.stringify(data);
       this.user = JSON.parse(data2);
-      this.getProfilePicture(this.user.id);
+      if(this.user){
+        if(this.user.id){
+          this.getProfilePicture(this.user.id);
+        }
+      }
       this.createPassform();
       this.createInfoform();
     }, error => {
@@ -82,7 +86,23 @@ export class ProfileComponent implements OnInit {
   }
 
   getProfilePicture(id: number) {
-    this.url2 = `../../../../assets/ProfilePictures/${id}.png`;
+    this.getFolder(id).subscribe(data =>{
+      this.profilepictureurl = data;
+    });
+  }
+  getFolder(id: number): Observable<string> {
+    const folderPath = `../../../../assets/ProfilePictures`;
+    return this.http
+      .get(`${folderPath}/${id}.png`, {observe: 'response', responseType: 'blob'})
+      .pipe(
+        map(response => {
+          return `${folderPath}/${id}.png`;
+        }),
+        catchError(error => {
+          // console.clear();
+          return of(`${folderPath}/default.png`);
+        })
+      );
   }
 
   triggerFileUpload() {
@@ -91,7 +111,7 @@ export class ProfileComponent implements OnInit {
   }
 
   removeProfilePicture() {
-    this.url2 = `../../../../assets/ProfilePictures/${this.user.id}.png`;
+    this.profilepictureurl = `../../../../assets/ProfilePictures/${this.user.id}.png`;
     this.userService.removeProfilePicture(this.user.id);
     location.reload();
   }

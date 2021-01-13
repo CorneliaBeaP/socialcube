@@ -3,10 +3,9 @@ import {AuthService} from "../../services/auth.service";
 import {Usersocu} from "../../classes/usersocu";
 import {HttpClient} from "@angular/common/http";
 import {Router} from "@angular/router";
-import {Subscription} from "rxjs";
+import {Observable, of, Subscription} from "rxjs";
 import {UserService} from "../../services/user.service";
-import set = Reflect.set;
-import {timeout} from "rxjs/operators";
+import {catchError, map} from "rxjs/operators";
 
 
 @Component({
@@ -18,6 +17,7 @@ export class HeaderComponent implements OnInit {
   isAdmin = false;
   @Input('user') user: Usersocu;
   subscription: Subscription;
+  profilepictureurl = '../../../../assets/ProfilePictures/default.png';
 
   constructor(private http: HttpClient,
               private authService: AuthService,
@@ -27,7 +27,9 @@ export class HeaderComponent implements OnInit {
 
   ngOnInit(): void {
     if(this.user){
-      this.getProfilePicture(this.user.id);
+      if(this.user.id){
+        this.getProfilePicture(this.user.id);
+      }
       this.getAdmin();
     }
   }
@@ -42,11 +44,31 @@ export class HeaderComponent implements OnInit {
     }
   }
 
-  getProfilePicture(id: number): string {
-    return `../../../../assets/ProfilePictures/${id}.png`;
-  }
+  // getProfilePicture(): string {
+  //     return `../../../../assets/ProfilePictures/${this.user.id}.png`;
+  // }
 
   goToProfile() {
     this.router.navigate(['/profile']);
+  }
+
+  getProfilePicture(id: number) {
+    this.getFolder(id).subscribe(data =>{
+      this.profilepictureurl = data;
+    });
+  }
+  getFolder(id: number): Observable<string> {
+    const folderPath = `../../../../assets/ProfilePictures`;
+    return this.http
+      .get(`${folderPath}/${id}.png`, {observe: 'response', responseType: 'blob'})
+      .pipe(
+        map(response => {
+          return `${folderPath}/${id}.png`;
+        }),
+        catchError(error => {
+          // console.clear();
+          return of(`${folderPath}/default.png`);
+        })
+      );
   }
 }
