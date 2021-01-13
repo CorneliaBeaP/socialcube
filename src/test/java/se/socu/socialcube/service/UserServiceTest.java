@@ -86,8 +86,6 @@ class UserServiceTest {
         Logger logger = Logger.getLogger(UserServiceTest.class.getName());
         for (UserSocu u : userRepository.findAll()
         ) {
-            String uid = u.getId() + "";
-            logger.log(Level.INFO, uid);
             if (u.getId() > 200) {
                 logger.warning("ID överstiger 200");
             }
