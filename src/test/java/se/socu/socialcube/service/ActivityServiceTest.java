@@ -1,20 +1,19 @@
 package se.socu.socialcube.service;
 
+import org.assertj.core.util.IterableUtil;
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import se.socu.socialcube.DTO.ActivityDTO;
-import se.socu.socialcube.entities.*;
+import se.socu.socialcube.entities.Activity;
+import se.socu.socialcube.entities.Company;
+import se.socu.socialcube.entities.UserSocu;
+import se.socu.socialcube.entities.Usertype;
 import se.socu.socialcube.repository.ActivityRepository;
 import se.socu.socialcube.repository.CompanyRepository;
 import se.socu.socialcube.repository.UserRepository;
-
-import static org.junit.jupiter.api.Assertions.*;
-
-import org.assertj.core.util.IterableUtil;
-
 
 import java.io.IOException;
 import java.nio.file.Files;
@@ -24,8 +23,8 @@ import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
-import java.util.logging.Level;
-import java.util.logging.Logger;
+
+import static org.junit.jupiter.api.Assertions.*;
 
 @SpringBootTest
 class ActivityServiceTest {
@@ -275,9 +274,20 @@ class ActivityServiceTest {
 
     @Test
     void cancelActivity() {
+        Activity activity = activityList.get(0);
+        assertFalse(activity.isCancelled());
+        activityService.cancelActivity(activity.getId());
+        Optional<Activity> optionalActivity = repository.findById(activity.getId());
+        assertTrue(optionalActivity.get().isCancelled());
     }
 
     @Test
     void deleteActivity() {
+        Activity activity = activityList.get(0);
+        Iterable<Activity> activities = repository.findAll();
+        assertEquals(1, IterableUtil.sizeOf(activities));
+        activityService.deleteActivity(activity.getId());
+        activities = repository.findAll();
+        assertEquals(0, IterableUtil.sizeOf(activities));
     }
 }
