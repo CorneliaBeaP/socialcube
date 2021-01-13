@@ -21,4 +21,5 @@ public interface ActivityRepository extends CrudRepository<Activity, Long> {
     @Query(value = "SELECT DISTINCT * FROM declinedactivities left JOIN activity where activity.id = activityid and usersocuid=?1", nativeQuery = true)
     ArrayList<Activity> findAllDeclinedActivitiesByUsersocuId(long userid);
 
+    ArrayList<Activity> findAllByCreatedby(UserSocu userSocu);
 }

@@ -42,6 +42,15 @@ export class ActivityCardsComponent implements OnInit, OnDestroy {
             activity.attendees = JSON.parse(data2);
           });
         });
+        activityarray.forEach((activity) => {
+          if(!activity.createdBy){
+            let usersocu: Usersocu = new Usersocu();
+            usersocu.id = 0;
+            usersocu.name = "Borttagen användare";
+            activity.createdBy = usersocu;
+            activity.createdbyid = usersocu.id;
+          }
+        });
         this.activities = activityarray;
         this.activities = this.activities.reverse();
         this.getDeclinedActivities();
@@ -99,6 +108,7 @@ export class ActivityCardsComponent implements OnInit, OnDestroy {
   getProfilePicture(id: number): string {
     return `../../../../assets/ProfilePictures/${id}.png`;
   }
+
 
   getAttendedActivities() {
     this.activityService.getattendedActivities(this.authService.getToken()).subscribe(data => {

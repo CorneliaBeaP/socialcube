@@ -9,10 +9,8 @@ import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.web.multipart.MultipartFile;
 import se.socu.socialcube.DTO.UserDTO;
-import se.socu.socialcube.entities.Company;
-import se.socu.socialcube.entities.Response;
-import se.socu.socialcube.entities.UserSocu;
-import se.socu.socialcube.entities.Usertype;
+import se.socu.socialcube.entities.*;
+import se.socu.socialcube.repository.ActivityRepository;
 import se.socu.socialcube.repository.CompanyRepository;
 import se.socu.socialcube.repository.UserRepository;
 import se.socu.socialcube.security.jwt.JwtUtil;
@@ -23,11 +21,11 @@ import java.io.InputStream;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
+import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 import java.util.Optional;
-import java.util.logging.Level;
 import java.util.logging.Logger;
 
 import static org.junit.jupiter.api.Assertions.*;
@@ -44,7 +42,14 @@ class UserServiceTest {
     @Autowired
     private CompanyRepository companyRepository;
 
+    @Autowired
+    private ActivityService activityService;
+
+    @Autowired
+    private ActivityRepository activityRepository;
+
     BCryptPasswordEncoder passwordEncoder;
+    List<Activity> activities;
 
     Company company;
     Company company2;
@@ -54,20 +59,21 @@ class UserServiceTest {
     UserSocu socuuser4;
     UserDTO dto;
 
+
     @BeforeEach
-    void setUp() throws IOException {
+    void setUp(){
         passwordEncoder = new BCryptPasswordEncoder();
         company = new Company(5501010101L, "TestCompany AB");
         socuuser = new UserSocu(Usertype.USER, "Anna Svensson", "anna.svensson@testcompany.com", passwordEncoder.encode("aOpTYjdls"), "A007", "IT-avdelningen", company);
-        socuuser.setId(1L);
         socuuser2 = new UserSocu(Usertype.ADMIN, "Erik Eriksson", "erik.eriksson@testcompany.com", passwordEncoder.encode("p56GkdoUyyy"), "A008", "IT-avdelningen", company);
-        socuuser2.setId(2L);
 
         company2 = new Company(5502020202L, "TestCompany2 AB");
         socuuser3 = new UserSocu(Usertype.USER, "Angelina Björk", "angelina@testcompany2.com", passwordEncoder.encode("slkdjfSGslri"), "", "Lager", company2);
-        socuuser3.setId(3L);
         socuuser4 = new UserSocu(Usertype.ADMIN, "Hans Ek", "hans@testcompany2.com", passwordEncoder.encode("lsgjSJRGlgs1"), "", "Service Desk", company2);
-        socuuser4.setId(4L);
+
+        LocalDateTime localDateTime = LocalDateTime.now();
+        Activity activity = new Activity("Fika", localDateTime.plusDays(3), localDateTime.plusDays(2), localDateTime, "Fika för att fira av Fia", false, socuuser, "Fikarummet", "Värtavägen 31, 11538 Stockholm", company);
+        Activity activity2 = new Activity("AW", localDateTime.plusDays(3), localDateTime.plusDays(2), localDateTime, "Trevlig AW", false, socuuser, "Fikarummet", "Värtavägen 31, 11538 Stockholm", company);
 
         dto = new UserDTO();
         dto.setUsertype(Usertype.USER);
@@ -82,6 +88,15 @@ class UserServiceTest {
         List<UserSocu> userSocuList = Arrays.asList(socuuser, socuuser2, socuuser3, socuuser4);
         companyRepository.saveAll(companyList);
         userRepository.saveAll(userSocuList);
+        activityRepository.save(activity);
+        activityRepository.save(activity2);
+        Iterable<Activity> iterable = activityRepository.findAll();
+        activities = new ArrayList<>();
+        for (Activity a : iterable
+        ) {
+            activities.add(a);
+        }
+
 
         Logger logger = Logger.getLogger(UserServiceTest.class.getName());
         for (UserSocu u : userRepository.findAll()
@@ -94,6 +109,7 @@ class UserServiceTest {
 
     @AfterEach
     void tearDown() throws IOException {
+        activityRepository.deleteAll();
         userRepository.deleteAll();
         companyRepository.deleteAll();
         String folder = "client/angularclient/src/assets/ProfilePictures/";
@@ -171,7 +187,20 @@ class UserServiceTest {
         Optional<UserSocu> userSocu = userRepository.findByEmail("anna.svensson@testcompany.com");
         Iterable<UserSocu> list = userRepository.findAll();
 
+        activityService.attendActivity(userSocu.get().getId(), activities.get(0).getId());
+        activityService.declineActivity(activities.get(1).getId(), userSocu.get().getId());
+        List<UserSocu> attendees = userRepository.findAllAttendeesByActivityId(activities.get(0).getId());
+        List<UserSocu> decliners = userRepository.findAllDeclinersByActivityId(activities.get(1).getId());
+
+        assertEquals(1, attendees.size());
+        assertEquals(1, decliners.size());
+
         userService.deleteUser(userSocu.get().getId());
+        attendees = userRepository.findAllAttendeesByActivityId(activities.get(0).getId());
+        decliners = userRepository.findAllDeclinersByActivityId(activities.get(1).getId());
+
+        assertEquals(0, attendees.size());
+        assertEquals(0, decliners.size());
         assertEquals((IterableUtil.sizeOf(list) - 1), IterableUtil.sizeOf(userRepository.findAll()));
 
         userSocu = userRepository.findByEmail("anna.svensson@testcompany.com");

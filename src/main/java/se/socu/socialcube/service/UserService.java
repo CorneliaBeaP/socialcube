@@ -3,11 +3,14 @@ package se.socu.socialcube.service;
 import io.jsonwebtoken.Claims;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
+import org.springframework.util.AutoPopulatingList;
 import org.springframework.web.multipart.MultipartFile;
 import se.socu.socialcube.DTO.UserDTO;
+import se.socu.socialcube.entities.Activity;
 import se.socu.socialcube.entities.Company;
 import se.socu.socialcube.entities.Response;
 import se.socu.socialcube.entities.UserSocu;
+import se.socu.socialcube.repository.ActivityRepository;
 import se.socu.socialcube.security.jwt.JwtUtil;
 import se.socu.socialcube.repository.CompanyRepository;
 import se.socu.socialcube.repository.UserRepository;
@@ -26,14 +29,16 @@ import java.util.Random;
 public class UserService {
 
 
-    public UserService(UserRepository userRepository, CompanyRepository companyRepository) throws IOException {
+    public UserService(UserRepository userRepository, CompanyRepository companyRepository, ActivityRepository activityRepository) throws IOException {
         this.userRepository = userRepository;
         this.companyRepository = companyRepository;
+        this.activityRepository = activityRepository;
         JwtUtil jwtUtil = new JwtUtil();
     }
 
     private UserRepository userRepository;
     private CompanyRepository companyRepository;
+    private ActivityRepository activityRepository;
 
 
     public UserDTO convertToUserDTOfromUserSocu(UserSocu userSocu) {
@@ -101,6 +106,35 @@ public class UserService {
         Response response = new Response();
         Optional<UserSocu> userSocu = userRepository.findById(id);
         if (userSocu.isPresent()) {
+            List<Activity> emptylist = new ArrayList<>();
+            List<Activity> attendedActivities = activityRepository.findAllAttendedActivitiesByUsersocuId(userSocu.get().getId());
+            for (Activity a : attendedActivities
+            ) {
+                userSocu.get().setAttendedactivities(emptylist);
+                List<UserSocu> attendees = userRepository.findAllAttendeesByActivityId(a.getId());
+                attendees.removeIf(u -> u.getId() == userSocu.get().getId());
+                a.setAttendees(attendees);
+                userRepository.save(userSocu.get());
+                activityRepository.save(a);
+            }
+            List<Activity> declinedActivities = activityRepository.findAllDeclinedActivitiesByUsersocuId(userSocu.get().getId());
+            for (Activity a : declinedActivities
+            ) {
+                userSocu.get().setDeclinedactivities(emptylist);
+                List<UserSocu> decliners = userRepository.findAllDeclinersByActivityId(a.getId());
+                decliners.removeIf(u -> u.getId() == userSocu.get().getId());
+                a.setDecliners(decliners);
+                userRepository.save(userSocu.get());
+                activityRepository.save(a);
+            }
+            List<Activity> createdActivities = activityRepository.findAllByCreatedby(userSocu.get());
+            for (Activity a : createdActivities
+            ) {
+                userSocu.get().setCreatedactivities(emptylist);
+                a.setCreatedby(null);
+                activityRepository.save(a);
+                userRepository.save(userSocu.get());
+            }
             try {
                 userRepository.delete(userSocu.get());
                 deleteProfilePicture(id, true);

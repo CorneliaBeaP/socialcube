@@ -15,8 +15,9 @@
   </div>
   <div class="row" *ngIf="!activity.cancelled">
     <div class="col">
-      <img class="ml-3" [src]="getProfilePicture(activity.createdBy.id)" alt="Skapad av {{activity.createdBy.name}}"
+      <img class="ml-3" *ngIf="activity.createdbyid>0" [src]="getProfilePicture(activity.createdBy.id)" alt="Skapad av {{activity.createdBy.name}}"
            [matTooltip]="activity.createdBy.name">
+      <i *ngIf="activity.createdbyid==0" class="fas fa-user-slash ml-3" [matTooltip]="activity.createdBy.name"></i>
     </div>
     <div class="col text-right mr-1">
     <span *ngFor="let attendee of activity.attendees" class="mr-1">

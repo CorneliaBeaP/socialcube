@@ -65,17 +65,13 @@ public class Activity implements Serializable {
     public String toString() {
         return "Activity{" +
                 "id=" + id +
-                ", activitytype='" + activitytype + '\'' +
                 ", activitydate=" + activitydate +
                 ", rsvpdate=" + rsvpdate +
                 ", createddate=" + createddate +
                 ", descriptionsocu='" + descriptionsocu + '\'' +
                 ", cancelled=" + cancelled +
-                ", createdby=" + createdby +
                 ", locationname='" + locationname + '\'' +
                 ", locationaddress='" + locationaddress + '\'' +
-                ", company=" + company +
-                ", attendees=" + attendees +
                 '}';
     }
 }

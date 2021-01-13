@@ -42,11 +42,13 @@ public class ActivityService {
         activityDTO.setRsvpdate(activity.getRsvpdate());
         activityDTO.setDescriptionsocu(activity.getDescriptionsocu());
         activityDTO.setCompanyorganizationnumber(activity.getCompany().getOrganizationnumber());
-        activityDTO.setCreatedbyid(activity.getCreatedby().getId());
+        if (!(activity.getCreatedby() == null)){
+            activityDTO.setCreatedbyid(activity.getCreatedby().getId());
+            activityDTO.setCreatedBy(userService.convertToUserDTOfromUserSocu(activity.getCreatedby()));
+        }
         activityDTO.setLocationname(activity.getLocationname());
         activityDTO.setLocationaddress(activity.getLocationaddress());
         activityDTO.setCreateddate(activity.getCreateddate());
-        activityDTO.setCreatedBy(userService.convertToUserDTOfromUserSocu(activity.getCreatedby()));
         activityDTO.setCancelled(activity.isCancelled());
         return activityDTO;
     }
