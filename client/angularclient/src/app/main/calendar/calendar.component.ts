@@ -6,6 +6,7 @@ import {AuthService} from "../../services/auth.service";
 import {Activity} from "../../classes/activity";
 import {CurrentmonthPipe} from "../../helpers/pipes/currentmonth.pipe";
 import {CancelledPipe} from "../../helpers/pipes/cancelled.pipe";
+import {ExpiredPipe} from "../../helpers/pipes/expired.pipe";
 
 @Component({
   selector: 'app-calendar',
@@ -22,7 +23,8 @@ export class CalendarComponent implements OnInit {
   constructor(private authService: AuthService,
               private activityService: ActivityService,
               private currentmonthPipe: CurrentmonthPipe,
-              private cancelledPipe: CancelledPipe) {
+              private cancelledPipe: CancelledPipe,
+              private expiredPipe: ExpiredPipe) {
   }
 
   ngOnInit(): void {
@@ -69,11 +71,9 @@ export class CalendarComponent implements OnInit {
     return name;
   }
 
-  getAttendedActivitiesThisMonth(activities
-                                   :
-                                   Activity[]
-  ) {
-    let updated = this.currentmonthPipe.transform(activities);
-    this.activitiesThisMonth = this.cancelledPipe.transform(updated);
+  getAttendedActivitiesThisMonth(activities: Activity[]) {
+    this.activitiesThisMonth = this.currentmonthPipe.transform(activities);
+    this.activitiesThisMonth = this.cancelledPipe.transform(this.activitiesThisMonth);
+    this.activitiesThisMonth = this.expiredPipe.transform(this.activitiesThisMonth);
   }
 }
