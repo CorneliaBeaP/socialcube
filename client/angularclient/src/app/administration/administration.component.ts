@@ -30,8 +30,8 @@ export class AdministrationComponent implements OnInit, OnDestroy {
   ngOnInit(): void {
     this.createForm();
     this.response = new Response();
-    this.response.message = "";
-    this.response.status = "";
+    this.response.message = '';
+    this.response.status = '';
   }
 
   createForm() {
@@ -67,9 +67,13 @@ export class AdministrationComponent implements OnInit, OnDestroy {
     usersocu.companyorganizationnumber = this.currentUser.companyorganizationnumber;
     this.subscription = this.userService.sendUser(usersocu).subscribe((data) => {
       this.response = data;
-      this.mailto(usersocu.email.toString());
-      this.addForm.reset();
-      window.location.reload();
+      if(this.response.status == 'OK'){
+        this.response.message = '';
+        this.response.status = '';
+        this.mailto(usersocu.email.toString());
+        this.addForm.reset();
+        window.location.reload();
+      }
     });
   }
 

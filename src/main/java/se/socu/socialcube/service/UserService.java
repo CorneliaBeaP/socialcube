@@ -82,23 +82,29 @@ public class UserService {
 
     public Response saveNewUser(UserDTO userDTO) {
         Response response = new Response();
-        BCryptPasswordEncoder passwordEncoder = new BCryptPasswordEncoder();
-        UserSocu userSocu = convertToUserSocuFromUserDTO(userDTO);
-        userSocu.setEmail(userSocu.getEmail().toLowerCase());
-        String password = generatePassword(11);
-        userSocu.setPassword(passwordEncoder.encode(password));
-        try {
-            userRepository.save(userSocu);
-            response.setStatus("OK");
-            response.setMessage(password);
-            ;
-        } catch (Exception e) {
-            e.printStackTrace();
+        Optional<UserSocu> alreadyexisting = userRepository.findByEmail(userDTO.getEmail().toLowerCase());
+        if (alreadyexisting.isPresent()) {
             response.setStatus("ERROR");
-            response.setMessage("Kunde inte lägga till användare");
+            response.setMessage("Mailadressen finns redan i databasen");
+            System.out.println(response.getMessage());
+        } else {
+            BCryptPasswordEncoder passwordEncoder = new BCryptPasswordEncoder();
+            UserSocu userSocu = convertToUserSocuFromUserDTO(userDTO);
+            userSocu.setEmail(userSocu.getEmail().toLowerCase());
+            String password = generatePassword(11);
+            userSocu.setPassword(passwordEncoder.encode(password));
+            try {
+                userRepository.save(userSocu);
+                response.setStatus("OK");
+                response.setMessage(password);
+            } catch (Exception e) {
+                e.printStackTrace();
+                response.setStatus("ERROR");
+                response.setMessage("Kunde inte lägga till användare");
+            }
+            Optional<UserSocu> userSocu1 = userRepository.findByEmail(userDTO.getEmail());
+            userSocu1.ifPresent(socu -> copyDefaultPictureForNewUser(socu.getId()));
         }
-        Optional<UserSocu> userSocu1 = userRepository.findByEmail(userDTO.getEmail());
-        userSocu1.ifPresent(socu -> copyDefaultPictureForNewUser(socu.getId()));
         return response;
     }
 

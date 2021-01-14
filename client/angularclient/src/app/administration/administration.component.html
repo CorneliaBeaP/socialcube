@@ -18,8 +18,10 @@
                      placeholder="Avdelning (valfritt)">
               <input formControlName="employeenumber" type="text" class="form-control mt-3"
                      placeholder="Anställningsnummer (valfritt)">
+              <div class="d-flex justify-content-center mt-3 errormessage">{{response.message}}</div>
+
               <div class="d-flex justify-content-center">
-                <button type="submit" class="minw-100 btn btn-light m-4">Lägg till användare och generera lösenord
+                <button type="submit" class="minw-100 btn btn-light m-4">Lägg till användare och skicka lösenord
                 </button>
               </div>
             </div>
