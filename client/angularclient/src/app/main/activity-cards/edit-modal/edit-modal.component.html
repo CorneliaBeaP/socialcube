@@ -30,6 +30,7 @@
         <div class="col">
           <input type="number" class="dateinput m-1" formControlName="activitytimehour" id="activitytimehour"> :
           <input type="number" class="dateinput m-1" formControlName="activitytimeminute" id="activitytimeminute">
+          <div class="errormessage">{{errorMessageTime}}</div>
         </div>
       </div>
       <div class="row">
@@ -59,7 +60,7 @@
           <input type="text" class="m-1" formControlName="locationname" id="locationname">
         </div>
       </div>
-      <div class="row">
+      <div class="row mb-4">
         <div class="col">
           <label for="locationaddress" class="m-1"></label>
         </div>
@@ -67,15 +68,45 @@
           <input type="text" class="m-1" formControlName="locationaddress" id="locationaddress">
         </div>
       </div>
+      <div class="row">
+        <div class="col">
+          <div class="cancel">
+            <button type="button" class="btn btn-outline-danger mr-2" (click)="cancelactivity=true">Ställ in
+            </button>
+            <span *ngIf="activity.attendees.length<=1">
+              <button type="button" class="btn btn-outline-danger" (click)="deleteactivity=true">Radera</button>
+            </span>
+          </div>
+        </div>
+      </div>
+      <div class="row mt-3">
+        <div class="col">
+          <div class="cancel">
+            <div *ngIf="deleteactivity">
+              Är du säker på att du vill radera aktiviteten?
+              Om du raderar aktiviteten kommer den att tas bort helt och kommer inte vara synlig för andra användare längre.
+              <div class="mt-2">
+                <button class="btn btn-outline-danger" (click)="deleteActivity()">Ja</button>
+                <button class="btn btn-outline-dark ml-1" (click)="deleteactivity=false">Avbryt</button>
+              </div>
+            </div>
+            <div *ngIf="cancelactivity">
+              Är du säker på att du vill ställa in aktiviteten?
+              Om du ställer in aktiviteten kommer den fortfarande att vara synlig för andra användare, men med information om att den är inställd.
+              <div class="mt-2">
+                <button class="btn btn-outline-danger minw-100" (click)="cancelActivity(activity)">Ja</button>
+                <button class="btn btn-outline-dark ml-1" (click)="cancelactivity=false">Avbryt</button>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
     </div>
   </form>
 </div>
 <div class="modal-footer">
   <button type="button" class="btn btn-light" (click)="onSave()">Spara</button>
-  <button type="button" class="btn btn-light" (click)="cancelActivity(activity)">Ställ in</button>
-  <span *ngIf="activity.attendees.length<=1">  <button type="button" class="btn btn-danger"
-                                                       (click)="deleteActivity()">Radera</button>
-</span>
   <button type="button" class="btn btn-danger" (click)="activeModal.close('Save click')">Avbryt</button>
 </div>
 

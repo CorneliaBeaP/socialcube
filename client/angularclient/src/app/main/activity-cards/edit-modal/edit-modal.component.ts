@@ -1,4 +1,4 @@
-import {Component, Input, OnDestroy, OnInit} from '@angular/core';
+import {Component, OnDestroy, OnInit} from '@angular/core';
 import {Activity} from "../../../classes/activity";
 import {NgbActiveModal} from "@ng-bootstrap/ng-bootstrap";
 import {FormBuilder, FormGroup, Validators} from "@angular/forms";
@@ -17,7 +17,10 @@ export class EditModalComponent implements OnInit, OnDestroy {
   updatedActivity: Activity;
   errorMessageActivityDate = '';
   errorMessageRSVPDate = '';
+  errorMessageTime = '';
   subscription: Subscription;
+  cancelactivity = false;
+  deleteactivity = false;
 
   constructor(public activeModal: NgbActiveModal,
               private formBuilder: FormBuilder,
@@ -148,6 +151,14 @@ export class EditModalComponent implements OnInit, OnDestroy {
           isFormOk = false;
           this.errorMessageRSVPDate = 'Felaktigt datum';
         }
+      }
+    }
+
+    //Kontroller för tid
+    if(this.form.get('activitytimehour').dirty || this.form.get('activitytimeminute')){
+      if (this.form.get('activitytimehour').value>23 || this.form.get('activitytimeminute').value>59){
+        isFormOk = false;
+        this.errorMessageTime = 'Felaktigt klockslag'
       }
     }
 
