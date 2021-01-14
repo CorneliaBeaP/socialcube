@@ -9,6 +9,7 @@ import se.socu.socialcube.entities.UserSocu;
 import se.socu.socialcube.service.UserService;
 
 import java.io.IOException;
+import java.time.LocalDateTime;
 import java.util.List;
 
 @CrossOrigin(origins = "http://localhost:4200", allowedHeaders = "*")
@@ -28,7 +29,6 @@ public class UserController {
 
     @PostMapping(path = "/api/users/add", produces = MediaType.APPLICATION_JSON_VALUE, consumes = MediaType.APPLICATION_JSON_VALUE)
     public Response saveNewUser(@RequestBody UserDTO userDTO) {
-        System.out.println("Mottagit ny användare");
         return userService.saveNewUser(userDTO);
     }
 
@@ -45,7 +45,7 @@ public class UserController {
 
     @GetMapping("/api/users/delete/image/{id}")
     public Response deleteProfilePicture(@PathVariable Long id) {
-       return userService.deleteProfilePicture(id, false);
+        return userService.deleteProfilePicture(id, false);
     }
 
     @PutMapping(value = "/api/users/password/{token}", consumes = MediaType.APPLICATION_JSON_VALUE)
@@ -60,13 +60,13 @@ public class UserController {
 
     @PostMapping(path = "/api/login", produces = MediaType.APPLICATION_JSON_VALUE)
     public UserDTO verifyCredentialsAndSendToken(@RequestBody String[] usercredentials) throws IOException {
-        System.out.println(userService.checkIfLoginCredentialsAreCorrectAndGetUser(usercredentials[0], usercredentials[1]).getName() + " har loggat in");
+        System.out.println(LocalDateTime.now() + " Inlogg: " + userService.checkIfLoginCredentialsAreCorrectAndGetUser(usercredentials[0], usercredentials[1]).getId());
         return userService.checkIfLoginCredentialsAreCorrectAndGetUser(usercredentials[0], usercredentials[1]);
     }
 
     @GetMapping(value = "/api/user/{token}")
     public UserDTO getUserDTOFromJWT(@PathVariable String token) throws IOException {
-        System.out.println("Info om " + userService.getUserFromJWT(token).getName() + " har skickats");
+        System.out.println(LocalDateTime.now() + " Info om användare " + userService.getUserFromJWT(token).getId() + " har skickats");
         return userService.getUserFromJWT(token);
     }
 

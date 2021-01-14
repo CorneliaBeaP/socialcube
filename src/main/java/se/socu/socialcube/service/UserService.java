@@ -86,7 +86,6 @@ public class UserService {
         if (alreadyexisting.isPresent()) {
             response.setStatus("ERROR");
             response.setMessage("Mailadressen finns redan i databasen");
-            System.out.println(response.getMessage());
         } else {
             BCryptPasswordEncoder passwordEncoder = new BCryptPasswordEncoder();
             UserSocu userSocu = convertToUserSocuFromUserDTO(userDTO);
