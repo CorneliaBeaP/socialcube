@@ -68,10 +68,10 @@ export class AdministrationComponent implements OnInit, OnDestroy {
     this.subscription = this.userService.sendUser(usersocu).subscribe((data) => {
       this.response = data;
       if(this.response.status == 'OK'){
-        this.response.message = '';
-        this.response.status = '';
         this.mailto(usersocu.email.toString());
         this.addForm.reset();
+        this.response.message = '';
+        this.response.status = '';
         window.location.reload();
       }
     });

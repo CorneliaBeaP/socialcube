@@ -91,6 +91,7 @@ class UserControllerTest {
         Response response = userController.saveNewUser(dto);
         assertNotNull(response.getStatus());
         assertEquals("OK", response.getStatus());
+        assertNotNull(response.getMessage());
     }
 
     @Test
