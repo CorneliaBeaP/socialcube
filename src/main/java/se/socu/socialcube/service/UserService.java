@@ -239,22 +239,28 @@ public class UserService {
 
     public Response updateUserInformation(long userid, String name, String email, String department) {
         Response response = new Response();
-
         Optional<UserSocu> userSocu = userRepository.findById(userid);
+        Optional<UserSocu> emailcheck = userRepository.findByEmail(email);
         if (userSocu.isPresent()) {
             UserSocu user = userSocu.get();
-            user.setName(name);
-            user.setEmail(email);
-            user.setDepartment(department);
-            try {
-                userRepository.save(user);
-                response.setMessage("Informationen uppdaterad!");
-                response.setStatus("OK");
-            } catch (Exception e) {
-                e.printStackTrace();
-                response.setMessage("Kunde inte uppdatera informationen. Försök igen senare.");
-                response.setStatus("ERROR");
+            if (emailcheck.isPresent() && !(emailcheck.get().getId() == user.getId())) {
+                    response.setStatus("ERROR");
+                    response.setMessage("Kunde inte uppdatera informationen. Mailadressen är redan registrerad till en annan användare.");
+            } else {
+                user.setEmail(email);
+                user.setName(name);
+                user.setDepartment(department);
+                try {
+                    userRepository.save(user);
+                    response.setMessage("Informationen uppdaterad!");
+                    response.setStatus("OK");
+                } catch (Exception e) {
+                    e.printStackTrace();
+                    response.setMessage("Kunde inte uppdatera informationen. Försök igen senare.");
+                    response.setStatus("ERROR");
+                }
             }
+
         } else {
             response.setMessage("Kunde inte uppdatera informationen. Försök igen senare.");
             response.setStatus("ERROR");

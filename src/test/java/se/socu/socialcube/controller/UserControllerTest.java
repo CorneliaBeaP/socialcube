@@ -118,6 +118,10 @@ class UserControllerTest {
         Response response = userController.updateUserInformation(token, info);
         assertNotNull(response.getStatus());
         assertEquals("OK", response.getStatus());
+        String[] infoalreadyexists = {"Anna Hansson", "erik.eriksson@testcompany.com", userSocu.getDepartment()};
+        response = userController.updateUserInformation(token, infoalreadyexists);
+        assertNotNull(response.getStatus());
+        assertEquals("ERROR", response.getStatus());
     }
 
     @Test

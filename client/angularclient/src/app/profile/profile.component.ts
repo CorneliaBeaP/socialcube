@@ -28,6 +28,7 @@ export class ProfileComponent implements OnInit {
   subscription: Subscription;
   subscrip: Subscription;
   response: Response;
+  infoResponse: Response;
   profilepicErrorMessage = "";
   fieldTextType1: boolean;
   fieldTextType2: boolean;
@@ -48,8 +49,8 @@ export class ProfileComponent implements OnInit {
     this.subscription = this.userService.getUser(this.authService.getToken()).subscribe((data) => {
       let data2 = JSON.stringify(data);
       this.user = JSON.parse(data2);
-      if(this.user){
-        if(this.user.id){
+      if (this.user) {
+        if (this.user.id) {
           this.getProfilePicture(this.user.id);
         }
       }
@@ -86,10 +87,11 @@ export class ProfileComponent implements OnInit {
   }
 
   getProfilePicture(id: number) {
-    this.getFolder(id).subscribe(data =>{
+    this.getFolder(id).subscribe(data => {
       this.profilepictureurl = data;
     });
   }
+
   getFolder(id: number): Observable<string> {
     const folderPath = `../../../../assets/ProfilePictures`;
     return this.http
@@ -138,6 +140,11 @@ export class ProfileComponent implements OnInit {
       return;
     }
     this.subscription = this.userService.updateUserInformation(this.user.token, this.infoform.get('name').value, this.infoform.get('email').value, this.infoform.get('department').value).subscribe((data) => {
+      let response: Response = data;
+      if (response.status == 'ERROR') {
+        this.infoResponse = data;
+        this.createInfoform();
+      }
       this.subscrip = this.userService.getUser(this.authService.getToken()).subscribe((data) => {
         let data2 = JSON.stringify(data);
         this.user = JSON.parse(data2);

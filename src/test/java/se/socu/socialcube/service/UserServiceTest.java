@@ -61,7 +61,7 @@ class UserServiceTest {
 
 
     @BeforeEach
-    void setUp(){
+    void setUp() {
         passwordEncoder = new BCryptPasswordEncoder();
         company = new Company(5501010101L, "TestCompany AB");
         socuuser = new UserSocu(Usertype.USER, "Anna Svensson", "anna.svensson@testcompany.com", passwordEncoder.encode("aOpTYjdls"), "A007", "IT-avdelningen", company);
@@ -309,6 +309,9 @@ class UserServiceTest {
         userSocu = userRepository.findById(userSocu.get().getId());
         assertEquals("Angelica Björk", userSocu.get().getName());
         assertEquals("angelica@testcompany2.com", userSocu.get().getEmail());
+        Response response = userService.updateUserInformation(userSocu.get().getId(), "Angelica Björk", "hans@testcompany2.com", "");
+        assertEquals("ERROR", response.getStatus());
+        assertEquals("Kunde inte uppdatera informationen. Mailadressen är redan registrerad till en annan användare.", response.getMessage());
     }
 
     @Test
