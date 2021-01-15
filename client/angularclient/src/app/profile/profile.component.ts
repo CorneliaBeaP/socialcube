@@ -87,24 +87,7 @@ export class ProfileComponent implements OnInit {
   }
 
   getProfilePicture(id: number) {
-    this.getFolder(id).subscribe(data => {
-      this.profilepictureurl = data;
-    });
-  }
-
-  getFolder(id: number): Observable<string> {
-    const folderPath = `../../../../assets/ProfilePictures`;
-    return this.http
-      .get(`${folderPath}/${id}.png`, {observe: 'response', responseType: 'blob'})
-      .pipe(
-        map(response => {
-          return `${folderPath}/${id}.png`;
-        }),
-        catchError(error => {
-          // console.clear();
-          return of(`${folderPath}/default.png`);
-        })
-      );
+    this.profilepictureurl = `../../../../assets/ProfilePictures/${id}.png`;
   }
 
   triggerFileUpload() {
@@ -193,5 +176,9 @@ export class ProfileComponent implements OnInit {
     } else {
       this.fieldTextType3 = !this.fieldTextType3;
     }
+  }
+
+  errorHandler(event) {
+    event.target.src = `../../../../assets/ProfilePictures/default.png`;
   }
 }
