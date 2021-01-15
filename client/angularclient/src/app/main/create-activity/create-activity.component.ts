@@ -89,6 +89,5 @@ export class CreateActivityComponent implements OnInit, OnDestroy {
   }
 
   ngOnDestroy(): void {
-    // this.subscription.unsubscribe();
   }
 }

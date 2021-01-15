@@ -86,12 +86,6 @@ class ActivityServiceTest {
         ) {
             userSocuList.add(u);
         }
-
-//        Logger logger = Logger.getLogger(ActivityServiceTest.class.getName());
-//        for (Activity a : repository.findAll()
-//        ) {
-//            logger.log(Level.INFO, a.getId() + "");
-//        }
     }
 
     @AfterEach
