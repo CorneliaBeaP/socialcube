@@ -11,10 +11,9 @@
       </li>
       <li class="mr-3 mt-2">
         {{user.name}}
-
       </li>
       <li class="mr-3 mt-1" *ngIf="profilepictureurl">
-        <img [src]="profilepictureurl" (click)="goToProfile()">
+        <img [src]="profilepictureurl" (error)="errorHandler($event)" (click)="goToProfile()">
       </li>
       <li class="nav-item dropdown">
         <a class="nav-link dropdown-toggle" href="#" id="navbarDropdownMenuLink" role="button" data-toggle="dropdown"

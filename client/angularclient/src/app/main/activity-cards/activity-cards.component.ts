@@ -35,35 +35,35 @@ export class ActivityCardsComponent implements OnInit, OnDestroy {
   }
 
   setUp() {
-     this.subscription = this.activityService.getActivities(this.user.token).subscribe(activityarray => {
-        activityarray.forEach((activity) => {
-          this.subscription = this.activityService.getAttendees(activity.id).subscribe((data) => {
-            let data2 = JSON.stringify(data);
-            activity.attendees = JSON.parse(data2);
-          });
+    this.subscription = this.activityService.getActivities(this.user.token).subscribe(activityarray => {
+      activityarray.forEach((activity) => {
+        this.subscription = this.activityService.getAttendees(activity.id).subscribe((data) => {
+          let data2 = JSON.stringify(data);
+          activity.attendees = JSON.parse(data2);
         });
-        activityarray.forEach((activity) => {
-          if(!activity.createdBy){
-            let usersocu: Usersocu = new Usersocu();
-            usersocu.id = 0;
-            usersocu.name = "Borttagen användare";
-            activity.createdBy = usersocu;
-            activity.createdbyid = usersocu.id;
-          }
-        });
-        this.activities = activityarray;
-        this.activities = this.activities.reverse();
-        this.getDeclinedActivities();
-        this.activities = this.expiredPipe.transform(this.activities);
       });
-      this.getAttendedActivities();
-      this.getProfilePicture(this.user.id);
+      activityarray.forEach((activity) => {
+        if (!activity.createdBy) {
+          let usersocu: Usersocu = new Usersocu();
+          usersocu.id = 0;
+          usersocu.name = "Borttagen användare";
+          activity.createdBy = usersocu;
+          activity.createdbyid = usersocu.id;
+        }
+      });
+      this.activities = activityarray;
+      this.activities = this.activities.reverse();
+      this.getDeclinedActivities();
+      this.activities = this.expiredPipe.transform(this.activities);
+    });
+    this.getAttendedActivities();
+    this.getProfilePicture(this.user.id);
   }
 
   attendEvent(activityid: number) {
-    if(this.isUserNotAttendingButHaveCreatedEvent(activityid)){
+    if (this.isUserNotAttendingButHaveCreatedEvent(activityid)) {
       this.activityService.attendDeclinedActivity(this.authService.getToken(), activityid);
-    }else{
+    } else {
       this.activityService.attendActivity(this.authService.getToken(), activityid);
     }
     location.reload();
@@ -202,6 +202,10 @@ export class ActivityCardsComponent implements OnInit, OnDestroy {
   openEditModal(activity: Activity) {
     let modalRef = this.modalService.open(EditModalComponent);
     modalRef.componentInstance.activity = activity;
+  }
+
+  errorHandler(event) {
+    event.target.src = `../../../../assets/ProfilePictures/default.png`;
   }
 
   ngOnDestroy(): void {

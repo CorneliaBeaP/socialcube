@@ -3,9 +3,8 @@ import {AuthService} from "../../services/auth.service";
 import {Usersocu} from "../../classes/usersocu";
 import {HttpClient} from "@angular/common/http";
 import {Router} from "@angular/router";
-import {Observable, of, Subscription} from "rxjs";
+import {Subscription} from "rxjs";
 import {UserService} from "../../services/user.service";
-import {catchError, map} from "rxjs/operators";
 
 
 @Component({
@@ -44,31 +43,16 @@ export class HeaderComponent implements OnInit {
     }
   }
 
-  // getProfilePicture(): string {
-  //     return `../../../../assets/ProfilePictures/${this.user.id}.png`;
-  // }
-
   goToProfile() {
     this.router.navigate(['/profile']);
   }
 
   getProfilePicture(id: number) {
-    this.getFolder(id).subscribe(data =>{
-      this.profilepictureurl = data;
-    });
+    this.profilepictureurl = `../../../../assets/ProfilePictures/${id}.png`;
   }
-  getFolder(id: number): Observable<string> {
-    const folderPath = `../../../../assets/ProfilePictures`;
-    return this.http
-      .get(`${folderPath}/${id}.png`, {observe: 'response', responseType: 'blob'})
-      .pipe(
-        map(response => {
-          return `${folderPath}/${id}.png`;
-        }),
-        catchError(error => {
-          // console.clear();
-          return of(`${folderPath}/default.png`);
-        })
-      );
+
+
+  errorHandler(event) {
+    event.target.src = `../../../../assets/ProfilePictures/default.png`;
   }
 }
