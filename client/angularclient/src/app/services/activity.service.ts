@@ -1,10 +1,8 @@
 import {Injectable} from '@angular/core';
-import {HttpClient, HttpHeaders} from "@angular/common/http";
+import {HttpClient} from "@angular/common/http";
 import {Router} from "@angular/router";
 import {Activity} from "../classes/activity";
 import {map} from "rxjs/operators";
-import {Usersocu} from "../classes/usersocu";
-import {Response} from "../classes/response";
 
 
 @Injectable({

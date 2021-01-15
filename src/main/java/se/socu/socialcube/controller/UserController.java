@@ -5,7 +5,6 @@ import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 import se.socu.socialcube.DTO.UserDTO;
 import se.socu.socialcube.entities.Response;
-import se.socu.socialcube.entities.UserSocu;
 import se.socu.socialcube.service.UserService;
 
 import java.io.IOException;

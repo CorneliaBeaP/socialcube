@@ -1,10 +1,8 @@
 package se.socu.socialcube.service;
 
-import org.springframework.stereotype.Repository;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import se.socu.socialcube.DTO.ActivityDTO;
-import se.socu.socialcube.DTO.UserDTO;
 import se.socu.socialcube.entities.Activity;
 import se.socu.socialcube.entities.Company;
 import se.socu.socialcube.entities.Response;
@@ -14,7 +12,6 @@ import se.socu.socialcube.repository.CompanyRepository;
 import se.socu.socialcube.repository.UserRepository;
 
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.List;
 import java.util.Optional;
 

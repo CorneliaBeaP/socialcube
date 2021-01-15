@@ -3,7 +3,6 @@ package se.socu.socialcube.service;
 import io.jsonwebtoken.Claims;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
-import org.springframework.util.AutoPopulatingList;
 import org.springframework.web.multipart.MultipartFile;
 import se.socu.socialcube.DTO.UserDTO;
 import se.socu.socialcube.entities.Activity;
@@ -11,9 +10,9 @@ import se.socu.socialcube.entities.Company;
 import se.socu.socialcube.entities.Response;
 import se.socu.socialcube.entities.UserSocu;
 import se.socu.socialcube.repository.ActivityRepository;
-import se.socu.socialcube.security.jwt.JwtUtil;
 import se.socu.socialcube.repository.CompanyRepository;
 import se.socu.socialcube.repository.UserRepository;
+import se.socu.socialcube.security.jwt.JwtUtil;
 
 import java.io.File;
 import java.io.IOException;

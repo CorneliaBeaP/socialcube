@@ -1,6 +1,4 @@
 import {Usersocu} from "./usersocu";
-import {Location} from "./location";
-import {Time} from "@angular/common";
 
 export class Activity {
   id: number;

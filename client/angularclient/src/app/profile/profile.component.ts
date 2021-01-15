@@ -1,8 +1,8 @@
 import {Component, OnInit} from '@angular/core';
 import {UserService} from "../services/user.service";
 import {AuthService} from "../services/auth.service";
-import {Observable, of, Subscription} from "rxjs";
-import {catchError, first, map} from "rxjs/operators";
+import {Subscription} from "rxjs";
+import {first} from "rxjs/operators";
 import {HttpClient} from "@angular/common/http";
 import {Usersocu} from "../classes/usersocu";
 import {FormBuilder, FormGroup, Validators} from "@angular/forms";

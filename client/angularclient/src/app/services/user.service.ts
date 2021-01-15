@@ -1,5 +1,5 @@
 import {Injectable} from '@angular/core';
-import {HttpClient, HttpHeaders, HttpParams} from '@angular/common/http';
+import {HttpClient, HttpHeaders} from '@angular/common/http';
 import {Usersocu} from '../classes/usersocu';
 import {Observable} from 'rxjs';
 import {map} from "rxjs/operators";
@@ -83,13 +83,6 @@ export class UserService {
 
   public getUser(token: string) {
     return this.http.get(`http://localhost:8080/api/user/${token}`).pipe(map(data => {
-      let data2 = JSON.stringify(data);
-      return JSON.parse(data2);
-    }));
-  }
-
-  public getUserIDfromJWT(token: string){
-    return this.http.get<Response>(`http://localhost:8080/api/getuserid/${token}`).pipe(map(data => {
       let data2 = JSON.stringify(data);
       return JSON.parse(data2);
     }));

@@ -8,7 +8,6 @@ import se.socu.socialcube.entities.Response;
 import se.socu.socialcube.service.ActivityService;
 import se.socu.socialcube.service.UserService;
 
-import javax.websocket.server.PathParam;
 import java.io.IOException;
 import java.util.ArrayList;
 

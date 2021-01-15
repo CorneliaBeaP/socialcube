@@ -1,7 +1,6 @@
 import {Component, Input, OnDestroy, OnInit} from '@angular/core';
 import {Activity} from "../../../classes/activity";
 import {Subscription} from "rxjs";
-import {UserService} from "../../../services/user.service";
 import {ActivityService} from "../../../services/activity.service";
 import {AuthService} from "../../../services/auth.service";
 

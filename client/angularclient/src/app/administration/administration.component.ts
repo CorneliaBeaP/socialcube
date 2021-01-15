@@ -3,9 +3,8 @@ import {FormBuilder, FormGroup, Validators} from "@angular/forms";
 import {Usersocu} from "../classes/usersocu";
 import {AuthService} from "../services/auth.service";
 import {UserService} from "../services/user.service";
-import {Observable, Subscription} from "rxjs";
+import {Subscription} from "rxjs";
 import {Response} from "../classes/response";
-import {map} from "rxjs/operators";
 
 @Component({
   selector: 'app-administration',

@@ -3,12 +3,10 @@ package se.socu.socialcube.repository;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.CrudRepository;
 import org.springframework.stereotype.Repository;
-import se.socu.socialcube.DTO.ActivityDTO;
 import se.socu.socialcube.entities.Activity;
 import se.socu.socialcube.entities.UserSocu;
 
 import java.util.ArrayList;
-import java.util.Collection;
 
 @Repository
 public interface ActivityRepository extends CrudRepository<Activity, Long> {

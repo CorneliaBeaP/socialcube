@@ -12,6 +12,9 @@ import java.security.Key;
 import java.util.Date;
 
 public class JwtUtil {
+
+/*    Källa: https://developer.okta.com/blog/2018/10/31/jwts-with-java */
+
     private static String SECRET_KEY;
 
     public JwtUtil() throws IOException {
