@@ -5,7 +5,7 @@ import {Activity} from "../../classes/activity";
 import {ActivityService} from "../../services/activity.service";
 import {AuthService} from "../../services/auth.service";
 import {DateAdapter, MAT_DATE_FORMATS} from "@angular/material/core";
-import {APP_DATE_FORMATS, AppDateAdapter} from "../../helpers/app-date-adapter";
+import {APP_DATE_FORMATS, AppDateAdapter} from "../../helpers/adapters/app-date-adapter";
 import {Subscription} from "rxjs";
 import {Usersocu} from "../../classes/usersocu";
 

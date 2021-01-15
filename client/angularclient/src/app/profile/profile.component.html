@@ -37,7 +37,7 @@
               <input formControlName="department" autocomplete="off" type="text" class="form-control mt-3"
                      placeholder="Avdelning">
               <div class="d-flex justify-content-center text-center">
-                <div class="errorred mt-2">{{infoResponse.message}}</div>
+                <div *ngIf="infoResponse" class="errorred mt-2">{{infoResponse.message}}</div>
               </div>
               <div class="d-flex justify-content-center text-center">
                 <button type="submit" class="minw-100 btn btn-light m-5">Spara</button>
