@@ -39,7 +39,11 @@ public class UserService {
     private CompanyRepository companyRepository;
     private ActivityRepository activityRepository;
 
-
+    /**
+     * Converts an instance of UserSocu-object to UserDTO
+     * @param userSocu the UserSocu that is to be converted
+     * @return an UserDTO which the same information as the user-object provided
+     */
     public UserDTO convertToUserDTOfromUserSocu(UserSocu userSocu) {
         UserDTO userDTO = new UserDTO();
         userDTO.setId(userSocu.getId());
@@ -53,6 +57,11 @@ public class UserService {
         return userDTO;
     }
 
+    /**
+     * Converts an instance of UserDTO to an UserSocu-object
+     * @param userDTO the UserDTO that is to be converted
+     * @return an UserSocu-object with the same information as the provided UserDTO
+     */
     public UserSocu convertToUserSocuFromUserDTO(UserDTO userDTO) {
         UserSocu userSocu = new UserSocu();
         userSocu.setName(userDTO.getName());
@@ -67,6 +76,11 @@ public class UserService {
         return userSocu;
     }
 
+    /**
+     * Provides all the users registered to a specific company
+     * @param id the companys id/organization number
+     * @return a list of all users registered to the company, as UserDTOs
+     */
     public List<UserDTO> getAllUserDTOsForCompany(Long id) {
         List<UserSocu> allUsers = (List<UserSocu>) userRepository.findAllByCompany_organizationnumber(id);
         List<UserDTO> allUsersDTO = new ArrayList<>();
@@ -79,6 +93,11 @@ public class UserService {
         return allUsersDTO;
     }
 
+    /**
+     * Saves a new user to the database
+     * @param userDTO an UserDTO with the information about the new user
+     * @return a response with information about if the user was saved or not
+     */
     public Response saveNewUser(UserDTO userDTO) {
         Response response = new Response();
         Optional<UserSocu> alreadyexisting = userRepository.findByEmail(userDTO.getEmail().toLowerCase());
@@ -106,6 +125,11 @@ public class UserService {
         return response;
     }
 
+    /**
+     * Deletes a user
+     * @param id the id of the user
+     * @return a response with information if the user was deleted or not
+     */
     public Response deleteUser(Long id) {
         Response response = new Response();
         Optional<UserSocu> userSocu = userRepository.findById(id);
@@ -156,7 +180,13 @@ public class UserService {
         return response;
     }
 
-    public Response saveImage(MultipartFile imagefile, Long userid) throws Exception {
+    /**
+     * Saves a profilepicture for an user
+     * @param imagefile the profilepicture the user uploaded
+     * @param userid the id of the user
+     * @return a response with information about if the image was successfully saved or not
+     */
+    public Response saveImage(MultipartFile imagefile, Long userid) {
         Response response = new Response();
         try {
             String folder = "client/angularclient/src/assets/ProfilePictures/";
@@ -174,6 +204,10 @@ public class UserService {
         return response;
     }
 
+    /**
+     * Creates a new image when a new user is created. The image name is the new users id and shows the default picture
+     * @param id the new users id
+     */
     public void copyDefaultPictureForNewUser(long id) {
         File source = new File("client/angularclient/src/assets/ProfilePictures/default.png");
         File newFile = new File("client/angularclient/src/assets/ProfilePictures/" + id + ".png");
@@ -184,6 +218,12 @@ public class UserService {
         }
     }
 
+    /**
+     * Replaces an users profile picture-file with the default profile picture or deletes the image completely in the case that the user is being deleted as well
+     * @param id the users id
+     * @param isUserRemoved boolean if the user is being deleted as well
+     * @return response with information about if the action was successful or not
+     */
     public Response deleteProfilePicture(Long id, Boolean isUserRemoved) {
         Response response = new Response();
         String folder = "client/angularclient/src/assets/ProfilePictures/";
@@ -204,6 +244,11 @@ public class UserService {
         return response;
     }
 
+    /**
+     * Generates a password with randomly selected numbers and letters
+     * @param length the length of which the password should be
+     * @return a randomly generated password
+     */
     public String generatePassword(int length) {
         String characters = "0123456789ABCDEFGHIJKLMNOPQRSTUVWXabcdefghijklmnopqrstuvwxyz";
         Random random = new Random();
@@ -215,6 +260,13 @@ public class UserService {
         return stringBuilder.toString();
     }
 
+    /**
+     * Changes an users password
+     * @param oldpass the users old password
+     * @param newpass the new password the user want to change to
+     * @param userid the id of the user
+     * @return a response with information if the change was successful or not
+     */
     public Response changePassword(String oldpass, String newpass, Long userid) {
         BCryptPasswordEncoder passwordEncoder = new BCryptPasswordEncoder();
         Response response = new Response();
@@ -236,6 +288,14 @@ public class UserService {
         return response;
     }
 
+    /**
+     * Updates userinformation in the database such as name, email and/or deparment.
+     * @param userid the id of the user
+     * @param name the users name
+     * @param email the users email
+     * @param department the users deparment, if there is any, otherwise empty
+     * @return a response with information if the update was successful or not
+     */
     public Response updateUserInformation(long userid, String name, String email, String department) {
         Response response = new Response();
         Optional<UserSocu> userSocu = userRepository.findById(userid);
@@ -277,7 +337,12 @@ public class UserService {
         return userDTOS;
     }
 
-    public UserDTO getUserFromJWT(String token) throws IOException {
+    /**
+     * Get the logged in user by decoding the Jason Web Token provided by the client
+     * @param token the Jason Web Token provided by the client
+     * @return an User Data Transfer Object of the user that is logged in
+     */
+    public UserDTO getUserFromJWT(String token){
         JwtUtil.decodeJWT(token);
         Claims claims = JwtUtil.decodeJWT(token);
         UserDTO dto = new UserDTO();
@@ -291,12 +356,23 @@ public class UserService {
         return dto;
     }
 
+    /**
+     * Get a userID for the logged in user from a JSON Web Token provided by the client
+     * @param token the Jason Web Token provided by the client
+     * @return the ID for the user that is logged in
+     */
     public long getUserIDFromJWT(String token) {
         Claims claims = JwtUtil.decodeJWT(token);
         return Long.parseLong(claims.getId());
     }
 
-    public UserDTO checkIfLoginCredentialsAreCorrectAndGetUser(String username, String password) throws IOException {
+    /**
+     * Check if the username and password provided are correct for an user and existing in the database
+     * @param username the username provided when logging in
+     * @param password the password provided when logging in
+     * @return an empty UserDTO if the login credentials are wrong, or an UserDTO of an user if the login credentials are right
+     */
+    public UserDTO checkIfLoginCredentialsAreCorrectAndGetUser(String username, String password) {
         UserDTO userDTO = new UserDTO();
         BCryptPasswordEncoder bCryptPasswordEncoder = new BCryptPasswordEncoder();
         if (!(username == null)) {
