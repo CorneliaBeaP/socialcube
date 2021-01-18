@@ -31,6 +31,11 @@ public class ActivityService {
         this.userService = userService;
     }
 
+    /**
+     * Converts an instance of an Activity-object to an Activity Data Transfer Object
+     * @param activity the activity-object that is to be converted
+     * @return an ActivityDTO with the same information as the Activity-object
+     */
     private ActivityDTO convertToActivityDTOfromActivity(Activity activity) {
         ActivityDTO activityDTO = new ActivityDTO();
         activityDTO.setId(activity.getId());
@@ -50,6 +55,11 @@ public class ActivityService {
         return activityDTO;
     }
 
+    /**
+     * Converts an Activity Data Transfer Object to an Activity-Object
+     * @param activityDTO the ActivityDTO that is to be converted
+     * @return an Activity-object with the same information as the ActivityDTO
+     */
     private Activity convertToActivityFromActivityDTO(ActivityDTO activityDTO) {
         Activity activity = new Activity();
         activity.setId(activityDTO.getId());
@@ -72,6 +82,11 @@ public class ActivityService {
         return activity;
     }
 
+    /**
+     * Save a new activity to the database
+     * @param activityDTO an ActivityDTO containing the information about the activity
+     * @return a response with information about if the saving was succesful or not
+     */
     public Response saveActivityDTO(ActivityDTO activityDTO) {
         Response response = new Response();
         Activity activity = convertToActivityFromActivityDTO(activityDTO);
@@ -90,6 +105,12 @@ public class ActivityService {
         return response;
     }
 
+    /**
+     * Used when an user declines an activity, the information is saved in the database
+     * @param activityID the id of the activity that is declined
+     * @param userID the id of the user that is declining the activity
+     * @return a response with information about if the save in the database is successful or not
+     */
     public Response declineActivity(long activityID, long userID) {
         Response response = new Response();
         Optional<Activity> activity = activityRepository.findById(activityID);
@@ -119,6 +140,12 @@ public class ActivityService {
         return response;
     }
 
+    /**
+     * Used when a user declines an activity that the user previously attended, the database is updated
+     * @param activityID the id of which activity it regards
+     * @param userID th id of the user that is declining the activity
+     * @return a response with information about if the update in the database was succesful
+     */
     public Response declineAttendedActivity(long activityID, long userID) {
         Response response = new Response();
         Optional<Activity> activity = activityRepository.findById(activityID);
@@ -140,6 +167,12 @@ public class ActivityService {
         return response;
     }
 
+    /**
+     * Used when a user attends an activity that the user previously has declined, the database is updated
+     * @param userid the id of the user attending the activity
+     * @param activityid the id of the activity the user is attending
+     * @return a response with information about if the update in the database was succesful
+     */
     public Response attendDeclinedActivity(long userid, long activityid) {
         Response response = new Response();
         Optional<Activity> activity = activityRepository.findById(activityid);
@@ -162,6 +195,11 @@ public class ActivityService {
         return response;
     }
 
+    /**
+     * Finds and provides all the activities registered to a specific company
+     * @param organizationnumber the id/organization number of the company
+     * @return a list with ActivityDTOs of all the activities registered to the company
+     */
     public ArrayList<ActivityDTO> findAllActivitiesByCompany_organizationnumber(long organizationnumber) {
         ArrayList<Activity> activities = activityRepository.findAllByCompany_organizationnumber(organizationnumber);
         ArrayList<ActivityDTO> activityDTOS = new ArrayList<>();
@@ -173,9 +211,15 @@ public class ActivityService {
         return activityDTOS;
     }
 
+    /**
+     * Used when an user is attending an activity, the information is saved in the database
+     * @param userid the id of the user that is attending an activity
+     * @param activityid the id of the activity that the user is attending
+     * @return a response with information about if the save to the database was successful or not
+     */
     public Response attendActivity(long userid, long activityid) {
         Response response = new Response();
-        List<Activity> attendedActivities = new ArrayList<>();
+        List<Activity> attendedActivities;
         Optional<Activity> activity = activityRepository.findById(activityid);
         Optional<UserSocu> userSocu = userRepository.findById(userid);
         if (activity.isPresent() && userSocu.isPresent()) {
@@ -185,18 +229,23 @@ public class ActivityService {
                 attendees.add(userSocu.get());
                 activity.get().setAttendees(attendees);
                 response.setStatus("OK");
-                response.setMessage("Attendee added");
+                response.setMessage("Deltagare tillagd");
             } else {
                 response.setStatus("ERROR");
-                response.setMessage("User already an attendee");
+                response.setMessage("Användaren är redan en deltagare");
             }
         } else {
             response.setStatus("ERROR");
-            response.setMessage("Not able to add attendee");
+            response.setMessage("Kunde inte lägga till deltagare");
         }
         return response;
     }
 
+    /**
+     * Provides all the activities that a specific user has attended
+     * @param userid the id of the user
+     * @return a list containing ActivityDTOs of all the activities the user has attended
+     */
     public ArrayList<ActivityDTO> getAllAttendedActivities(long userid) {
         String string = "" + userid;
         ArrayList<Activity> activities = activityRepository.findAllAttendedActivitiesByUsersocuId(Long.parseLong(string));
@@ -208,6 +257,11 @@ public class ActivityService {
         return activityDTOS;
     }
 
+    /**
+     * Provides all the activities that a specific user has declined
+     * @param userid the id of the user
+     * @return a list containing ActivityDTOs of all the activities the user has declined
+     */
     public ArrayList<ActivityDTO> getAllDeclinedActivities(long userid) {
         ArrayList<Activity> activities = activityRepository.findAllDeclinedActivitiesByUsersocuId(userid);
         ArrayList<ActivityDTO> activityDTOS = new ArrayList<>();
@@ -218,6 +272,11 @@ public class ActivityService {
         return activityDTOS;
     }
 
+    /**
+     * Updates an activity in the database with new information on location, description, RSVPdate, date of activity and/or activity type.
+     * @param activityDTO the ActivityDTO containing information about the activity
+     * @return a response with information about if the up
+     */
     public Response updateActivity(ActivityDTO activityDTO) {
         Response response = new Response();
         if (!(activityDTO == null)) {
