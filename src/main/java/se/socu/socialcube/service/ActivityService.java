@@ -307,6 +307,11 @@ public class ActivityService {
         return response;
     }
 
+    /**
+     * Changes an activitys boolean "isCancelled" from false to true in the database.
+     * @param id the id of the activity which it regards
+     * @return response with information about if the update in the database was succesful or not
+     */
     public Response cancelActivity(long id) {
         Response response = new Response();
         Optional<Activity> activity = activityRepository.findById(id);
@@ -325,6 +330,11 @@ public class ActivityService {
         return response;
     }
 
+    /**
+     * Removes an activity from the database
+     * @param id the id of the activity
+     * @return a response with information about if the removal was succesful or not
+     */
     public Response deleteActivity(long id) {
         Response response = new Response();
         Optional<Activity> activity = activityRepository.findById(id);
