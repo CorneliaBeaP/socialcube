@@ -208,6 +208,16 @@ export class ActivityCardsComponent implements OnInit, OnDestroy {
     event.target.src = `../../../../assets/ProfilePictures/default.png`;
   }
 
+  getTooltipAttendee(name: string, department: string): string{
+   let returnstring = '';
+   if(department){
+     returnstring = `${name} (${department})`;
+   }else{
+     returnstring = name;
+   }
+    return returnstring;
+  }
+
   ngOnDestroy(): void {
     this.subscription.unsubscribe();
   }

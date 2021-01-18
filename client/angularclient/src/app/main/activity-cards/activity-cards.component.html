@@ -16,12 +16,12 @@
   <div class="row" *ngIf="!activity.cancelled">
     <div class="col">
       <img class="ml-3" *ngIf="activity.createdbyid>0" [src]="getProfilePicture(activity.createdBy.id)" alt="Skapad av {{activity.createdBy.name}}"
-           [matTooltip]="activity.createdBy.name" (error)="errorHandler($event)">
+           [matTooltip]="getTooltipAttendee(activity.createdBy.name, activity.createdBy.department)" (error)="errorHandler($event)">
       <i *ngIf="activity.createdbyid==0" class="fas fa-user-slash ml-3" [matTooltip]="activity.createdBy.name"></i>
     </div>
     <div class="col text-right mr-1">
     <span *ngFor="let attendee of activity.attendees" class="mr-1">
-      <img [attr.src]="getProfilePicture(attendee.id)" (error)="errorHandler($event)" alt="{{attendee.name}}" [matTooltip]="attendee.name">
+      <img [attr.src]="getProfilePicture(attendee.id)" (error)="errorHandler($event)" alt="{{attendee.name}}" [matTooltip]="getTooltipAttendee(attendee.name, attendee.department)">
     </span>
     </div>
   </div>
