@@ -15,15 +15,40 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 
+/**
+ * A service that communicates with the repository regarding things about activities, which in it's turn communicates with the database.
+ */
 @Service
 @Transactional
 public class ActivityService {
 
+    /**
+     * a repository that communicates with the database regarding things about activities
+     */
     private ActivityRepository activityRepository;
+
+    /**
+     * a repository that communicates with the database regarding things about users
+     */
     private UserRepository userRepository;
+
+    /**
+     * a repository that communicates with the database regarding things about companies
+     */
     private CompanyRepository companyRepository;
+
+    /**
+     * a service that communicates with the repository regarding things about users, which in it's turn communicates with the database.
+     */
     private UserService userService;
 
+    /**
+     * Contructor for the ActivityService
+     * @param activityRepository a repository that communicates with the database regarding things about activities
+     * @param userRepository a repository that communicates with the database regarding things about users
+     * @param companyRepository a repository that communicates with the database regarding things about companies
+     * @param userService a service that communicates with the repository regarding things about users, which in it's turn communicates with the database.
+     */
     public ActivityService(ActivityRepository activityRepository, UserRepository userRepository, CompanyRepository companyRepository, UserService userService) {
         this.activityRepository = activityRepository;
         this.userRepository = userRepository;

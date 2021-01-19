@@ -24,10 +24,20 @@ import java.util.List;
 import java.util.Optional;
 import java.util.Random;
 
+/**
+ * A service that communicates with the repository regarding things about users, which in it's turn communicates with the database.
+ */
 @Service
 public class UserService {
 
 
+    /**
+     * Constructor for the UserService
+     * @param userRepository a repository that communicates with the database regarding things about users
+     * @param companyRepository a repository that communicates with the database regarding things about companies
+     * @param activityRepository a repository that communicates with the database regarding things about activities
+     * @throws IOException
+     */
     public UserService(UserRepository userRepository, CompanyRepository companyRepository, ActivityRepository activityRepository) throws IOException {
         this.userRepository = userRepository;
         this.companyRepository = companyRepository;
@@ -35,8 +45,19 @@ public class UserService {
         JwtUtil jwtUtil = new JwtUtil();
     }
 
+    /**
+     * a repository that communicates with the database regarding things about users
+     */
     private UserRepository userRepository;
+
+    /**
+     * a repository that communicates with the database regarding things about companies
+     */
     private CompanyRepository companyRepository;
+
+    /**
+     * a repository that communicates with the database regarding things about activities
+     */
     private ActivityRepository activityRepository;
 
     /**

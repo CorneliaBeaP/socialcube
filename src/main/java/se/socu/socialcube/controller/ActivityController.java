@@ -11,6 +11,9 @@ import se.socu.socialcube.service.UserService;
 import java.io.IOException;
 import java.util.ArrayList;
 
+/**
+ * Controller that recieves information and requests from the client regarding things about the activity entity
+ */
 @CrossOrigin(origins = "http://localhost:4200", allowedHeaders = "*")
 @RestController
 public class ActivityController {
