@@ -20,7 +20,7 @@ public class SocialcubeApplication {
 
 
     @Bean
-    public CommandLineRunner setUp(UserRepository userRepository, CompanyRepository companyRepository, ActivityRepository activityRepository, UserService userService) {
+    public CommandLineRunner setUp() {
         return (args -> {
             System.out.println(LocalDateTime.now() +  " Applikationen startar");
         });
