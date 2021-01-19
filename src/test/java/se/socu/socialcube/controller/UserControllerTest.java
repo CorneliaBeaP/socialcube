@@ -125,7 +125,7 @@ class UserControllerTest {
     }
 
     @Test
-    void verifyCredentialsAndSendToken() throws IOException {
+    void verifyCredentialsAndSendToken(){
         UserSocu userSocu = optionalUserSocu.get();
         String[] usercredentials = {userSocu.getEmail(), "aOpTYjdls"};
         UserDTO userDTO = userController.verifyCredentialsAndSendToken(usercredentials);
@@ -145,23 +145,12 @@ class UserControllerTest {
     }
 
     @Test
-    void getUserDTOFromJWT() throws IOException {
+    void getUserDTOFromJWT(){
         UserSocu userSocu = optionalUserSocu.get();
         String token = JwtUtil.createJWT(String.valueOf(userSocu.getId()), String.valueOf(userSocu.getId()), userSocu.getName());
         UserDTO userDTO = userController.getUserDTOFromJWT(token);
 
         assertNotNull(userDTO.getName());
         assertEquals("Anna Svensson", userDTO.getName());
-    }
-
-    @Test
-    void getUserIDfromJWT() {
-        UserSocu userSocu = optionalUserSocu.get();
-        String token = JwtUtil.createJWT(String.valueOf(userSocu.getId()), String.valueOf(userSocu.getId()), userSocu.getName());
-        Response response = userController.getUserIDfromJWT(token);
-
-        assertNotNull(response.getStatus());
-        assertEquals("OK", response.getStatus());
-        assertEquals(String.valueOf(userSocu.getId()), response.getMessage());
     }
 }
