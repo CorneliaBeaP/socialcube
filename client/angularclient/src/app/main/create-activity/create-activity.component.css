@@ -18,10 +18,7 @@ input{
   width: 100%;
 }
 
-.invalid-input{
 
-  border:1px solid #f00;
-}
 
 
 
@@ -39,4 +36,8 @@ input{
 
 .btn-glass:hover{
   background-color: rgba(255, 255, 255, 0.5);
+}
+
+.invalid-input{
+  border:1px solid #ff5e5e !important;
 }

@@ -33,8 +33,7 @@ export class CreateActivityComponent implements OnInit, OnDestroy {
   constructor(private route: ActivatedRoute,
               private router: Router,
               private formBuilder: FormBuilder,
-              private activityService: ActivityService,
-              private authService: AuthService) {
+              private activityService: ActivityService) {
   }
 
   ngOnInit(): void {
