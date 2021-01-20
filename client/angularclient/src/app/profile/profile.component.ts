@@ -103,7 +103,7 @@ export class ProfileComponent implements OnInit {
 
   createInfoform() {
     this.infoform = this.formBuilder.group({
-      name: [this.user.name, Validators.required],
+      name: [this.user.name, [Validators.required, Validators.pattern(/^[a-z ,.'-åäö]+$/i)]],
       email: [this.user.email, [Validators.required, Validators.email]],
       department: [this.user.department]
     });
@@ -118,16 +118,26 @@ export class ProfileComponent implements OnInit {
   }
 
   onSubmitInfoform() {
+    if(this.infoform.get('name').value=='' || !this.infoform.get('name').value.replace(/\s/g, '').length){
+      this.infoResponse = new Response();
+      this.infoResponse.status = 'ERROR';
+      this.infoResponse.message = 'Du måste fylla i ett namn.';
+      this.isInfoSaveButtonClicked = true;
+      return;
+    }
+    if(this.infoform.get('email').value=='' || !this.infoform.get('email').value.replace(/\s/g, '').length) {
+      this.infoResponse = new Response();
+      this.infoResponse.status = 'ERROR';
+      this.infoResponse.message = 'Du måste fylla i en mailadress.';
+      this.isInfoSaveButtonClicked = true;
+      return;
+    }
     if (this.infoform.invalid) {
       this.isInfoSaveButtonClicked = true;
       return;
     }
     this.subscription = this.userService.updateUserInformation(this.user.token, this.infoform.get('name').value, this.infoform.get('email').value, this.infoform.get('department').value).subscribe((data) => {
-      let response: Response = data;
-      if (response.status == 'ERROR') {
-        this.infoResponse = data;
-        this.createInfoform();
-      }
+      this.infoResponse = data;
       this.subscrip = this.userService.getUser(this.authService.getToken()).subscribe((data) => {
         let data2 = JSON.stringify(data);
         this.user = JSON.parse(data2);
