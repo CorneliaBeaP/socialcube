@@ -4,6 +4,7 @@
     <th scope="col">Namn</th>
     <th scope="col">Emailadress</th>
     <th scope="col">Avdelning</th>
+    <th scope="col">Anställningsnr</th>
     <th scope="col"></th>
   </tr>
   </thead>
@@ -12,6 +13,7 @@
     <td>{{ user.name }}</td>
     <td><a href="mailto:{{ user.email }}">{{ user.email }}</a></td>
     <td>{{user.department}}</td>
+    <td>{{user.employmentnumber}}</td>
     <td>
       <button type="button" *ngIf="!(user.id==currentuser.id)" class="btn btn-danger" (click)="deleteUser(user.id)"><i class="fas fa-trash-alt"></i></button>
     </td>
