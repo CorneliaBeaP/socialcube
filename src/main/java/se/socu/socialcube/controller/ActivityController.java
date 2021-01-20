@@ -122,23 +122,23 @@ public class ActivityController {
     /**
      * Gets information from the client that a user has declined an activity and forwards that information to the ActivityService which in turn communicates with the database.
      * @param activityid the id of the activity
-     * @param userid the id of the user
+     * @param token a JWT that is connected to the currently logged in user
      * @return a response with information about if the information was successfully updated in the database or if there were errors
      */
-    @GetMapping(path = "api/activity/decline/{activityid}/{userid}")
-    public Response declineActivity(@PathVariable long activityid, @PathVariable long userid){
-        return activityService.declineActivity(activityid, userid);
+    @GetMapping(path = "api/activity/decline/{activityid}/{token}")
+    public Response declineActivity(@PathVariable long activityid, @PathVariable String token){
+        return activityService.declineActivity(activityid, userService.getUserIDFromJWT(token));
     }
 
     /**
      * Gets information from the client that a user has declined an activity which he earlier had attended, and then forwards that information to the ActivityService which in turn communicates with the database.
      * @param activityid the id of the activity
-     * @param userid the id of the user
+     * @param token a JWT that is connected to the currently logged in user
      * @return a response with information about if the information was successfully updated in the database or if there were errors
      */
-    @DeleteMapping(path = "api/activity/decline/{activityid}/{userid}")
-    public Response declineAttendedActivity(@PathVariable long activityid, @PathVariable long userid) {
-        return activityService.declineAttendedActivity(activityid, userid);
+    @DeleteMapping(path = "api/activity/decline/{activityid}/{token}")
+    public Response declineAttendedActivity(@PathVariable long activityid, @PathVariable String token) {
+        return activityService.declineAttendedActivity(activityid, userService.getUserIDFromJWT(token));
     }
 
     /**

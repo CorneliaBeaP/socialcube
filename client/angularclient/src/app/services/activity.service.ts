@@ -71,8 +71,8 @@ export class ActivityService {
     }));
   }
 
-  public declineAttendedActivity(userid: number, activityid: number) {
-    return this.http.delete(`http://localhost:8080/api/activity/decline/${activityid}/${userid}`).pipe(map(data => {
+  public declineAttendedActivity(token: string, activityid: number) {
+    return this.http.delete(`http://localhost:8080/api/activity/decline/${activityid}/${token}`).pipe(map(data => {
       let data2 = JSON.stringify(data);
       return JSON.parse(data2);
     }));
@@ -84,8 +84,8 @@ export class ActivityService {
     });
   }
 
-  public declineActivity(userid: number, activityid: number) {
-    return this.http.get(`http://localhost:8080/api/activity/decline/${activityid}/${userid}`).pipe(map(data => {
+  public declineActivity(token: string, activityid: number) {
+    return this.http.get(`http://localhost:8080/api/activity/decline/${activityid}/${token}`).pipe(map(data => {
       let data2 = JSON.stringify(data);
       return JSON.parse(data2);
     }));

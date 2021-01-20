@@ -71,11 +71,11 @@ export class ActivityCardsComponent implements OnInit, OnDestroy {
 
   declineEvent(activity: Activity) {
     if (this.isUserAttending(this.user.id, activity.id)) {
-      this.subscription = this.activityService.declineAttendedActivity(this.user.id, activity.id).subscribe((data) => {
+      this.subscription = this.activityService.declineAttendedActivity(this.authService.getToken(), activity.id).subscribe((data) => {
         console.log(data);
       });
     } else {
-      this.subscription = this.activityService.declineActivity(this.user.id, activity.id).subscribe((data) => {
+      this.subscription = this.activityService.declineActivity(this.authService.getToken(), activity.id).subscribe((data) => {
         console.log(data);
       });
     }
