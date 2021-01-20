@@ -50,7 +50,7 @@
       <div class="text-right rsvp" *ngIf="activity.rsvpdate && !this.activity.cancelled">Senaste
         OSA-datum: {{activity.rsvpdate[0]}}-<span *ngIf="activity.rsvpdate[1]<10">0</span>{{activity.rsvpdate[1]}}-<span
           *ngIf="activity.rsvpdate[2]<10">0</span>{{activity.rsvpdate[2]}}</div>
-      <div class="text-right rsvp" *ngIf="hasRSVPDateBeen(activity) && !this.activity.cancelled">OSA-datumet för denna
+      <div class="text-right rsvp" *ngIf="hasRSVPDateBeen(activity) && !this.activity.cancelled && !isUserAttending(user.id, activity.id)">OSA-datumet för denna
         aktivitet har varit och det går därför inte att tacka ja till detta event.
       </div>
     </div>
