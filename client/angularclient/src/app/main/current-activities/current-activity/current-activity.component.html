@@ -12,13 +12,15 @@
         </div>
       </mat-panel-description>
     </mat-expansion-panel-header>
-    <div class="text-right">
+    <div class="text-right glass-cloud">
       <i class="far fa-clock ml-2 mr-2 mt-1"></i> {{activity.activitydate[3]}}:<span
       *ngIf="activity.activitydate[4]<10">0</span>{{activity.activitydate[4]}}
+      <div><i class="fas fa-map-marker-alt mr-2"></i> {{activity.locationname}} - {{activity.locationaddress}}</div>
     </div>
-    <div>{{activity.locationname}} - {{activity.locationaddress}}</div>
-    <div class="mt-2 mb-2">{{activity.descriptionsocu}}</div>
-    <div class="mt-2">
+    <div class="glass-cloud mt-1">
+      <div class="mt-2 mb-2">{{activity.descriptionsocu}}</div>
+    </div>
+    <div class="mt-2 text-center">
       <div class="font-weight-bold" *ngIf="activity.cancelled">Den här aktiviteten är inställd.</div>
       <div *ngIf="isAttended && !activity.cancelled">Du har tackat ja till detta event.</div>
       <div *ngIf="!isAttended">
