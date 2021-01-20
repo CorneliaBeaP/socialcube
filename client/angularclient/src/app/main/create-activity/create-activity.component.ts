@@ -28,7 +28,8 @@ export class CreateActivityComponent implements OnInit, OnDestroy {
   submitbuttonclicked = false;
   @Input('user') user: Usersocu;
 
-  tooltiprsvp = "Här fyller du i datumet man senast behöver tacka ja till eventet. Om detta inte är aktuellt kan du lämna fältet tomt.";
+  tooltiprsvp = 'Här fyller du i datumet man senast behöver tacka ja till eventet. Om detta inte är aktuellt kan du lämna fältet tomt.';
+  tooltiptype = 'Vad är det för rolig slags aktivitet du vill skapa? Kanske en julfest, fika, lunch eller After Work?';
 
   constructor(private route: ActivatedRoute,
               private router: Router,

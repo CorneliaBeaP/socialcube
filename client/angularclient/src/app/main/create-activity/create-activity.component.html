@@ -4,7 +4,8 @@
   <div *ngIf="showPlanActivity">
     <form (ngSubmit)="onSubmit()" [formGroup]="form">
       <div class="form-group ml-3 mt-2">
-        <label for="activitytype" class="mt-4 ml-1">Typ</label>
+        <label for="activitytype" class="mt-4 ml-1">Typ <i class="fas fa-info-circle" [matTooltip]="tooltiptype"
+                                                          [matTooltipPosition]="'right'"></i></label>
         <input autocomplete="off" [ngClass]="{'invalid-input': this.form.get('activitytype').invalid && this.submitbuttonclicked}"
                formControlName="activitytype" type="text" class="form-control m-1 default-input" id="activitytype"
                required>
