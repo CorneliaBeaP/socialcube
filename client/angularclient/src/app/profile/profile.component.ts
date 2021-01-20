@@ -123,6 +123,7 @@ export class ProfileComponent implements OnInit {
       this.infoResponse.status = 'ERROR';
       this.infoResponse.message = 'Du måste fylla i ett namn.';
       this.isInfoSaveButtonClicked = true;
+      this.createInfoform();
       return;
     }
     if(this.infoform.get('email').value=='' || !this.infoform.get('email').value.replace(/\s/g, '').length) {
@@ -130,6 +131,7 @@ export class ProfileComponent implements OnInit {
       this.infoResponse.status = 'ERROR';
       this.infoResponse.message = 'Du måste fylla i en mailadress.';
       this.isInfoSaveButtonClicked = true;
+      this.createInfoform();
       return;
     }
     if (this.infoform.invalid) {
@@ -137,7 +139,11 @@ export class ProfileComponent implements OnInit {
       return;
     }
     this.subscription = this.userService.updateUserInformation(this.user.token, this.infoform.get('name').value, this.infoform.get('email').value, this.infoform.get('department').value).subscribe((data) => {
+      let response: Response = data;
       this.infoResponse = data;
+      if (response.status == 'ERROR') {
+        this.createInfoform();
+      }
       this.subscrip = this.userService.getUser(this.authService.getToken()).subscribe((data) => {
         let data2 = JSON.stringify(data);
         this.user = JSON.parse(data2);
