@@ -5,14 +5,14 @@
     <form (ngSubmit)="onSubmit()" [formGroup]="form">
       <div class="form-group ml-3 mt-2">
         <label for="activitytype" class="mt-4 ml-1">Typ</label>
-        <input [ngClass]="{'invalid-input': this.form.get('activitytype').invalid && this.submitbuttonclicked}"
+        <input autocomplete="off" [ngClass]="{'invalid-input': this.form.get('activitytype').invalid && this.submitbuttonclicked}"
                formControlName="activitytype" type="text" class="form-control m-1 default-input" id="activitytype"
                required>
         <div class="mt-5 ml-1">Datum för aktivitet</div>
         <div>
           <mat-form-field appearance="standard">
             <mat-label>Välj ett datum</mat-label>
-            <input formControlName="activitydate" matInput [matDatepicker]="activitydate">
+            <input autocomplete="off" formControlName="activitydate" matInput [matDatepicker]="activitydate">
             <mat-datepicker-toggle matSuffix [for]="activitydate"></mat-datepicker-toggle>
             <mat-datepicker #activitydate></mat-datepicker>
           </mat-form-field>
@@ -29,23 +29,25 @@
         <div>
           <mat-form-field appearance="standard">
             <mat-label>Välj ett datum</mat-label>
-            <input formControlName="rsvpdate" matInput [matDatepicker]="rsvpdate">
+            <input autocomplete="off" formControlName="rsvpdate" matInput [matDatepicker]="rsvpdate">
             <mat-datepicker-toggle matSuffix [for]="rsvpdate"></mat-datepicker-toggle>
             <mat-datepicker #rsvpdate></mat-datepicker>
           </mat-form-field>
         </div>
 
         <label class="mt-4 ml-1">Plats</label>
-        <input [ngClass]="{'invalid-input': this.form.get('locationname').invalid && this.submitbuttonclicked}"
+        <input autocomplete="off" [ngClass]="{'invalid-input': this.form.get('locationname').invalid && this.submitbuttonclicked}"
                formControlName="locationname" type="text" class="form-control m-1 default-input" id="locationname"
                placeholder="Namn">
-        <input [ngClass]="{'invalid-input': this.form.get('locationaddress').invalid && this.submitbuttonclicked}"
+        <input autocomplete="off" [ngClass]="{'invalid-input': this.form.get('locationaddress').invalid && this.submitbuttonclicked}"
                formControlName="locationaddress" type="text" class="form-control m-1 default-input" id="locationaddress"
                placeholder="Adress">
         <label for="description" class="mt-4 ml-1">Beskrivning</label>
-        <textarea [ngClass]="{'invalid-input': this.form.get('descriptionsocu').invalid && this.submitbuttonclicked}"
+        <textarea autocomplete="off" [ngClass]="{'invalid-input': this.form.get('descriptionsocu').invalid && this.submitbuttonclicked}"
                   formControlName="descriptionsocu" class="form-control m-1 default-input" id="description"
                   rows="3"></textarea>
+        <div *ngIf="submitbuttonclicked" class="error text-center mt-2">Vänligen fyll i samtliga rödmarkerade fält.</div>
+
         <div class="d-flex justify-content-center">
           <button class="btn btn-glass mt-4">Skapa aktivitet</button>
         </div>

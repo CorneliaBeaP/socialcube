@@ -18,16 +18,12 @@ input{
   width: 100%;
 }
 
-
-
-
-
 .default-input{
   background-color: rgba(0,0,0,0);
   border: none;
   border-color: #686b6e !important;
   border-bottom: 1px solid;
-  border-radius: 0px;
+  border-radius: 0;
 }
 
 .btn-glass{
@@ -39,5 +35,9 @@ input{
 }
 
 .invalid-input{
-  border:1px solid #ff5e5e !important;
+  border-bottom:1px solid #ff5e5e !important;
+}
+
+.error{
+  color: #ff5e5e;
 }

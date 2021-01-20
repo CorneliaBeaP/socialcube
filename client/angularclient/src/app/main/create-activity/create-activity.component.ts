@@ -77,13 +77,9 @@ export class CreateActivityComponent implements OnInit, OnDestroy {
     activity.cancelled = false;
     let today = new Date();
     activity.createddate = new Date(today.getFullYear(), today.getMonth(), today.getDate(), today.getHours() + 1, today.getMinutes());
-    console.log(new Date());
-    console.log(activity);
 
     this.subscription = this.activityService.createActivity(activity).subscribe(next => {
-      console.log(next);
     });
-    this.form.reset();
     location.reload();
   }
 
