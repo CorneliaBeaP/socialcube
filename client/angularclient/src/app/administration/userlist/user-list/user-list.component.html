@@ -13,8 +13,7 @@
     <td><a href="mailto:{{ user.email }}">{{ user.email }}</a></td>
     <td>{{user.department}}</td>
     <td>
-      <button type="button" class="btn buttonsocu m-1"><i class="fas fa-pen"></i></button>
-      <button type="button" class="btn btn-danger" (click)="deleteUser(user.id)"><i class="fas fa-trash-alt"></i></button>
+      <button type="button" *ngIf="!(user.id==currentuser.id)" class="btn btn-danger" (click)="deleteUser(user.id)"><i class="fas fa-trash-alt"></i></button>
     </td>
   </tr>
   </tbody>
