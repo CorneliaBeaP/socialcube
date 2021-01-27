@@ -6,6 +6,9 @@ import {UserService} from "../services/user.service";
 import {Subscription} from "rxjs";
 import {Response} from "../classes/response";
 
+/**
+ * The main component used in /administration
+ */
 @Component({
   selector: 'app-administration',
   templateUrl: './administration.component.html',
@@ -13,11 +16,23 @@ import {Response} from "../classes/response";
 })
 export class AdministrationComponent implements OnInit, OnDestroy {
 
+  /**
+   * Formgroup that makes upp form where the administrator can add new users
+   */
   addForm: FormGroup;
+  /**
+   * Response from backend with eventual error message
+   */
   response: Response;
   subscription: Subscription;
   subscrip: Subscription;
+  /**
+   * Boolean that tells if the user has clicked the "Save"-button
+   */
   isSubmitButtonClicked = false;
+  /**
+   * The currently logged in user
+   */
   currentUser: Usersocu;
 
   constructor(private formBuilder: FormBuilder,
@@ -26,6 +41,9 @@ export class AdministrationComponent implements OnInit, OnDestroy {
     this.getLoggedInUser();
   }
 
+  /**
+   * Creates a new form for adding users and resets any error messages
+   */
   ngOnInit(): void {
     this.createForm();
     this.response = new Response();
@@ -93,6 +111,9 @@ export class AdministrationComponent implements OnInit, OnDestroy {
     window.location.assign(`mailto:${emailaddress}?subject=Lösenord för SocialCube&body=Hej! Du har precis blivit tillagd som användare på SocialCube av ${this.currentUser.name}.%0D%0ADitt användarnamn: ${emailaddress}%0D%0ADitt lösenord: ${this.response.message}%0D%0ANär du loggat in för första gången bör du byta ditt lösenord. Detta gör du i din profil.`);
   }
 
+  /**
+   * Unsubscribes from any subscriptions to prevent memory leak
+   */
   ngOnDestroy(): void {
     this.subscrip.unsubscribe();
   }

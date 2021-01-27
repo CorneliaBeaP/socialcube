@@ -8,7 +8,9 @@ import {APP_DATE_FORMATS, AppDateAdapter} from "../../helpers/adapters/app-date-
 import {Subscription} from "rxjs";
 import {Usersocu} from "../../classes/usersocu";
 
-
+/**
+ * Component used for creating a new activity by an user
+ */
 @Component({
   selector: 'app-create-activity',
   templateUrl: './create-activity.component.html',
@@ -18,16 +20,41 @@ import {Usersocu} from "../../classes/usersocu";
     {provide: MAT_DATE_FORMATS, useValue: APP_DATE_FORMATS}
   ]
 })
-export class CreateActivityComponent implements OnInit, OnDestroy {
+export class CreateActivityComponent implements OnInit{
 
+  /**
+   * Boolean if the whole component should be expanded or contracted
+   */
   showPlanActivity = false;
 
+  /**
+   * Formgroup for the input fields
+   */
   form: FormGroup;
+
+  /**
+   * Subscription to receive and send information to and from the backend
+   */
   subscription: Subscription;
+
+  /**
+   * Boolean if the "Save"-button has been clicked
+   */
   submitbuttonclicked = false;
+
+  /**
+   * The currently logged in user
+   */
   @Input('user') user: Usersocu;
 
+  /**
+   * Tooltip next to the RSVP input field
+   */
   tooltiprsvp = 'Här fyller du i datumet man senast behöver tacka ja till eventet. Om detta inte är aktuellt kan du lämna fältet tomt.';
+
+  /**
+   * Tooltip next to the Activity Type input field
+   */
   tooltiptype = 'Vad är det för rolig slags aktivitet du vill skapa? Kanske en julfest, fika, lunch eller After Work?';
 
   constructor(private route: ActivatedRoute,
@@ -36,6 +63,10 @@ export class CreateActivityComponent implements OnInit, OnDestroy {
               private activityService: ActivityService) {
   }
 
+  /**
+   * Setup for the component
+   * - Calls the method to create the form
+   */
   ngOnInit(): void {
     this.createForm();
   }
@@ -87,8 +118,5 @@ export class CreateActivityComponent implements OnInit, OnDestroy {
     this.subscription = this.activityService.createActivity(activity).subscribe(next => {
     });
     location.reload();
-  }
-
-  ngOnDestroy(): void {
   }
 }

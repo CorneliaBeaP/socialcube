@@ -5,22 +5,55 @@ import {FormBuilder, FormGroup, Validators} from "@angular/forms";
 import {Subscription} from "rxjs";
 import {first} from "rxjs/operators";
 
+/**
+ * Component used when navigating to /login
+ */
 @Component({
   selector: 'app-login',
   templateUrl: './login.component.html',
   styleUrls: ['./login.component.css']
 })
 export class LoginComponent implements OnInit, OnDestroy {
+  /**
+   * Boolean if the login-page should be shown or the "I dont have an account"-page
+   */
   loginpage = true;
+  /**
+   * Input string for the username given by the user
+   */
   username: string;
+  /**
+   * Input string for the password given by the user
+   */
   password: string;
+  /**
+   * Formgroup used for the input fields of username and password
+   */
   loginForm: FormGroup;
+  /**
+   * url of where the user came from
+   */
   returnUrl: string;
+  /**
+   * Boolean if the user has clicked the login-button or not
+   */
   submitted = false;
   subscription: Subscription;
+  /**
+   * url of the background
+   */
   background: string;
+  /**
+   * Boolean if the username and/or password are incorrect
+   */
   isWrongCredentials: boolean;
+  /**
+   * Error message shown if the username and/or password are incorrect
+   */
   error = '';
+  /**
+   * Array with urls to different background
+   */
   backgrounds = [
     "../../assets/images/1BG.jpg",
     "../../assets/images/2BG.jpg",
@@ -44,7 +77,12 @@ export class LoginComponent implements OnInit, OnDestroy {
               private formBuilder: FormBuilder) {
   }
 
-
+  /**
+   * Sets up the component when its created
+   * - Resets Local Storage
+   * - Sets a background
+   * - Creates the login-form
+   */
   ngOnInit(): void {
     this.resetLocalStorage();
     this.setBackground();
@@ -115,6 +153,9 @@ export class LoginComponent implements OnInit, OnDestroy {
     this.authService.logout();
   }
 
+  /**
+   * Unsubscribes from any subscriptions to prevent memory leak
+   */
   ngOnDestroy(): void {
     this.subscription.unsubscribe();
   }

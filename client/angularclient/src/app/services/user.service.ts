@@ -3,12 +3,17 @@ import {HttpClient, HttpHeaders} from '@angular/common/http';
 import {Usersocu} from '../classes/usersocu';
 import {Observable} from 'rxjs';
 import {map} from "rxjs/operators";
-import {Response} from "../classes/response";
 
 
+/**
+ * Service used to communicate with the backend regarding users
+ */
 @Injectable()
 export class UserService {
 
+  /**
+   * The url used when sending a REST request about users
+   */
   usersUrl: string;
 
   constructor(private http: HttpClient) {

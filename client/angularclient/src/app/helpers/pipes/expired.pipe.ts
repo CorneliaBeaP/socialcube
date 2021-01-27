@@ -1,13 +1,16 @@
 import { Pipe, PipeTransform } from '@angular/core';
 import {Activity} from "../../classes/activity";
 
+/**
+ * Pipe that sorts out activities that has expired
+ */
 @Pipe({
   name: 'expired'
 })
 export class ExpiredPipe implements PipeTransform {
 
   /**
-   * Pipe that takes an array with activities and removes the activities that has expired
+   * Takes an array with activities and removes the activities that has expired
    * @param list the array that needs to have expired activities removed
    * @returns an array that only contains ativities that has not expired (empty if there are none)
    */

@@ -6,16 +6,34 @@ import {Router} from "@angular/router";
 import {Subscription} from "rxjs";
 import {UserService} from "../../services/user.service";
 
-
+/**
+ * Component used as navigation bar in the top of every page when the user is logged in
+ */
 @Component({
   selector: 'app-header',
   templateUrl: './header.component.html',
   styleUrls: ['./header.component.css']
 })
 export class HeaderComponent implements OnInit {
+
+  /**
+   * Boolean if the user is the UserType Admin
+   */
   isAdmin = false;
+
+  /**
+   * The currently logged in user
+   */
   @Input('user') user: Usersocu;
+
+  /**
+   * Subscription to receive and send information to and from the backend
+   */
   subscription: Subscription;
+
+  /**
+   * Url for the profile picture, the default picture if none is found
+   */
   profilepictureurl = '../../../../assets/ProfilePictures/default.png';
 
   constructor(private http: HttpClient,
@@ -24,6 +42,11 @@ export class HeaderComponent implements OnInit {
               private router: Router) {
   }
 
+  /**
+   * Setup for the component
+   * - Get profile picture url
+   * - Checks if the user is the User type Admin
+   */
   ngOnInit(): void {
     if(this.user){
       if(this.user.id){

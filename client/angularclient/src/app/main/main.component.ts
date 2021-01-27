@@ -7,6 +7,9 @@ import {Activity} from "../classes/activity";
 import {ActivityService} from "../services/activity.service";
 import {ExpiredPipe} from "../helpers/pipes/expired.pipe";
 
+/**
+ * Component used when navigating to /home
+ */
 @Component({
   selector: 'app-main',
   templateUrl: './main.component.html',
@@ -14,8 +17,19 @@ import {ExpiredPipe} from "../helpers/pipes/expired.pipe";
 })
 export class MainComponent implements OnInit, OnDestroy {
 
+  /**
+   * The currently logged in user
+   */
   user: Usersocu;
+
+  /**
+   * Subscription to receive and send information to and from the backend
+   */
   subscription: Subscription;
+
+  /**
+   * List of activities the currently logged in user has attended
+   */
   attendedActivities: Activity[];
 
 
@@ -51,6 +65,9 @@ export class MainComponent implements OnInit, OnDestroy {
     });
   }
 
+  /**
+   * Unsubscribes from any subscriptions to prevent memory leak
+   */
   ngOnDestroy(): void {
     this.subscription.unsubscribe();
   }

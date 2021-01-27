@@ -10,6 +10,9 @@ import {AdminGuard} from "./helpers/auth/admin.guard";
 import {Page404Component} from "./error/page404/page404.component";
 import {StartredirecterComponent} from "./startredirecter/startredirecter.component";
 
+/**
+ * Information about which component that should be shown when navigating to different urls
+ */
 const routes: Routes = [
   {path: 'login', component: LoginComponent},
   {path: 'home', component: MainComponent, canActivate: [AuthGuard]},

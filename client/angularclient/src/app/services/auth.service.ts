@@ -5,15 +5,29 @@ import {BehaviorSubject, Observable} from "rxjs";
 import {Router} from "@angular/router";
 import {map} from "rxjs/operators";
 
-
+/**
+ * Service used to communicate with the backend regarding authentication and authorization for a user
+ */
 @Injectable({
   providedIn: 'root'
 })
 export class AuthService {
 
+  /**
+   * The url used when sending a REST request about logging in
+   */
   loginUrl: string;
+  /**
+   * Username and password provided by the user
+   */
   private usercredentials: string[];
+  /**
+   * UserBehaviorSubject used when logging in and that is then provided to the AuthGuard to see if the user can be navigated to /home
+   */
   private userBehaviorSubject: BehaviorSubject<Usersocu>;
+  /**
+   * The currently logged in user
+   */
   public user: Observable<Usersocu>;
 
   constructor(private http: HttpClient,

@@ -9,7 +9,9 @@ import {NgbModal} from "@ng-bootstrap/ng-bootstrap";
 import {EditModalComponent} from "./edit-modal/edit-modal.component";
 import {UserService} from "../../services/user.service";
 
-
+/**
+ * Component used for displaying cards of each activity
+ */
 @Component({
   selector: 'app-activity-cards',
   templateUrl: './activity-cards.component.html',
@@ -17,10 +19,25 @@ import {UserService} from "../../services/user.service";
 })
 export class ActivityCardsComponent implements OnInit, OnDestroy {
 
+  /**
+   * List of activities that should be shown registered on the organization number the currently logged in user works at
+   */
   activities: Activity[];
+  /**
+   * List of activities that the currently logged in user has attended
+   */
   attendedActivities: Activity[];
+  /**
+   * Subscription to receive and send information to and from the backend
+   */
   subscription: Subscription;
+  /**
+   * List of activities that the currently logged in user has declined
+   */
   declinedActivities: Activity[];
+  /**
+   * The currently logged in user
+   */
   @Input('user') user: Usersocu;
 
   constructor(private activityService: ActivityService,
@@ -30,6 +47,9 @@ export class ActivityCardsComponent implements OnInit, OnDestroy {
               private modalService: NgbModal) {
   }
 
+  /**
+   * Calls the method setUp
+   */
   ngOnInit(): void {
     this.setUp();
   }
@@ -286,6 +306,9 @@ export class ActivityCardsComponent implements OnInit, OnDestroy {
     return returnstring;
   }
 
+  /**
+   * Unsubscribes from any subscriptions to prevent memory leak
+   */
   ngOnDestroy(): void {
     this.subscription.unsubscribe();
   }

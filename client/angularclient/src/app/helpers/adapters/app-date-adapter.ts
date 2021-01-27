@@ -2,6 +2,9 @@ import {NativeDateAdapter} from "@angular/material/core";
 import {MatDateFormats} from "@angular/material/core";
 import {Injectable} from "@angular/core";
 
+/**
+ * Adapter used to change format on a date
+ */
 @Injectable()
 export class AppDateAdapter extends NativeDateAdapter {
 

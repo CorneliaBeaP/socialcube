@@ -1,16 +1,19 @@
 import {Component} from '@angular/core';
-import {Router} from "@angular/router";
-import {AuthService} from "./services/auth.service";
 
+/**
+ * Main component
+ */
 @Component({
   selector: 'app-root',
   templateUrl: './app.component.html',
   styleUrls: ['./app.component.css']
 })
 export class AppComponent {
+  /**
+   * Title to be shown in browser
+   */
   title = 'SocialCube';
 
-  constructor(private router: Router,
-              private authService: AuthService) {
+  constructor() {
   }
 }

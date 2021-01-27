@@ -9,6 +9,9 @@ import {FormBuilder, FormGroup, Validators} from "@angular/forms";
 import {Response} from "../classes/response";
 
 
+/**
+ * Component used when navigating to /profile
+ */
 @Component({
   selector: 'app-profile',
   templateUrl: './profile.component.html',
@@ -16,22 +19,73 @@ import {Response} from "../classes/response";
 })
 export class ProfileComponent implements OnInit {
 
+  /**
+   * Url used when uploading a new profile picture
+   */
   url: string | ArrayBuffer;
+  /**
+   * Url for the profile picture, default to start with
+   */
   profilepictureurl = '../../../../assets/ProfilePictures/default.png';
+  /**
+   * The currently logged in user
+   */
   user: Usersocu;
+  /**
+   * Formgroup for input fields for changing user information
+   */
   infoform: FormGroup;
+  /**
+   * Formgroup for input fields for changing password
+   */
   passform: FormGroup;
+  /**
+   * Boolean if the Save-button is clicked when trying to change the password
+   */
   isPassSaveButtonClicked = false;
+  /**
+   * Boolean if the Save-button is clicked when trying to change the user information
+   */
   isInfoSaveButtonClicked = false;
+  /**
+   * Boolean to see if the new password and the repeated new password are matching
+   */
   isPasswordsNotMatching = false;
+  /**
+   * Boolean to see if the old password is wrong and therefore show an error message
+   */
   isOldPasswordWrong = false;
+  /**
+   * Subscription to receive and send information to and from the backend
+   */
   subscription: Subscription;
+  /**
+   * Subscription to receive and send information to and from the backend
+   */
   subscrip: Subscription;
+  /**
+   * Response received from the backend with eventual error message regarding the change of password
+   */
   response: Response;
+  /**
+   * Response received from the backend with eventual error message regarding the change of user information
+   */
   infoResponse: Response;
+  /**
+   * Error message if the new uploaded profile picture is invalid
+   */
   profilepicErrorMessage = "";
+  /**
+   * Boolean for toggling between showing and hiding password in password field for old password
+   */
   fieldTextType1: boolean;
+  /**
+   * Boolean for toggling between showing and hiding password in password field for new password
+   */
   fieldTextType2: boolean;
+  /**
+   * Boolean for toggling between showing and hiding password in password field for repeated new password
+   */
   fieldTextType3: boolean;
 
 
@@ -41,6 +95,10 @@ export class ProfileComponent implements OnInit {
               private formBuilder: FormBuilder) {
   }
 
+  /**
+   * Setup for the component
+   * - Gets the user that is currently logged in
+   */
   ngOnInit(): void {
     this.getLoggedInUser();
   }

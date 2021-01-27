@@ -1,13 +1,16 @@
 import {Pipe, PipeTransform} from '@angular/core';
 import {Activity} from "../../classes/activity";
 
+/**
+ * Pipe that sorts out activities that takes place the current month
+ */
 @Pipe({
   name: 'currentmonth'
 })
 export class CurrentmonthPipe implements PipeTransform {
 
   /**
-   * Pipe that find activities that takes place the same month that it currently is and returns an array with only these activities
+   * Finds activities that takes place the same month that it currently is and returns an array with only these activities
    * @param list the list that needs to be sorted
    * @returns an array only containing activities taking place this month (empty array if there is none)
    */

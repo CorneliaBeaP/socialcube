@@ -5,11 +5,17 @@ import {Activity} from "../classes/activity";
 import {map} from "rxjs/operators";
 
 
+/**
+ * Service used to communicate with the backend regarding activities
+ */
 @Injectable({
   providedIn: 'root'
 })
 export class ActivityService {
 
+  /**
+   * The url used for sending REST request about activities
+   */
   activityUrl: string;
 
   constructor(private http: HttpClient,

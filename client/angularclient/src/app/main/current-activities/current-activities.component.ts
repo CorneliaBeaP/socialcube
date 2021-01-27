@@ -6,12 +6,15 @@ import {Activity} from "../../classes/activity";
 import {Subscription} from "rxjs";
 import {ExpiredPipe} from "../../helpers/pipes/expired.pipe";
 
+/**
+ * Component used for showing the all the activities registered to a company, even declined ones
+ */
 @Component({
   selector: 'app-current-activities',
   templateUrl: './current-activities.component.html',
   styleUrls: ['./current-activities.component.css']
 })
-export class CurrentActivitiesComponent implements OnInit, OnDestroy {
+export class CurrentActivitiesComponent implements OnInit{
 
   showCurrentActivities = false;
   currentActivities: Activity[];
@@ -37,8 +40,5 @@ export class CurrentActivitiesComponent implements OnInit, OnDestroy {
         this.currentActivities = this.expiredPipe.transform(next);
       });
     }
-  }
-
-  ngOnDestroy(): void {
   }
 }

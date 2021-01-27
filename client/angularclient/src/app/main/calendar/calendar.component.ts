@@ -8,6 +8,9 @@ import {CurrentmonthPipe} from "../../helpers/pipes/currentmonth.pipe";
 import {CancelledPipe} from "../../helpers/pipes/cancelled.pipe";
 import {ExpiredPipe} from "../../helpers/pipes/expired.pipe";
 
+/**
+ * Component used for showing the activities that the currently logged in user has attended and that takes place in the current month
+ */
 @Component({
   selector: 'app-calendar',
   templateUrl: './calendar.component.html',
@@ -15,9 +18,24 @@ import {ExpiredPipe} from "../../helpers/pipes/expired.pipe";
 })
 export class CalendarComponent implements OnInit {
 
+  /**
+   * The currently logged in user
+   */
   @Input('user') user: Usersocu;
+
+  /**
+   * Subscription to receive and send information to and from the backend
+   */
   subscription: Subscription;
+
+  /**
+   * List of activities that the currently logged in user has attended
+   */
   attendedActivities: Activity[];
+
+  /**
+   * Activities that takes place the current month
+   */
   activitiesThisMonth: Activity[];
 
   constructor(private authService: AuthService,
@@ -27,6 +45,9 @@ export class CalendarComponent implements OnInit {
               private expiredPipe: ExpiredPipe) {
   }
 
+  /**
+   * Calls the method setUp
+   */
   ngOnInit(): void {
     this.setUp();
   }

@@ -5,6 +5,9 @@ import {FormBuilder, FormGroup, Validators} from "@angular/forms";
 import {ActivityService} from "../../../services/activity.service";
 import {Subscription} from "rxjs";
 
+/**
+ * Modal for editing an activity
+ */
 @Component({
   selector: 'app-edit-modal',
   templateUrl: './edit-modal.component.html',
@@ -12,14 +15,41 @@ import {Subscription} from "rxjs";
 })
 export class EditModalComponent implements OnInit, OnDestroy {
 
+  /**
+   * The current activity
+   */
   activity: Activity;
+  /**
+   * Formgroup for input fields
+   */
   form: FormGroup;
+  /**
+   * The new information sent to the backend
+   */
   updatedActivity: Activity;
+  /**
+   * Eventual error message if something is incorrect with the new date of the activity
+   */
   errorMessageActivityDate = '';
+  /**
+   * Eventual error message if something is incorrect with the new RSVP date of the activity
+   */
   errorMessageRSVPDate = '';
+  /**
+   * Eventual error message if something is incorrect with the new time of the activity
+   */
   errorMessageTime = '';
+  /**
+   * Subscription to receive and send information to and from the backend
+   */
   subscription: Subscription;
+  /**
+   * Boolean if the user tries to cancel an activity, showing a confirmation message
+   */
   cancelactivity = false;
+  /**
+   * Boolean if the user tries to delete an activity, showing a confirmation message
+   */
   deleteactivity = false;
 
   constructor(public activeModal: NgbActiveModal,
@@ -27,6 +57,11 @@ export class EditModalComponent implements OnInit, OnDestroy {
               private activityService: ActivityService) {
   }
 
+  /**
+   * Setup for the component
+   * - Creates the variable updatedActivity and copies all the information from the original activity to it
+   * - Creates the form for the inputs in the edit modal
+   */
   ngOnInit(): void {
     this.updatedActivity = new Activity();
     Object.assign(this.updatedActivity, this.activity);
@@ -202,6 +237,9 @@ export class EditModalComponent implements OnInit, OnDestroy {
     location.reload();
   }
 
+  /**
+   * Unsubscribes from any subscriptions to prevent memory leak
+   */
   ngOnDestroy(): void {
     if (this.subscription) {
       this.subscription.unsubscribe();
