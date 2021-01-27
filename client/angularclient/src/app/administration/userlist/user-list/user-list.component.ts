@@ -25,6 +25,10 @@ export class UserListComponent implements OnInit, OnDestroy {
     });
   }
 
+  /**
+   * Deletes an user
+   * @param id - userid
+   */
   deleteUser(id: number) {
    this.subscription = this.userService.deleteUser(id).subscribe();
     window.location.reload();
