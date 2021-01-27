@@ -33,6 +33,9 @@ export class EditModalComponent implements OnInit, OnDestroy {
     this.createForm();
   }
 
+  /**
+   * Creates the form for the inputs in the edit modal
+   */
   createForm() {
     let extraZero = '';
     if (this.updatedActivity.activitydate[4] < 10) {
@@ -68,6 +71,9 @@ export class EditModalComponent implements OnInit, OnDestroy {
     });
   }
 
+  /**
+   *Forwards the changed inputs to the backend to be saved in the database if anything has been changed, if the form is invalid the user stays in the modal
+   */
   onSave() {
     this.errorMessageRSVPDate = '';
     this.errorMessageActivityDate = '';
@@ -82,6 +88,9 @@ export class EditModalComponent implements OnInit, OnDestroy {
     }
   }
 
+  /**
+   * Copies the values from the form into an Activity-object that can be sent to the backend
+   */
   copyValuesFromFormAndSaveActivity() {
     this.updatedActivity.activitytype = this.form.get('activitytype').value;
     this.updatedActivity.activitydate[0] = this.form.get('activitydateyear').value;
@@ -104,6 +113,13 @@ export class EditModalComponent implements OnInit, OnDestroy {
     location.reload();
   }
 
+  /**
+   * Checks if the changed inputs are valid:
+   * checks that the date of the activity hasn't been changed do a date that has already been
+   * checks that the rsvpdate hasn't been changed do a date that has already been
+   * checks that the time of the activity is a valid time
+   *
+   */
   isFormOk(): boolean {
     let today = new Date();
     let isFormOk = true;
@@ -155,8 +171,8 @@ export class EditModalComponent implements OnInit, OnDestroy {
     }
 
     //Kontroller för tid
-    if(this.form.get('activitytimehour').dirty || this.form.get('activitytimeminute')){
-      if (this.form.get('activitytimehour').value>23 || this.form.get('activitytimeminute').value>59){
+    if (this.form.get('activitytimehour').dirty || this.form.get('activitytimeminute')) {
+      if (this.form.get('activitytimehour').value > 23 || this.form.get('activitytimeminute').value > 59) {
         isFormOk = false;
         this.errorMessageTime = 'Felaktigt klockslag'
       }
@@ -165,6 +181,10 @@ export class EditModalComponent implements OnInit, OnDestroy {
     return isFormOk;
   }
 
+  /**
+   * Forwards the information about an activity being cancelled to the backend to be updated in the database, then closes the modal
+   * @param activity the activity that is being cancelled
+   */
   cancelActivity(activity: Activity) {
     this.subscription = this.activityService.cancelActivity(activity.id).subscribe((data) => {
       console.log(data);
@@ -173,6 +193,9 @@ export class EditModalComponent implements OnInit, OnDestroy {
     location.reload();
   }
 
+  /**
+   * Forwards the information about an activity being deleted to the backend to be removed from the database, then closes the modal
+   */
   deleteActivity() {
     this.subscription = this.activityService.deleteActivity(this.activity.id).subscribe();
     this.activeModal.close();

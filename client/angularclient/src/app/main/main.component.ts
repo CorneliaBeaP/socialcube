@@ -29,6 +29,9 @@ export class MainComponent implements OnInit, OnDestroy {
   ngOnInit(): void {
   }
 
+  /**
+   * Gets the logged in user from the backend by providing the saved token from Localstorage
+   */
   getLoggedInUser(){
     this.subscription = this.userService.getUser(this.authService.getToken()).subscribe((data) => {
       let data2 = JSON.stringify(data);
@@ -39,6 +42,9 @@ export class MainComponent implements OnInit, OnDestroy {
     });
   }
 
+  /**
+   * Gets the activities that the logged in user has attended from the backend by providing the saved token from Localstorage
+   */
   getAttendedActivities() {
    this.subscription = this.activityService.getattendedActivities(this.user.token).subscribe(data => {
       this.attendedActivities =this.expiredPipe.transform(data);

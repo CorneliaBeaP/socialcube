@@ -6,6 +6,11 @@ import {Activity} from "../../classes/activity";
 })
 export class CurrentmonthPipe implements PipeTransform {
 
+  /**
+   * Pipe that find activities that takes place the same month that it currently is and returns an array with only these activities
+   * @param list the list that needs to be sorted
+   * @returns an array only containing activities taking place this month (empty array if there is none)
+   */
   transform(list: Activity[]): Activity[] {
     let today = new Date();
     let updatedList = [];

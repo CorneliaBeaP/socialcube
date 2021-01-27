@@ -6,6 +6,10 @@ import {Activity} from "../../classes/activity";
 })
 export class CancelledPipe implements PipeTransform {
 
+  /**
+   * Pipe that removes activities that are cancelled from a list with activities
+   * @param list the list that needs to be removed of cancelled activities
+   */
   transform(list: Activity[]): Activity[] {
     let updatedList = [];
     list.forEach((activity) => {

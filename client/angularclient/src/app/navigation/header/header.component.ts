@@ -33,25 +33,41 @@ export class HeaderComponent implements OnInit {
     }
   }
 
+  /**
+   * Logs out the user
+   */
   logout() {
     this.authService.logout();
   }
 
+  /**
+   * Checks if the logged in user is an admin
+   */
   getAdmin() {
     if (this.user.usertype.toString() == 'ADMIN') {
       this.isAdmin = true;
     }
   }
 
+  /**
+   * Navigates to /profile
+   */
   goToProfile() {
     this.router.navigate(['/profile']);
   }
 
+  /**
+   * Gets the url for the profile picture for a user
+   * @param id the id of the user
+   */
   getProfilePicture(id: number) {
     this.profilepictureurl = `../../../../assets/ProfilePictures/${id}.png`;
   }
 
-
+  /**
+   * Shows a default profile picture if an url is not found for the profile picture
+   * @param event the source event
+   */
   errorHandler(event) {
     event.target.src = `../../../../assets/ProfilePictures/default.png`;
   }

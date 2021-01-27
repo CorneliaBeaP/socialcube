@@ -23,6 +23,9 @@ export class UpcomingActivitiesComponent implements OnInit {
     this.getActivities();
   }
 
+  /**
+   * Gets all the activities the user has attended and sorts away expired activities
+   */
   getActivities() {
     this.activityService.getattendedActivities(this.user.token).subscribe(data => {
       this.activities =this.expiredPipe.transform(data);

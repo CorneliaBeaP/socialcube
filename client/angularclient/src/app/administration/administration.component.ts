@@ -33,6 +33,9 @@ export class AdministrationComponent implements OnInit, OnDestroy {
     this.response.status = '';
   }
 
+  /**
+   * Creates a form used for adding a new user
+   */
   createForm() {
     this.addForm = this.formBuilder.group({
       name: ['', [Validators.required, Validators.pattern(/^[a-z ,.'-åäö]+$/i)]],
@@ -42,6 +45,9 @@ export class AdministrationComponent implements OnInit, OnDestroy {
     });
   }
 
+  /**
+   * Gets the logged in user by confirming that the token saved in LocalStorage is correct and checking which user it belongs to, if the token is incorrect the user gets logged out automatically
+   */
   getLoggedInUser() {
     this.subscrip = this.userService.getUser(this.authService.getToken()).subscribe((data) => {
       let data2= JSON.stringify(data);
@@ -51,6 +57,9 @@ export class AdministrationComponent implements OnInit, OnDestroy {
     });
   }
 
+  /**
+   * Gather the information provided in the addForm and forwards it to a UserService which in turn forwards the information to the backend
+   */
   onSubmit() {
     if (this.addForm.invalid) {
       this.isSubmitButtonClicked = true;
@@ -76,11 +85,15 @@ export class AdministrationComponent implements OnInit, OnDestroy {
     });
   }
 
-  ngOnDestroy(): void {
-    this.subscrip.unsubscribe();
-  }
-
+  /**
+   * Opens an email to the added user with information about username and password
+   * @param emailaddress
+   */
   mailto(emailaddress: string) {
     window.location.assign(`mailto:${emailaddress}?subject=Lösenord för SocialCube&body=Hej! Du har precis blivit tillagd som användare på SocialCube av ${this.currentUser.name}.%0D%0ADitt användarnamn: ${emailaddress}%0D%0ADitt lösenord: ${this.response.message}%0D%0ANär du loggat in för första gången bör du byta ditt lösenord. Detta gör du i din profil.`);
+  }
+
+  ngOnDestroy(): void {
+    this.subscrip.unsubscribe();
   }
 }

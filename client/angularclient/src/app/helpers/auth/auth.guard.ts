@@ -11,6 +11,11 @@ export class AuthGuard implements CanActivate {
               private authService: AuthService) {
   }
 
+  /**
+   * Checks if there is a logged in user and in that case is authoritized to go to /home, navigates to /login if not
+   * @param route
+   * @param state
+   */
   canActivate(
     route: ActivatedRouteSnapshot,
     state: RouterStateSnapshot) {
@@ -20,7 +25,6 @@ export class AuthGuard implements CanActivate {
         return true;
       }
     }
-
 
     this.router.navigate(['/login'], {queryParams: {returnUrl: state.url}});
     return false;

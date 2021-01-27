@@ -3,7 +3,6 @@ import {FormBuilder, FormGroup, Validators} from "@angular/forms";
 import {ActivatedRoute, Router} from "@angular/router";
 import {Activity} from "../../classes/activity";
 import {ActivityService} from "../../services/activity.service";
-import {AuthService} from "../../services/auth.service";
 import {DateAdapter, MAT_DATE_FORMATS} from "@angular/material/core";
 import {APP_DATE_FORMATS, AppDateAdapter} from "../../helpers/adapters/app-date-adapter";
 import {Subscription} from "rxjs";
@@ -41,6 +40,9 @@ export class CreateActivityComponent implements OnInit, OnDestroy {
     this.createForm();
   }
 
+  /**
+   * Creates the form the the user can create an activity
+   */
   createForm() {
     this.form = this.formBuilder.group({
       activitytype: ['', Validators.required],
@@ -54,6 +56,9 @@ export class CreateActivityComponent implements OnInit, OnDestroy {
 
   }
 
+  /**
+   * Takes the information provided in the form and forwards it to the backend
+   */
   onSubmit() {
     if (this.form.invalid) {
       this.submitbuttonclicked = true;

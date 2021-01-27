@@ -34,6 +34,13 @@ export class ActivityCardsComponent implements OnInit, OnDestroy {
     this.setUp();
   }
 
+  /**
+   * - Gets all the activities from the backend
+   * - Gets the attendees for each activity
+   * - Sorts away expired activities
+   * - Gets attended activities for the logged in user
+   * - Gets the profile picture for the logged in user
+   */
   setUp() {
     this.subscription = this.activityService.getActivities(this.user.token).subscribe(activityarray => {
       activityarray.forEach((activity) => {
@@ -60,6 +67,10 @@ export class ActivityCardsComponent implements OnInit, OnDestroy {
     this.getProfilePicture(this.user.id);
   }
 
+  /**
+   * Forwards information to the backend that a user has attended an activity
+   * @param activityid the id of the activity
+   */
   attendEvent(activityid: number) {
     if (this.isUserNotAttendingButHaveCreatedEvent(activityid)) {
       this.activityService.attendDeclinedActivity(this.authService.getToken(), activityid);
@@ -69,6 +80,10 @@ export class ActivityCardsComponent implements OnInit, OnDestroy {
     location.reload();
   }
 
+  /**
+   * Forwards information to the backend that a user has declined an activity
+   * @param activity the activity
+   */
   declineEvent(activity: Activity) {
     if (this.isUserAttending(this.user.id, activity.id)) {
       this.subscription = this.activityService.declineAttendedActivity(this.authService.getToken(), activity.id).subscribe((data) => {
@@ -82,6 +97,9 @@ export class ActivityCardsComponent implements OnInit, OnDestroy {
     location.reload();
   }
 
+  /**
+   * Recieves all the declined activities for the user from the backend
+   */
   public getDeclinedActivities() {
     this.subscription = this.activityService.getDeclinedActivities(this.authService.getToken()).subscribe((data) => {
       let data2 = JSON.stringify(data);
@@ -90,6 +108,9 @@ export class ActivityCardsComponent implements OnInit, OnDestroy {
     });
   }
 
+  /**
+   * Sorts away declined activities from the array with all the activities that is shown in the activity cards
+   */
   sortAwayDeclinedActivities() {
     if (this.declinedActivities) {
       this.declinedActivities.forEach(declinedActivity => {
@@ -105,17 +126,29 @@ export class ActivityCardsComponent implements OnInit, OnDestroy {
     }
   }
 
+  /**
+   * Gets the url for the profile picture for a specific user
+   * @param id the id of the user
+   */
   getProfilePicture(id: number): string {
     return `../../../../assets/ProfilePictures/${id}.png`;
   }
 
-
+  /**
+   * Receives all the attended activities for the logged in user and sorts away the expired ones
+   */
   getAttendedActivities() {
     this.activityService.getattendedActivities(this.authService.getToken()).subscribe(data => {
       this.attendedActivities = this.expiredPipe.transform(data);
     });
   }
 
+  /**
+   * Checks if an user is attending a specific activity
+   * @param userid the id of the user
+   * @param activityid the id of the activity
+   * @returns a boolean if the user is attending or not, true if the user is attending, false if not
+   */
   isUserAttending(userid: number, activityid: number): boolean {
     let bool = false;
     if (!(this.attendedActivities == null)) {
@@ -130,6 +163,11 @@ export class ActivityCardsComponent implements OnInit, OnDestroy {
     return bool;
   }
 
+  /**
+   * Checks if the user is not attending a specific activity but have created it
+   * @param activityid the id of the activity
+   * @returns a boolean if the user is not attending but have created the activity
+   */
   isUserNotAttendingButHaveCreatedEvent(activityid: number): boolean {
     let bool = false;
     if (!(this.declinedActivities == null)) {
@@ -147,6 +185,11 @@ export class ActivityCardsComponent implements OnInit, OnDestroy {
     return bool;
   }
 
+  /**
+   * Checks if the rsvp-date has already been for a specific activity
+   * @param activity the id of the activity
+   * @returns a boolean if the date has been or not
+   */
   hasRSVPDateBeen(activity: Activity): boolean {
     let bool = false;
     let today = new Date();
@@ -167,6 +210,10 @@ export class ActivityCardsComponent implements OnInit, OnDestroy {
     return bool;
   }
 
+  /**
+   * Checks if the attend button should be disabled on the card for a specific activity and disables it in that case
+   * @param activity the id of the activity
+   */
   isAttendButtonDisabled(activity: Activity) {
     let isDisabled = false;
     if ((this.hasRSVPDateBeen(activity)) || (this.isUserAttending(this.user.id, activity.id))) {
@@ -178,6 +225,10 @@ export class ActivityCardsComponent implements OnInit, OnDestroy {
     return isDisabled;
   }
 
+  /**
+   * Checks if the decline button should be disabled on the card for a specific activity and disables it in that case
+   * @param activity the id of the activity
+   */
   isDeclineButtonDisabled(activity: Activity) {
     let isDisabled = false;
     if (this.declinedActivities) {
@@ -191,6 +242,10 @@ export class ActivityCardsComponent implements OnInit, OnDestroy {
     return isDisabled;
   }
 
+  /**
+   * Checks if the edit button should be disabled on the card for a specific activity and disables it in that case
+   * @param activity the id of the activity
+   */
   isEditButtonDisabled(activity: Activity) {
     let isDisabled = false;
     if (activity.cancelled) {
@@ -199,15 +254,28 @@ export class ActivityCardsComponent implements OnInit, OnDestroy {
     return isDisabled;
   }
 
+  /**
+   * Opens the modal to edit an activity
+   * @param activity
+   */
   openEditModal(activity: Activity) {
     let modalRef = this.modalService.open(EditModalComponent);
     modalRef.componentInstance.activity = activity;
   }
 
+  /**
+   * Shows the default profile picture if the url for the users profile picture cant be found
+   * @param event the source event
+   */
   errorHandler(event) {
     event.target.src = `../../../../assets/ProfilePictures/default.png`;
   }
 
+  /**
+   * Returns the string that should be shown when hovering over an users profile picture
+   * @param name the name of the user
+   * @param department the deparment where the user works
+   */
   getTooltipAttendee(name: string, department: string): string{
    let returnstring = '';
    if(department){

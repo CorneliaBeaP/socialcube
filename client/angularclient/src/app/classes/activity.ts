@@ -1,5 +1,8 @@
 import {Usersocu} from "./usersocu";
 
+/**
+ * The class used for receiving and sending activities from and to the backend
+ */
 export class Activity {
   id: number;
   activitytype: string;

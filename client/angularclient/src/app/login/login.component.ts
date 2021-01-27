@@ -51,6 +51,9 @@ export class LoginComponent implements OnInit, OnDestroy {
     this.createForm();
   }
 
+  /**
+   * Creates a login-form with username and password
+   */
   createForm() {
     this.loginForm = this.formBuilder.group({
       username: ['', Validators.required],
@@ -60,10 +63,18 @@ export class LoginComponent implements OnInit, OnDestroy {
     this.returnUrl = this.route.snapshot.queryParams['returnUrl'] || '/home';
   }
 
+  /**
+   * Toggles if the Login-page or the I dont have an account-page should be shown
+   * @param login boolean if the login-page should be shown, false if not
+   */
   showLoginPage(login: boolean): void {
     this.loginpage = login;
   }
 
+  /**
+   * Takes the information provided in the login-form and forwards it to the backend, then recieving a response if the usercredentials are correct
+   * which leads to the user being forwarded to /home, or if the usercredentials are wrong stays in /login with an error message explaining that the usercredentials are wrong
+   */
   onSubmit() {
     this.isWrongCredentials = false;
     if (this.loginForm.invalid) {
@@ -86,10 +97,9 @@ export class LoginComponent implements OnInit, OnDestroy {
       });
   }
 
-  ngOnDestroy(): void {
-    this.subscription.unsubscribe();
-  }
-
+  /**
+   * Shuffles the images in the array backgrounds[] and shows a random image as background on the login-page
+   */
   setBackground() {
     let shuffled = this.backgrounds
       .map((a) => ({sort: Math.random(), value: a}))
@@ -98,7 +108,14 @@ export class LoginComponent implements OnInit, OnDestroy {
     this.background = shuffled[0];
   }
 
+  /**
+   * Logs out the user if he or she goes directly to /login
+   */
   resetLocalStorage() {
     this.authService.logout();
+  }
+
+  ngOnDestroy(): void {
+    this.subscription.unsubscribe();
   }
 }

@@ -45,6 +45,10 @@ export class ProfileComponent implements OnInit {
     this.getLoggedInUser();
   }
 
+  /**
+   * Get the logged in user from the backend by providing the saved token from LocalStorage and set up the page by calling on the remaining methods in the component. The user is
+   * logged out if the token is incorrect
+   */
   getLoggedInUser() {
     this.subscription = this.userService.getUser(this.authService.getToken()).subscribe((data) => {
       let data2 = JSON.stringify(data);
@@ -61,6 +65,10 @@ export class ProfileComponent implements OnInit {
     });
   }
 
+  /**
+   * Reads the file when uploading a new profile picture
+   * @param event the source event
+   */
   onSelectFile(event) { // called each time file input changes
     if (event.target.files && event.target.files[0]) {
       let reader = new FileReader();
@@ -72,6 +80,10 @@ export class ProfileComponent implements OnInit {
     }
   }
 
+  /**
+   * Uploads the profile picture file to the backend to be saved. Displays an error message if the file is too large or in the wrong format
+   * @param file
+   */
   onUpload(file: any) {
     let formData = new FormData();
     if (!(file.size > 1048576)) {
@@ -86,21 +98,34 @@ export class ProfileComponent implements OnInit {
     }
   }
 
+  /**
+   * Gets the url for the profile picture for a specific user
+   * @param id the id of the user
+   */
   getProfilePicture(id: number) {
     this.profilepictureurl = `../../../../assets/ProfilePictures/${id}.png`;
   }
 
+  /**
+   * Clicks a hidden button that is used to upload the file
+   */
   triggerFileUpload() {
     let element: HTMLElement = document.getElementById('fileupload') as HTMLElement;
     element.click();
   }
 
+  /**
+   * Forwards the information to the backend that a user wants to delete its uploaded profile picture
+   */
   removeProfilePicture() {
     this.profilepictureurl = `../../../../assets/ProfilePictures/${this.user.id}.png`;
     this.userService.removeProfilePicture(this.user.id);
     location.reload();
   }
 
+  /**
+   * Creates the form where the user can change its user information
+   */
   createInfoform() {
     this.infoform = this.formBuilder.group({
       name: [this.user.name, [Validators.required, Validators.pattern(/^[a-z ,.'-åäö]+$/i)]],
@@ -109,6 +134,9 @@ export class ProfileComponent implements OnInit {
     });
   }
 
+  /**
+   * Creates the form where the user can change its password
+   */
   createPassform() {
     this.passform = this.formBuilder.group({
       oldpassword: ['', Validators.required],
@@ -117,6 +145,9 @@ export class ProfileComponent implements OnInit {
     });
   }
 
+  /**
+   * Forwards the new information to the backend when a user changes its user information, shows error message if any input is invalid
+   */
   onSubmitInfoform() {
     if(this.infoform.get('name').value=='' || !this.infoform.get('name').value.replace(/\s/g, '').length){
       this.infoResponse = new Response();
@@ -151,6 +182,9 @@ export class ProfileComponent implements OnInit {
     });
   }
 
+  /**
+   * Forwards the new information to the backend when a user changes its password, shows error message if any input is invalid
+   */
   onSubmitPassform() {
     this.isPasswordsNotMatching = false;
     this.isOldPasswordWrong = false;
@@ -184,6 +218,10 @@ export class ProfileComponent implements OnInit {
       });
   }
 
+  /**
+   * Toggle between showing and hiding password in password field
+   * @param id the id of the input field
+   */
   toggleFieldTextType(id: number) {
     if (id == 1) {
       this.fieldTextType1 = !this.fieldTextType1;
@@ -194,6 +232,10 @@ export class ProfileComponent implements OnInit {
     }
   }
 
+  /**
+   * Shows a default profile picture if an url is not found for the profile picture
+   * @param event the source event
+   */
   errorHandler(event) {
     event.target.src = `../../../../assets/ProfilePictures/default.png`;
   }

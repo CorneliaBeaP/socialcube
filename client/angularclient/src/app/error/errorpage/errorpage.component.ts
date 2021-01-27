@@ -22,6 +22,9 @@ export class ErrorpageComponent implements OnInit, OnDestroy {
     this.getErrorMessage();
   }
 
+  /**
+   * Changes the error message on the page if the user tries accessing /admin and does not have that authority
+   */
   getErrorMessage() {
     if (this.queryparam == '/admin') {
       this.errormessage = 'Du har inte behörighet att komma åt denna sida.';

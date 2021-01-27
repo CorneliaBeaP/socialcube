@@ -25,14 +25,12 @@ export class CurrentActivitiesComponent implements OnInit, OnDestroy {
   }
 
   ngOnInit(): void {
-    this.setUp();
-  }
-
-  setUp() {
     this.getActivities();
   }
 
-
+  /**
+   * Gets the all the activities registered for the company in which the user works at and sorts away expired activities
+   */
   getActivities() {
     if(this.user) {
       this.subscription = this.activityService.getActivities(this.user.token).subscribe(next => {

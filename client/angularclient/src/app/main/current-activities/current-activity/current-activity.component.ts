@@ -28,7 +28,9 @@ export class CurrentActivityComponent implements OnInit, OnDestroy {
 
   }
 
-
+  /**
+   * Checks if the activity is attended by the logged in user
+   */
   isActivityAttended() {
     this.subscription = this.activityService.getattendedActivities(this.authService.getToken()).subscribe((data) => {
       let data2 = JSON.stringify(data);
@@ -42,8 +44,10 @@ export class CurrentActivityComponent implements OnInit, OnDestroy {
     });
   }
 
+  /**
+   * Checks if the activity is declined by the user
+   */
   isActivityDeclined() {
-
     this.subscription = this.activityService.getDeclinedActivities(this.authService.getToken()).subscribe((data) => {
       let data2 = JSON.stringify(data);
       this.declinedActivities = JSON.parse(data2);
@@ -55,6 +59,9 @@ export class CurrentActivityComponent implements OnInit, OnDestroy {
     });
   }
 
+  /**
+   * Forwards the information to the backend that the activity is being attended by the current user
+   */
   attendActivity() {
     if(this.isDeclined){
       this.subscription = this.activityService.attendDeclinedActivity(this.authService.getToken(), this.activity.id);

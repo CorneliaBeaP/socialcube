@@ -18,7 +18,7 @@ export class StartredirecterComponent implements OnInit {
   }
 
   /**
-   * Checks if there is an logged in user and redirects the page to /home in that case
+   * Checks if there is a logged in user and redirects the page to /home in that case, otherwise redirects to /login
    */
   checkIfLoggedInUser() {
     if (this.authService.getUserValue()) {

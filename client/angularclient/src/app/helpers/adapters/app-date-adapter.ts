@@ -4,6 +4,12 @@ import {Injectable} from "@angular/core";
 
 @Injectable()
 export class AppDateAdapter extends NativeDateAdapter {
+
+  /**
+   * Reformats the date from the standard US date format mm-dd-yyy to date format dd-mm-yyyy
+   * @param date the date to be converted
+   * @param displayFormat
+   */
   format(date: Date, displayFormat: Object): string {
     if (displayFormat === 'input') {
       let day: string = date.getDate().toString();

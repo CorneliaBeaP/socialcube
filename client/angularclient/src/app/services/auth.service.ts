@@ -24,10 +24,16 @@ export class AuthService {
 
   }
 
+  /**
+   * Gets a uservalue when an user just has logged in
+   */
   public getUserValue(): Usersocu {
     return this.userBehaviorSubject.value;
   }
 
+  /**
+   * Gets the saved JSON Web Token for the logged in user from LocalStorage
+   */
   public getToken() {
     let token = '';
     if (localStorage.getItem('token')) {
@@ -36,6 +42,11 @@ export class AuthService {
     return token;
   }
 
+  /**
+   * Forwards user credentials to the backend to check if they are correct or not and which usertype the user has
+   * @param username the username the user has provided in the login-form
+   * @param password the password the user has provided in the login-form
+   */
   login(username: string, password: string) {
     this.usercredentials = [username, password];
     return this.http.post<Usersocu>(this.loginUrl, this.usercredentials)
@@ -52,6 +63,9 @@ export class AuthService {
       }));
   }
 
+  /**
+   * Logs out the user by navigating to /login and remove all items from LocalStorage
+   */
   logout() {
     localStorage.removeItem('user');
     localStorage.removeItem('token');

@@ -31,6 +31,11 @@ export class CalendarComponent implements OnInit {
     this.setUp();
   }
 
+  /**
+   * - Gets the attended activities for the logged in user
+   * - Gets the attended activities for the current month
+   * - Gets the name of the current month
+   */
   setUp() {
     this.subscription = this.activityService.getattendedActivities(this.authService.getToken()).subscribe((data) => {
       this.attendedActivities = data;
@@ -39,6 +44,9 @@ export class CalendarComponent implements OnInit {
     })
   }
 
+  /**
+   * Gets the name of the current month
+   */
   getNameOfMonth(): string {
     let today = new Date();
     let thismonth = today.getMonth() + 1;
@@ -71,6 +79,10 @@ export class CalendarComponent implements OnInit {
     return name;
   }
 
+  /**
+   * Sorts out activities that has expired, that are cancelled or that are not taking place the current month
+   * @param activities an array of attended activities for the logged in user
+   */
   getAttendedActivitiesThisMonth(activities: Activity[]) {
     this.activitiesThisMonth = this.currentmonthPipe.transform(activities);
     this.activitiesThisMonth = this.cancelledPipe.transform(this.activitiesThisMonth);

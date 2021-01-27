@@ -12,6 +12,11 @@ export class AdminGuard implements CanActivate {
               private authService: AuthService) {
   }
 
+  /**
+   * Checks if the user has Usertype ADMIN and has the authority to visit /admin, forwards user to /error if not
+   * @param route
+   * @param state
+   */
   canActivate(
     route: ActivatedRouteSnapshot,
     state: RouterStateSnapshot) {

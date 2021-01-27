@@ -18,7 +18,6 @@ export class UserListComponent implements OnInit, OnDestroy {
   constructor(private userService: UserService) {
   }
 
-
   ngOnInit(): void {
     this.subscription = this.userService.findAll(this.currentuser.companyorganizationnumber).subscribe(data => {
       this.users = data;
