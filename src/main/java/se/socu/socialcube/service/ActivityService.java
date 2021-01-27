@@ -11,6 +11,7 @@ import se.socu.socialcube.repository.ActivityRepository;
 import se.socu.socialcube.repository.CompanyRepository;
 import se.socu.socialcube.repository.UserRepository;
 
+import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
@@ -115,6 +116,10 @@ public class ActivityService {
     public Response saveActivityDTO(ActivityDTO activityDTO) {
         Response response = new Response();
         Activity activity = convertToActivityFromActivityDTO(activityDTO);
+        LocalDateTime date = activity.getRsvpdate();
+        //Quick fix nedan då efter årsskiftet 2020-2021 så började det registrerades en dag tidigare istället för det valda datumet?
+        date = date.plusDays(1);
+        activity.setRsvpdate(date);
         List<UserSocu> attendees = new ArrayList<>();
         attendees.add(activity.getCreatedby());
         activity.setAttendees(attendees);
