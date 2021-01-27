@@ -92,6 +92,12 @@ public class ActivityService {
         activity.setActivitytype(activityDTO.getActivitytype());
         activity.setActivitydate(activityDTO.getActivitydate());
         activity.setRsvpdate(activityDTO.getRsvpdate());
+        if(!(activityDTO.getRsvpdate() == null)){
+            LocalDateTime date = activityDTO.getRsvpdate();
+            //Quick fix nedan då efter årsskiftet 2020-2021 så började det registrerades en dag tidigare istället för det valda datumet?
+            date = date.plusDays(1);
+            activity.setRsvpdate(date);
+        }
         activity.setDescriptionsocu(activityDTO.getDescriptionsocu());
         activity.setLocationname(activityDTO.getLocationname());
         activity.setLocationaddress(activityDTO.getLocationaddress());
@@ -116,10 +122,6 @@ public class ActivityService {
     public Response saveActivityDTO(ActivityDTO activityDTO) {
         Response response = new Response();
         Activity activity = convertToActivityFromActivityDTO(activityDTO);
-        LocalDateTime date = activity.getRsvpdate();
-        //Quick fix nedan då efter årsskiftet 2020-2021 så började det registrerades en dag tidigare istället för det valda datumet?
-        date = date.plusDays(1);
-        activity.setRsvpdate(date);
         List<UserSocu> attendees = new ArrayList<>();
         attendees.add(activity.getCreatedby());
         activity.setAttendees(attendees);
